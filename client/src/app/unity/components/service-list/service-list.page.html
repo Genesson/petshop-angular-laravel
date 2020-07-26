@@ -1,0 +1,207 @@
+<ion-row>
+    <ion-col *ngIf="services">
+        <div class="service-list" *ngFor="let service of services">
+            <div class="service-item">
+                <span class="description">{{ service.description }}</span>
+                <span class="option">
+                    <ion-toggle color="success"
+                      mode="ios"
+                      [checked]="service.status == 1"
+                      (ionChange)="changeStatusService(service)">
+                    </ion-toggle>
+                </span>
+            </div>
+            <div class="service-subitem">
+                <ng-container *ngTemplateOutlet="(getOpenTemplate(service.type)) ? getOpenTemplate(service.type) : default; context: { service: service }"></ng-container>
+            </div>
+        </div>
+    </ion-col>
+</ion-row>
+
+<ng-template #default>Carregando...</ng-template>
+
+<ng-template #shower let-service="service">
+    <div class="service-subitem-header grid">
+        <span>Porte</span>
+        <span>Raça</span>
+        <span>Pelo</span>
+        <span>Tempo</span>
+        <span>Valor</span>
+        <span>Opções</span>
+    </div>
+    <div class="service-subitem-content grid" *ngFor="let shower of showers">
+        <span>{{ shower.size.description }}</span>
+        <span>{{ shower.breed.description }}</span>
+        <span>{{ shower.type_fur.description }}</span>
+        <span>{{ shower.time }}min</span>
+        <span>{{ shower.price | currency: 'BRL':'symbol' }}</span>
+        <span class="action">
+            <ion-icon src="assets/icon/delete.svg" (click)="confirmShower(shower)" color="danger" class="icon"></ion-icon>
+        </span>
+    </div>
+    <div class="service-subitem-footer">
+        <a class="link" (click)="presentModalShower(true, service)">+ Adicionar Opção</a> |
+        <a class="link" (click)="presentModalService(true, service)">+ Adicionar Subcategoria</a>
+    </div>
+
+    <ion-row>
+        <ion-col *ngIf="subServices">
+            <div class="service-list sub-shower" *ngFor="let service of subServices; let i = index">
+                <div class="service-item">
+                    <span class="description">{{ service.description }}</span>
+                    <span class="option">
+                        <ion-icon src="assets/icon/delete.svg" (click)="confirmSubService(service)" color="danger" class="icon-sub"></ion-icon>
+                        <ion-toggle color="success"
+                          mode="ios"
+                          [checked]="service.status == 1"
+                          (ionChange)="changeStatusService(service)">
+                        </ion-toggle>
+                    </span>
+                </div>
+                <div class="service-subitem">
+                    <ng-container *ngTemplateOutlet="subShower; context: { service: service, i: i }"></ng-container>
+                </div>
+            </div>
+        </ion-col>
+    </ion-row>
+</ng-template>
+
+<ng-template #subShower let-service="service" let-i="i">
+    <div class="service-subitem-header shower grid">
+        <span>Porte</span>
+        <span>Raça</span>
+        <span>Pelo</span>
+        <span>Tempo</span>
+        <span>Valor</span>
+        <span>Opções</span>
+    </div>
+    <div *ngFor="let subShower of subShowers[i]">
+        <div class="service-subitem-content grid" *ngIf="subShower.service === service.id">
+            <span>{{ subShower.size.description }}</span>
+            <span>{{ subShower.breed.description }}</span>
+            <span>{{ subShower.type_fur.description }}</span>
+            <span>{{ subShower.time }}min</span>
+            <span>{{ subShower.price | currency: 'BRL':'symbol' }}</span>
+            <span class="action">
+                <ion-icon src="assets/icon/delete.svg" (click)="confirmSubShower(subShower)" color="danger" class="icon"></ion-icon>
+            </span>
+        </div>
+    </div>
+    <div class="service-subitem-footer">
+        <a class="link" (click)="presentModalSubShower(true, service)">+ Adicionar Opção</a>
+    </div>
+</ng-template>
+
+<ng-template #transport let-service="service">
+    <div class="service-subitem-header grid-transport">
+        <span>Descrição</span>
+        <span>Bairro</span>
+        <span>Região</span>
+        <span>Valor</span>
+        <span>Opções</span>
+    </div>
+    <div class="service-subitem-content grid-transport" *ngFor="let transport of transports">
+        <span>{{ transport.description }}</span>
+        <span>
+            <span *ngFor="let district of transport.districts; let last = last;">
+                {{ (!last) ? district.description + ',' : district.description + '.' }}
+            </span>
+        </span>
+        <span>{{ transport.region.description }}</span>
+        <span>{{ transport.price | currency: 'BRL':'symbol' }}</span>
+        <span class="action">
+            <ion-icon src="assets/icon/delete.svg" (click)="confirmTransport(transport)" color="danger" class="icon"></ion-icon>
+        </span>
+    </div>
+    <div class="service-subitem-footer">
+        <a class="link" (click)="presentModalTransport(true, service)">+ Adicionar Opção</a>
+    </div>
+</ng-template>
+
+<ng-template #dayCare let-service="service">
+    <div class="service-subitem-header grid-day-care">
+        <span>Porte</span>
+        <span>Período</span>
+        <span>Valor</span>
+        <span>Opções</span>
+    </div>
+    <div class="service-subitem-content grid-day-care" *ngFor="let dayCare of dayCares">
+        <span>{{ dayCare.size.description }}</span>
+        <span>{{ periodType[dayCare.period] }}</span>
+        <span>{{ dayCare.price | currency: 'BRL':'symbol' }}</span>
+        <span class="action">
+            <ion-icon src="assets/icon/delete.svg" (click)="confirmDayCare(dayCare)" color="danger" class="icon"></ion-icon>
+        </span>
+    </div>
+    <div class="service-subitem-footer">
+        <a class="link" (click)="presentModalDayCare(true, service)">+ Adicionar Opção</a>
+    </div>
+</ng-template>
+
+<ng-template #hotel let-service="service">
+    <div class="service-subitem-header grid-hotel">
+        <span>Porte</span>
+        <span>Período</span>
+        <span>Valor</span>
+        <span>Opções</span>
+    </div>
+    <div class="service-subitem-content grid-hotel" *ngFor="let hotel of hotels">
+        <span>{{ hotel.size.description }}</span>
+        <span>{{ periodType[hotel.period] }}</span>
+        <span>{{ hotel.price | currency: 'BRL':'symbol' }}</span>
+        <span class="action">
+            <ion-icon src="assets/icon/delete.svg" (click)="confirmHotel(hotel)" color="danger" class="icon"></ion-icon>
+        </span>
+    </div>
+    <div class="service-subitem-footer">
+        <a class="link" (click)="presentModalHotel(true, service)">+ Adicionar Opção</a>
+    </div>
+</ng-template>
+
+<ng-template #petSitter let-service="service">
+    <div class="service-subitem-header grid-pet-sitter">
+        <span>Responsável</span>
+        <span>Bairro</span>
+        <span>Região</span>
+        <span>Tempo</span>
+        <span>Valor</span>
+        <span>Opções</span>
+    </div>
+    <div class="service-subitem-content grid-pet-sitter" *ngFor="let petSitter of petSitters">
+        <span>{{ petSitter.user.name }}</span>
+        <span>
+            <span *ngFor="let district of petSitter.districts; let last = last;">
+                {{ (!last) ? district.description + ',' : district.description + '.' }}
+            </span>
+        </span>
+        <span>{{ petSitter.region.description }}</span>
+        <span>{{ petSitter.time }}min</span>
+        <span>{{ petSitter.price | currency: 'BRL':'symbol' }}</span>
+        <span class="action">
+            <ion-icon src="assets/icon/delete.svg" (click)="confirmPetSitter(petSitter)" color="danger" class="icon"></ion-icon>
+        </span>
+    </div>
+    <div class="service-subitem-footer">
+        <a class="link" (click)="presentModalPetSitter(true, service)">+ Adicionar Opção</a>
+    </div>
+</ng-template>
+
+<ng-template #other let-service="service">
+    <div class="service-subitem-header grid-other">
+        <span>Descrição</span>
+        <span>Tempo</span>
+        <span>Valor</span>
+        <span>Opções</span>
+    </div>
+    <div class="service-subitem-content grid-other" *ngFor="let other of others">
+        <span>{{ other.description }}</span>
+        <span>{{ other.time }}min</span>
+        <span>{{ other.price | currency: 'BRL':'symbol' }}</span>
+        <span class="action">
+            <ion-icon src="assets/icon/delete.svg" (click)="confirmOther(other)" color="danger" class="icon"></ion-icon>
+        </span>
+    </div>
+    <div class="service-subitem-footer">
+        <a class="link" (click)="presentModalOther(true, service)">+ Adicionar Opção</a>
+    </div>
+</ng-template>

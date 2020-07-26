@@ -1,0 +1,33 @@
+.sp-card-button {
+  width: 145px;
+  height: 145px;
+  border: 2px dashed #DCDCDC;
+  cursor: pointer;
+  box-shadow: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  align-items: center;
+  transition: all 200ms linear;
+
+  .sp-card-button-icon {
+    background: url('../../../../../assets/icon/newpet.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 80px;
+    height: 70px;
+    margin-top: 16px;
+  }
+
+  .sp-card-button-subtitle {
+    font-size: 14px;
+    color: #989898;
+    text-align: center;
+    transition: all 1s ease;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

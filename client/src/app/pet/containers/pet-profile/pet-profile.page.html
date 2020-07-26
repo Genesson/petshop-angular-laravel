@@ -1,0 +1,270 @@
+<app-header [title]="'Informações do Pet'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-pet-profile-content">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="3">
+                <ion-card class="sp-pet-card">
+                  <img [style.background]="'url('+ pet?.avatar +')'" class="image">
+                  <ion-card-header class="sp-header">
+                      <ion-card-title class="sp-title">{{ pet?.name }}</ion-card-title>
+                      <ion-card-subtitle class="sp-subtitle">
+                        <a (click)="openViewTutor(pet?.user)" class="link">{{ pet?.user?.name }}</a>
+                      </ion-card-subtitle>
+                  </ion-card-header>
+              </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Avaliação comportamental:</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6" *ngIf="evaluationsCollection$ | async as evaluations">
+                <ion-row class="evaluation" *ngFor="let evaluation of evaluations">
+                    <ion-col size="5" class="date">Dia {{evaluation.first_date | date: 'dd/MM/yyyy'}}</ion-col>
+                    <ion-col size="2">
+                        <div class="circle-evaluation"
+                             [ngClass]="(evaluation.test) ? 'test-true':'test-false'"></div>
+                    </ion-col>
+                    <ion-col size="5">
+                        <a (click)="openPetEvaluationInfo(evaluation)" class="details">Ver detalhes</a>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="evaluations.length === 0">
+                  <ion-col>
+                    <p>Nenhuma avaliação realizada!</p>
+                  </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="5">
+                <ion-button color="success" mode="ios" shape="round" (click)="openPetEvaluation(pet)">Nova Avaliação</ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Informações básicas</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">Nome:</ion-text>
+                    <ion-text class="info">{{ pet?.name }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Tipo:</ion-text>
+                    <ion-text class="info">{{ pet?.type?.description }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Raça:</ion-text>
+                    <ion-text class="info">{{ pet?.breed?.description }}</ion-text>
+                </ion-row>
+            </ion-col>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">Sexo:</ion-text>
+                    <ion-text class="info">{{ (pet?.gender === 'MALE') ? 'Masculino' : 'Feminino' }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Porte:</ion-text>
+                    <ion-text class="info">{{ pet?.size?.description }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Tipo de Pelo:</ion-text>
+                    <ion-text class="info">{{ pet?.type_fur?.description }}</ion-text>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Alimentação</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">Marca da ração:</ion-text>
+                    <ion-text class="info">{{ pet?.ration_brand }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Vezes por dia:</ion-text>
+                    <ion-text class="info">{{ pet?.times_day }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Quantidade por vez:</ion-text>
+                    <ion-text class="info">{{ pet?.amount_time }}g</ion-text>
+                </ion-row>
+            </ion-col>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">Observação:</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="info">{{ pet?.obs_general }}</ion-text>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Observação médica</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="1">
+                <div class="circle">
+                    <ion-icon src="assets/icon/icon-medic-kit.svg" class="icon-medic"></ion-icon>
+                </div>
+            </ion-col>
+            <ion-col size="11">
+                <ion-row class="line-info">
+                    <ion-text class="info">{{ pet?.obs_medical }}</ion-text>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Lembrete de saúde</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row class="line-info">
+            <ion-text class="info">Nenhum lembrete de saúde</ion-text>
+        </ion-row>
+        <!--<ion-row class="line-info">
+            <ion-text class="info">Repelentes, vacinas que estão atrasadas</ion-text>
+        </ion-row>
+        <ion-row class="line-info">
+            <ion-text class="info">Vacina v10 - 29/10/2019</ion-text>
+        </ion-row>
+        <ion-row class="line-info">
+            <ion-text class="info">Repelente para pulga - 29/10/2019</ion-text>
+        </ion-row>-->
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Consultas veterinárias</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row class="line-info">
+            <ion-text class="info">Nenhuma consulta veterinária</ion-text>
+        </ion-row>
+        <!--<ion-row>
+            <ion-col size="6">
+                <ion-row class="evaluation">
+                    <ion-col size="7" class="date bold">Dia 04 de Agosto de 2019</ion-col>
+                    <ion-col size="5">
+                        <a href="" class="details">Ver detalhes</a>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="evaluation">
+                    <ion-col size="7" class="date bold">Dia 04 de Agosto de 2019</ion-col>
+                    <ion-col size="5">
+                        <a href="" class="details">Ver detalhes</a>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="evaluation">
+                    <ion-col size="7" class="date bold">Dia 04 de Agosto de 2019</ion-col>
+                    <ion-col size="5">
+                        <a href="" class="details">Ver detalhes</a>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button color="success" mode="ios" shape="round" (click)="openPetEvaluation(pet)">Avaliação</ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <a href="" class="plus">+Ver mais</a>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Tutor(a)</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="1">
+                <ion-text color="primary">
+                    <ion-avatar>
+                        <ion-img src="{{ pet?.user?.avatar }}" class="avatar"></ion-img>
+                    </ion-avatar>
+                </ion-text>
+            </ion-col>
+            <ion-col size="9">
+                <ion-row>
+                    <ion-text class="desc">{{ pet?.user?.name }}</ion-text>
+                </ion-row>
+                <ion-row>
+                    <a class="profile-link" (click)="openViewTutor(pet?.user)">Ver perfil</a>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Relatório de consumo:</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row class="line-info">
+            <ion-text class="info">Nenhum relatório de consumo</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-row class="evaluation">
+                    <ion-col size="5">
+                        <ion-text class="bold">Agosto:</ion-text>
+                        <ion-text class="normal">R$ 480,00</ion-text>
+                    </ion-col>
+                    <ion-col size="2">
+                        <span class="circle"></span>
+                    </ion-col>
+                    <ion-col size="5">
+                        <a href="" class="details">Ver detalhes</a>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="evaluation">
+                    <ion-col size="7">
+                        <ion-text class="bold">Agosto:</ion-text>
+                        <ion-text class="normal">R$ 480,00</ion-text>
+                    </ion-col>
+                    <ion-col size="5">
+                        <a href="" class="details">Ver detalhes</a>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="evaluation">
+                    <ion-col size="7">
+                        <ion-text class="bold">Agosto:</ion-text>
+                        <ion-text class="normal">R$ 480,00</ion-text>
+                    </ion-col>
+                    <ion-col size="5">
+                        <a href="" class="details">Ver detalhes</a>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <a href="" class="plus">+Ver mais</a>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary" class="title">
+                <h3>Pacote</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row class="line-info">
+            <ion-text class="info">Nenhum pacote</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="1">
+                <ion-icon class="icon" src="assets/icon/icon-bag.svg"></ion-icon>
+            </ion-col>
+            <ion-col size="11">
+                <ion-row>
+                    <ion-text class="info">Banho 1x por semana, creche de segunda a sexta.</ion-text>
+                </ion-row>
+                <ion-row class="line-valid">
+                    <ion-text class="info">Válido até 12/10/2019</ion-text>
+                    <a href="" id="renew-package">Renovar Pacote</a>
+                </ion-row>
+            </ion-col>
+        </ion-row>-->
+    </ion-grid>
+</ion-content>

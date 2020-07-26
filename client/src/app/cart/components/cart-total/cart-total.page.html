@@ -1,0 +1,17 @@
+<div class="sp-cart-total">
+    <div class="sp-cart-discount-result">Desconto: <span>{{ order?.discount | currency: 'BRL':'symbol' }}</span></div>
+    <div class="sp-cart-total-result">Total: <span>{{ order?.amount | currency: 'BRL':'symbol' }}</span></div>
+    <div class="sp-cart-total-result">Total c/ desconto: <span>{{ (order?.amount - order?.discount) | currency: 'BRL':'symbol' }}</span></div>
+    <ion-row>
+        <ion-col>
+            <ion-button color="success" shape="round" mode="ios" class="button" (click)="clickPayLater.emit(order)">
+                <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner> Pagar Depois
+            </ion-button>
+        </ion-col>
+        <ion-col>
+            <ion-button color="success" shape="round" mode="ios" class="button" (click)="clickReceive.emit(order)">
+                Pagar
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</div>

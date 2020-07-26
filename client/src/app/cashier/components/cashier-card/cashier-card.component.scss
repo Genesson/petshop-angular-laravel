@@ -1,0 +1,16 @@
+.sp-cashier-card {
+  --background: #ffffff;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  margin-left: 0;
+  padding: 10px;
+
+  .sp-cashier-card-subtitle {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5A5A5A;
+  }
+
+  .sp-cashier-card-value {
+    font-size: 25px;
+  }
+}

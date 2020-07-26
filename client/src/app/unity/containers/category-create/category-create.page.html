@@ -1,0 +1,73 @@
+<app-header-modal [title]="isEditing ? 'Atualizar Categoria' : 'Cadastrar Categoria'"></app-header-modal>
+
+<ion-content class="sp-category-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col size="8">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Descrição</ion-label>
+                    <ion-input type="text" formControlName="description"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.description">
+                    <app-validation-message [form]="formGroup" [control]="'description'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="4">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Ordem</ion-label>
+                    <ion-input type="number" formControlName="order"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.order">
+                    <app-validation-message [form]="formGroup" [control]="'order'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione o Módulo</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="module">
+                        <ion-select-option [value]="'SHOWER'">Banho</ion-select-option>
+                        <ion-select-option [value]="'TRANSPORT'">Transporte</ion-select-option>
+                        <ion-select-option [value]="'PET_SITTER'">PetSitter</ion-select-option>
+                        <ion-select-option [value]="'DAY_CARE'">Creche</ion-select-option>
+                        <ion-select-option [value]="'HOTEL'">Hotel</ion-select-option>
+                        <ion-select-option [value]="'OTHER'">Outro Serviços</ion-select-option>
+                    </ion-select>
+                    <ng-container *ngFor="let validation of validationMessages.module">
+                        <app-validation-message [form]="formGroup" [control]="'module'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-item>
+            </ion-col>
+            <ion-col size="4">
+                <ion-label class="sp-label">Permitir Pacotes?</ion-label>
+                <ion-toggle color="success" mode="ios" formControlName="package"></ion-toggle>
+            </ion-col>
+        </ion-row>
+        <!--<ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione os Serviços</ion-label>
+                    <ion-select multiple="true"
+                                placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="services">
+                        <ion-select-option [value]="service.id" *ngFor="let service of servicesCollection$ | async">{{ service.description }}</ion-select-option>
+                    </ion-select>
+                    <ng-container *ngFor="let validation of validationMessages.services">
+                        <app-validation-message [form]="formGroup" [control]="'services'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-item>
+            </ion-col>
+        </ion-row>-->
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="(isEditing) ? 'Atualizar' : 'Cadastrar'"
+                  [isLoading]="isLoading$ | async"></app-footer-modal>

@@ -1,0 +1,22 @@
+.sp-pet-content {
+  --background: #F5F7F8;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+
+  .sp-pet-title {
+    font-size: 22px;
+    color: #A2A2A2;
+    font-weight: bold;
+  }
+
+  .sp-margin-top {
+    margin-top: 25px;
+  }
+
+  .sp-timepicker {
+    display: flex;
+    place-content: center;
+  }
+}

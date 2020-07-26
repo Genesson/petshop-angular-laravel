@@ -1,0 +1,198 @@
+<app-header [title]="'Lista de Produtos'"></app-header>
+<app-product-general-tabs [selected]="tab" (tab)="onTab($event)"></app-product-general-tabs>
+
+<ion-content class="sp-product-content">
+  <div class="sp-user-user" *ngIf="tab === 'product'">
+    <ion-grid class="sp-form">
+      <ion-row>
+        <ion-col size="3">
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="name" (keyup)="updateFilterPetName($event)"
+                       placeholder="Buscar por nome" class="sp-search"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="category" (keyup)="updateFilterPetCategory($event)"
+                       placeholder="Buscar por Categoria" class="sp-search"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button color="primary" shape="round" mode="ios" expand="block" (click)="updateFilter()">Pesquisar
+          </ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button color="success" shape="round" mode="ios" expand="block" (click)="presentModal()">Cadastrar Produto
+          </ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button color='success' mode='ios'
+                      shape='round' expand='block'
+                      (click)='showImports = !showImports'>
+            Importar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf='showImports'>
+        <ion-col size="2">
+          <ion-button color="primary" shape="round" mode="ios" expand="block" (click)="openImportModal()">
+            Importação de NFe
+          </ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <input type="file" #productFileInput (change)="onProductFileUpload($event)" class="sp-form-file">
+          <ion-button color="primary" shape="round" mode="ios" expand="block" (click)="productFileInput.click()">
+            <ion-spinner slot="start" name="crescent" *ngIf="isLoadingCsvProduct$ | async"></ion-spinner>
+            Importar Produtos
+          </ion-button>
+        </ion-col>
+        <ion-col size="3">
+          <input type="file" #productProductProviderFileInput (change)="onProductProductProviderFileUpload($event)" class="sp-form-file">
+          <ion-button color="primary" shape="round" mode="ios" expand="block" (click)="productProductProviderFileInput.click()">
+            <ion-spinner slot="start" name="crescent" *ngIf="isLoadingCsvProductProductProvider$ | async"></ion-spinner>
+            Importar Fornecedores dos Produtos
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ngx-datatable #table [rows]="rows" [ngClass]="'material'" [rowHeight]="'auto'" [headerHeight]="50"
+                         [columnMode]="'force'" [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                         [loadingIndicator]="isLoading$ | async">
+            <ngx-datatable-column name="Foto">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <ion-img src="{{ row?.image }}" *ngIf="row.image !== null" class="image"></ion-img>
+                <ion-img src="assets/images/NoImage.png" *ngIf="row.image === null" class="image"></ion-img>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Nome">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.description }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Categoria">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.category?.description }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Valor">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.price_sale | currency: 'BRL':'symbol' }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Estoque">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.quantity_stock }}{{ row?.unity | lowercase }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Opções" sortable="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <ion-button color="light" mode="ios" (click)="presentViewModal(row)">
+                  <ion-icon src="assets/icon/eye.svg"></ion-icon>
+                </ion-button>
+                <ion-button color="light" mode="ios" (click)="selectProduct(row)">
+                  <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                </ion-button>
+                <ion-button color="light" mode="ios" (click)="confirmProduct(row)">
+                  <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                </ion-button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="sp-product-product" *ngIf="tab === 'category'">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="success" shape="round" mode="ios" (click)="presentCategoryModal()">Cadastrar Categoria
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ngx-datatable [rows]="productCategoriesCollection$ | async"
+                         [ngClass]="'material'"
+                         [rowHeight]="'auto'"
+                         [headerHeight]="50"
+                         [columnMode]="'force'"
+                         [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                         [loadingIndicator]="isLoadingProductCategory$ | async">
+            <ngx-datatable-column name="Descrição">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.description }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Opções" sortable="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <ion-button color="light" mode="ios" (click)="selectProductCategory(row)">
+                  <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                </ion-button>
+                <ion-button color="light" mode="ios" (click)="confirmProductCategory(row)">
+                  <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                </ion-button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="sp-product-product" *ngIf="tab === 'provider'">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <ion-button
+            expand="block"
+            color="success" shape="round" mode="ios" (click)="presentProviderModal()">
+            Cadastrar Fornecedor
+          </ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <input type="file" #fileProductProviderInput (change)="onProductProviderFileUpload($event)"
+                 style='display: none' class="sp-form-file">
+          <ion-button color="primary" shape="round" mode="ios" expand="block"
+                      (click)="fileProductProviderInput.click()">
+            <ion-spinner slot="start" name="crescent" *ngIf="isLoadingCsvProductProvider$ | async"></ion-spinner>
+            Importar Fornecedores
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ngx-datatable [rows]="productProvidersCollection$ | async" [ngClass]="'material'" [rowHeight]="'auto'"
+                         [headerHeight]="50" [columnMode]="'force'"
+                         [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                         [loadingIndicator]="isLoadingProductProvider$ | async">
+            <ngx-datatable-column name="Descrição">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.description }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Opções" sortable="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <ion-button color="light" mode="ios" (click)="selectProductProvider(row)">
+                  <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                </ion-button>
+                <ion-button color="light" mode="ios" (click)="confirmProductProvider(row)">
+                  <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                </ion-button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

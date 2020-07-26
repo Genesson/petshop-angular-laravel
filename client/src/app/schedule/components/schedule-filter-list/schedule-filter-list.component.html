@@ -1,0 +1,49 @@
+<ion-header class="sp-schedule-filter-list-content" mode="ios">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col size="3">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Buscar por Pet</ion-label>
+                    <ion-input formControlName="pet" type="text" (keyup)="filterPetName.emit($event)"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Serviço</ion-label>
+                    <ion-select formControlName="service"
+                                placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                (ngModelChange)="filterService.emit($event)">
+                        <ion-select-option [value]="service.description"
+                                           *ngFor="let service of services">{{ service.description}}</ion-select-option>
+                        <ion-select-option value="">Todos</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2">
+                <input type="text" placeholder="Data" class="form-control" formControlName="date" bsDatepicker
+                  (ngModelChange)="filterDate.emit($event)">
+            </ion-col>
+            <ion-col size="3">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Responsável</ion-label>
+                    <ion-select formControlName="responsible"
+                                placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                (ionChange)="filterResponsible.emit($event)">
+                        <ion-select-option [value]="user.name"
+                                           *ngFor="let user of users">{{ user.name }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2">
+                <ion-button color="success" shape="round" mode="ios" expand="block" class="button"
+                            (click)="onClickfilter()">
+                    Pesquisar
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-header>

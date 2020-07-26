@@ -1,0 +1,54 @@
+<app-header [title]="'Listagem de Pacotes'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-package-content">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-button color="success" shape="round" mode="ios" (click)="presentModal()">Adicionar Pacote</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ngx-datatable [rows]="packagesCollection$ | async"
+                               [ngClass]="'material'"
+                               [rowHeight]="'auto'"
+                               [headerHeight]="50"
+                               [columnMode]="'force'"
+                               [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                               [loadingIndicator]="isLoading$ | async">
+                    <ngx-datatable-column name="Pacote">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.name }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Valor">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.price | currency: 'BRL':'symbol' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Periodo">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.days }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Opções" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-button color="light" mode="ios" (click)="openModalPackagePet(row)">
+                                <ion-icon src="assets/icon/pet.svg"></ion-icon>
+                            </ion-button>
+                            <ion-button color="light" mode="ios" (click)="selectPackage(row)">
+                                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                            </ion-button>
+                            <ion-button color="light" mode="ios" (click)="confirmPackage(row)">
+                                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                            </ion-button>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

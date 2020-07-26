@@ -1,0 +1,14 @@
+<ion-card class="sp-pet-card">
+    <img [style.background]="'url(' + image + ')'" class="image">
+    <ion-card-header class="sp-header">
+        <ion-card-title class="sp-name">{{ name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="sp-content" *ngIf="isButtons">
+        <ion-button color="secondary" size="small" class="sp-button" (click)="clickEdit.emit()" *ngIf="!onlyDelete">
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" size="small" class="sp-button" (click)="clickDelete.emit()">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+    </ion-card-content>
+</ion-card>

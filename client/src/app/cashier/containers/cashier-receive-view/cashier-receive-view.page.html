@@ -1,0 +1,29 @@
+<app-header-modal [title]="'Detalhes da Parcela'"></app-header-modal>
+
+<ion-content class="sp-cashier-receive-view-content">
+    <ion-grid>
+        <ion-row>
+            <ion-col class="sp-receive-column">
+                <span><strong>Parcela:</strong> {{ data?.quota }}</span>
+                <span><strong>Valor:</strong> {{ data?.value | currency: 'BRL':'symbol' }}</span>
+                <span><strong>Total Ordem:</strong> {{ data?.order?.amount | currency: 'BRL':'symbol' }}</span>
+                <span><strong>Forma de Pagamento:</strong> {{ data?.payment_with | titlecase }}</span>
+                <span><strong>Bandeira:</strong> {{ data?.flag?.description }}</span>
+                <span><strong>N° do Comprovante:</strong> {{ data?.voucher_number }}</span>
+                <span><strong>CPF na Nota?</strong> {{ data?.cpf }}</span>
+                <span><strong>CPF:</strong> {{ data?.cpf_number }}</span>
+                <span><strong>Data de Vencimento:</strong> {{ data?.expiration  }}</span>
+                <span><strong>Data de Pagamento:</strong> {{ data?.receivement_at | date: 'dd/MM/yyyy' }}</span>
+                <span><strong>Cliente:</strong> {{ data?.tutor?.name }}</span>
+                <span><strong>Pet:</strong> {{ data?.pet?.name }}</span>
+                <span><strong>Vendedor:</strong> {{ data?.user?.name }}</span>
+                <span><strong>Produtos:</strong> {{ data?.productsName }}</span>
+                <span><strong>Serviços:</strong> {{ data?.servicesName }}</span>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="'OK'"></app-footer-modal>

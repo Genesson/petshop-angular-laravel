@@ -1,0 +1,51 @@
+<ion-header class="sp-header">
+    <ng-container *ngTemplateOutlet="headerActions ? actions : onlyTitle"></ng-container>
+</ion-header>
+
+<ng-template #onlyTitle>
+    <ion-toolbar class="sp-header-toolbar">
+
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+            <ion-button (click)="onClickBack()" *ngIf="showButtonBack">
+                <ion-icon slot="icon-only" name="ios-arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title class="sp-header-title">{{ title }}</ion-title>
+
+        <ion-buttons slot="end" class="sp-buttons-end">
+            <ion-button (click)="onClickCart()" *ngIf="isCart">
+                <ion-icon slot="start" name="cart" class="sp-icon-cart"></ion-icon>
+                <ion-badge color="primary" mode="ios" class="sp-badge-cart">{{ order?.products?.length + order?.services?.length }}</ion-badge>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-chip slot="end" *ngIf="sessionSandbox" class="sp-chip" (click)="onClickUser(sessionSandbox.userData)">
+            <ion-label>{{ sessionSandbox.userData.name }}</ion-label>
+            <ion-avatar>
+                <img src="{{ (sessionSandbox.userData.avatar === null) ? 'assets/images/avatar.png' : sessionSandbox.userData.avatar }}">
+            </ion-avatar>
+        </ion-chip>
+
+    </ion-toolbar>
+</ng-template>
+
+<ng-template #actions>
+    <ion-toolbar class="sp-header-toolbar">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="8" class="sp-column">
+                    <ion-title class="sp-header-title" *ngIf="title">{{ title }}</ion-title>
+                    <ion-button color="success" shape="round" mode="ios" (click)="actionButton.emit()" *ngIf="!title">
+                        {{ buttonTitle }}
+                    </ion-button>
+                </ion-col>
+                <ion-col size="4" class="sp-column">
+                    <ion-input placeholder="{{descriptionSearch}}" class="sp-search"></ion-input>
+                    <ion-button color="primary" shape="round" mode="ios" expand="block">Pesquisar</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ng-template>

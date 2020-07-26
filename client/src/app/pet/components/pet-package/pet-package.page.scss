@@ -1,0 +1,51 @@
+.sp-form {
+  .input-opacity {
+    opacity: 0.5;
+  }
+
+  &.sp-grid-no-padding {
+    --ion-grid-padding: 0;
+  }
+
+  .sp-item-checkbox {
+    padding: 5px 0;
+  }
+
+  .sp-toogle {
+    .sp-label {
+      margin-left: 5px;
+    }
+  }
+
+  .sp-form-days {
+    margin-top: 10px;
+  }
+
+  .sp-form-hidden {
+    height: 0;
+    visibility: hidden;
+
+    input {
+      height: 0;
+    }
+  }
+
+  .sp-month {
+    padding: 0 5px;
+
+    .sp-button {
+      height: 50px;
+      --border-radius: 8px !important;
+    }
+  }
+
+  .btn-generate {
+    height: 66px;
+    margin: 0;
+  }
+
+  .fix-height-toggle {
+    height: 66px;
+    display: flex;
+  }
+}

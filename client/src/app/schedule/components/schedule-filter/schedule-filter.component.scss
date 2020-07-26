@@ -1,0 +1,26 @@
+.sp-schedule-filter-content {
+  width: 100%;
+
+  .button {
+    --ion-color-contrast: #FFFFFF !important;
+  }
+
+  .button-arrow {
+    --ion-color-contrast: #A2A2A2 !important;
+  }
+
+  .sp-schedule-filter-navigate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .current-date {
+      width: 120px;
+      font-size: 14px;
+      color: #A2A2A2;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+}

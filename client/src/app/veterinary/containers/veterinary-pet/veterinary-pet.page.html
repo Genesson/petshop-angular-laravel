@@ -1,0 +1,11 @@
+<app-header [title]="'Selecione o Pet'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-veterinary-pet-content">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="3" *ngFor="let pet of petsCollection$ | async">
+                <app-pet-cart [pet]="pet" (clickCard)="openModalVeterinaryCreate(pet)"></app-pet-cart>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,75 @@
+<app-header [title]="'Avaliação comportamental'" [showButtonBack]="true" class="sp-dont-print"></app-header>
+
+<ion-content class="sp-pet-evaluation-info-content">
+    <ion-grid>
+        <ion-row style="margin-bottom: 20px;">
+            <ion-col size="2" class="sp-dont-print">
+                <ion-text color="secondary">
+                    <img [style.background]="'url('+ evaluation?.pet?.avatar +')'" class="image">
+                </ion-text>
+            </ion-col>
+            <ion-col size="10" style="margin-top: 40px;">
+                <ion-row>
+                    <p class="name">{{ evaluation?.pet?.name }}</p>
+                </ion-row>
+                <ion-row class="status-wrapper">
+                    <div class="circle-evaluation sp-dont-print" [ngClass]="(evaluation.test) ? 'test-true':'test-false'"></div>
+                    <p class="status">{{ (evaluation.test) ? 'Aprovado' : 'Reprovado'}}</p>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row class="desc">
+            <p><strong>Dia {{evaluation.first_date | date: 'dd/MM/yyyy'}}:</strong> {{ evaluation.description }}</p>
+        </ion-row>
+        <ion-row>
+            <h6 class="title">Participou das atividades:</h6>
+        </ion-row>
+        <ion-row>
+            <p class="desc">Piscina:</p>
+        </ion-row>
+        <ion-row>
+            <p class="desc">{{ poolType[evaluation.liked_pool] }}</p>
+        </ion-row>
+        <ion-row>
+            <h6 class="title">Hidratação:</h6>
+        </ion-row>
+        <ion-row>
+            <p class="desc">{{ hydrationType[evaluation.hydration] }}</p>
+        </ion-row>
+        <ion-row>
+            <h6 class="title">Xixi e Cocô:</h6>
+        </ion-row>
+        <ion-row>
+            <p class="desc">{{ peePoopType[evaluation.pee_poop] }}</p>
+        </ion-row>
+        <ion-row>
+            <h6 class="title">Comportamento:</h6>
+        </ion-row>
+        <ion-row>
+            <p class="desc">{{ evaluation.behavior }}</p>
+        </ion-row>
+        <ion-row>
+            <h6 class="title">Recomendação de Frequência:</h6>
+        </ion-row>
+        <ion-row>
+            <p class="desc">Escovar os dentes {{ evaluation.frequency }} vez por semana</p>
+        </ion-row>
+        <ion-row>
+            <p class="desc">Motivo: {{ evaluation.reason }}</p>
+        </ion-row>
+        <ion-row>
+            <h6 class="title">Passou no teste:</h6>
+        </ion-row>
+        <ion-row>
+            <p class="desc">{{ (evaluation.test) ? 'Sim' : 'Não' }}.</p>
+        </ion-row>
+        <div class="divisor sp-dont-print"></div>
+        <ion-row>
+            <ion-col size="6">
+                <ion-button color="primary" mode="ios" shape="round" (click)="onClickPrint()" class="sp-dont-print">
+                  Imprimir
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

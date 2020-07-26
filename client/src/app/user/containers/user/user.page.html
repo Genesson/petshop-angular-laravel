@@ -1,0 +1,102 @@
+<app-header [title]="'Lista de Usuários'"></app-header>
+<app-user-tabs [selected]="tab" (tab)="onTab($event)"></app-user-tabs>
+
+<ion-content class="sp-user-content">
+  <div class="sp-user-user" *ngIf="tab === 'user'">
+    <ng-container *ngIf="!(isLoading$ | async); else loading">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button color="success" shape="round" mode="ios" *ngxPermissionsOnly="['ADMIN', 'OWNER']"
+              (click)="presentModal()">Cadastrar Usuário</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ngx-datatable [rows]="usersCollection$ | async" [ngClass]="'material'" [rowHeight]="'auto'"
+              [headerHeight]="50" [columnMode]="'force'" [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+              [loadingIndicator]="isLoading$ | async">
+              <ngx-datatable-column name="Foto">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <ion-avatar (click)="selectUser(row)">
+                    <ion-img src="{{ row?.avatar }}" *ngIf="row.avatar !== null"></ion-img>
+                    <ion-img src="assets/images/NoImage.png" *ngIf="row.avatar === null"></ion-img>
+                  </ion-avatar>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Nome">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span (click)="selectUser(row)">{{ row?.name }}</span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Unidade (Permissão)">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span (click)="selectUser(row)">{{ row?.unitsName }}</span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Setor">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span (click)="selectUser(row)">{{ userType[row.role] }}</span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Opções" sortable="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <ion-button color="light" mode="ios" (click)="selectUser(row)">
+                    <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                  </ion-button>
+                  <ion-button color="light" mode="ios" (click)="confirmUser(row)">
+                    <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                  </ion-button>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </div>
+  <div class="sp-user-user" *ngIf="tab === 'permission'">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="success" shape="round" mode="ios" *ngxPermissionsOnly="['ADMIN', 'OWNER']"
+            (click)="presentModalPermission()">Cadastrar Permissão</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ngx-datatable [rows]="permissionsCollection$ | async" [ngClass]="'material'" [rowHeight]="'auto'"
+            [headerHeight]="50" [columnMode]="'force'" [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+            [loadingIndicator]="isLoading$ | async">
+            <ngx-datatable-column name="Descrição">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span (click)="selectUser(row)">{{ row.description }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Opções" sortable="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <ion-button color="light" mode="ios" (click)="selectPermission(row)">
+                  <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                </ion-button>
+                <ion-button color="light" mode="ios" (click)="confirmPermission(row)">
+                  <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                </ion-button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ng-template #loading>
+  <div class="wrapper-content">
+    <ion-spinner name="crescent"></ion-spinner>
+    <span>Carregando usuários...</span>
+  </div>
+</ng-template>

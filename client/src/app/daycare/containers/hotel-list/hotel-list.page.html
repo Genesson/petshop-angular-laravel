@@ -1,0 +1,64 @@
+<app-header [title]="'Reservas Resort'" [showButtonBack]="true"></app-header>
+<app-hotel-filter-list [services]="servicesCollection$ | async"
+                       (filterPetName)="updateFilterPetName($event)"
+                       (filterDate)="updateFilterDate($event)"
+                       (filterAll)="updateFilter($event)"></app-hotel-filter-list>
+
+<ion-content class="sp-hotel-list-content">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ngx-datatable #table
+                               [rows]="rows"
+                               [ngClass]="'material'"
+                               [rowHeight]="'auto'"
+                               [headerHeight]="50"
+                               [columnMode]="'force'"
+                               [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                               [loadingIndicator]="isLoading$ | async">
+                    <ngx-datatable-column name="Check-in">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.date_checkin | date: 'dd/MM/yyyy' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Check-out">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.date_checkout | date: 'dd/MM/yyyy' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Pet">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.pet?.name }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Quarto">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.room }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Diárias">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.daily }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Status">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span class="payment" [class.paid]="row?.order?.receivement_at">{{ (row?.order?.receivement_at) ? 'Pago' : 'Pendente' }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Opções" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-button color="light" mode="ios" (click)="finishedSchedule(row)">
+                                <ion-icon src="assets/icon/{{ (row.finished_at) ? 'check.svg' : 'close.svg' }}">
+                                </ion-icon>
+                            </ion-button>
+                            <ion-button color="light" mode="ios" (click)="deleteSchedule(row)">
+                                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                            </ion-button>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

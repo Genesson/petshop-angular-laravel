@@ -1,0 +1,19 @@
+<ion-header class="sp-product-tabs">
+    <div class="sp-product-tabs-wrapper">
+        <ion-tab-button class="sp-product-tabs-button"
+                        [class.selected]="selected === 'product'"
+                        (click)="tab.emit('product')">
+            <ion-label>PRODUTOS</ion-label>
+        </ion-tab-button>
+        <ion-tab-button class="sp-product-tabs-button"
+                        [class.selected]="selected === 'category'"
+                        (click)="tab.emit('category')">
+            <ion-label>CATEGORIAS</ion-label>
+        </ion-tab-button>
+        <ion-tab-button class="sp-product-tabs-button"
+                        [class.selected]="selected === 'provider'"
+                        (click)="tab.emit('provider')">
+          <ion-label>FORNECEDORES</ion-label>
+        </ion-tab-button>
+    </div>
+</ion-header>

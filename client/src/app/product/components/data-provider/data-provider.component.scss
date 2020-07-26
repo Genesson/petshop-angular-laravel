@@ -1,0 +1,43 @@
+.title {
+    font-weight: bold;
+    color: #474747;
+}
+
+.info {
+    font-size: 9pt;
+    color: #474747;
+}
+
+.spacing {
+    margin-top: 30px;
+}
+
+.update {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    p {
+        font-weight: bold;
+        text-align: center;
+        font-size: 10pt;
+    }
+}
+
+.border {
+    width: 100px;
+    height: 35px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dcdcdc;
+
+    ion-label {
+        color: #8d8d8d;
+    }
+}

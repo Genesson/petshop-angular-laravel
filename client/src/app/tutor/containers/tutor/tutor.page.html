@@ -1,0 +1,147 @@
+<app-header [title]="'Tutores'"></app-header>
+
+<ion-content class="sp-tutor-content">
+  <ion-grid class="sp-form">
+    <ion-row>
+      <ion-col size="2">
+        <ion-item>
+          <ion-input type="text" [(ngModel)]="searchField"
+                     (ngModelChange)="onChangeSearch($event)"
+                     placeholder="Buscar por Tutor" class="sp-search">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-input type="text" (keyup)="filterPet($event)"
+                     placeholder="Buscar por Pet" class="sp-search">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-input type="text" (keyup)="filterCpf($event)"
+                     placeholder="Buscar por CPF" class="sp-search">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-input type="text" (keyup)="filterPhone($event)"
+                     placeholder="Buscar por Telefone" class="sp-search">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button color="success" shape="round"
+                    mode="ios" expand="block" (click)="presentModal()">
+          Cadastrar Tutor
+        </ion-button>
+      </ion-col>
+      <ion-col size='2'>
+        <ion-button color='success' mode='ios'
+                    shape='round' expand='block'
+                    (click)='showImports = !showImports'>
+          Importar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf='showImports'>
+      <ion-col size="2">
+        <input type="file" #fileInput (change)="onFileUpload($event)" class="sp-form-file">
+        <ion-button color="primary" shape="round" mode="ios" expand="block" (click)="fileInput.click()">
+          <ion-spinner slot="start" name="crescent" *ngIf="isLoadingCsvTutor$ | async"></ion-spinner>
+          Importar Tutores
+        </ion-button>
+      </ion-col>
+      <ion-col size="2">
+        <input type="file" #contactFileInput (change)="onContactFileUpload($event)" class="sp-form-file">
+        <ion-button color="primary" shape="round" mode="ios" expand="block" (click)="contactFileInput.click()">
+          <ion-spinner slot="start" name="crescent" *ngIf="isLoadingCsvContact$ | async"></ion-spinner>
+          Importar Contatos
+        </ion-button>
+      </ion-col>
+      <ion-col size="2">
+        <input type="file" #petFileInput (change)="onPetFileUpload($event)" class="sp-form-file">
+        <ion-button color="primary" shape="round" mode="ios" expand="block" (click)="petFileInput.click()">
+          <ion-spinner slot="start" name="crescent" *ngIf="isLoadingCsvPet$ | async"></ion-spinner>
+          Importar Pets
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ngx-datatable #table
+                       [rows]="rows"
+                       [ngClass]="'material'"
+                       [rowHeight]="'auto'"
+                       [headerHeight]="50"
+                       [columnMode]="'force'"
+                       [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                       [loadingIndicator]="isLoading$ | async">
+          <ngx-datatable-column name="Foto">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-avatar (click)="selectTutor(row)">
+                <img src="{{ row?.avatar }}" *ngIf="row.avatar !== null">
+                <img src="assets/images/NoImage.png" *ngIf="row.avatar === null">
+              </ion-avatar>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Nome">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span (click)="selectTutor(row)">{{ row?.name }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="CPF">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span (click)="selectTutor(row)">{{ row?.cpf }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Celular">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span (click)="selectTutor(row)">{{ row?.phone || row?.cell_phone }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Tel. Residencial">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span (click)="selectTutor(row)">{{ row?.phone_residential }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Endereço">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span (click)="selectTutor(row)" *ngIf="row.address.street">
+                                {{ row?.address?.street }}, {{ row?.address?.number }} - {{ row?.address?.district }}
+                            </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Opções" sortable="false">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-button color="light" mode="ios" (click)="openViewTutor(row)">
+                <ion-icon src="assets/icon/eye.svg"></ion-icon>
+              </ion-button>
+              <ion-button color="light" mode="ios" (click)="selectTutor(row)">
+                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+              </ion-button>
+              <ion-button color="light" mode="ios" (click)="confirmTutor(row)">
+                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+              </ion-button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ul *ngIf="paginator$ | async as page" class="pagination">
+        <li (click)="changePage(page.first_page_url)">
+          <ion-icon name="skip-backward"></ion-icon>
+        </li>
+        <li (click)="changePage(page.prev_page_url)" *ngIf="page.prev_page_url">{{ page.prev_page_url }}</li>
+        <li (click)="changePage(page.current_page)" class="active">{{ page.current_page }}</li>
+        <li (click)="changePage(page.next_page_url)" *ngIf="page.next_page_url">{{ page.next_page_url }}</li>
+      </ul>
+    </ion-row>
+  </ion-grid>
+</ion-content>

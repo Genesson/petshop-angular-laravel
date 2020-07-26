@@ -1,0 +1,86 @@
+<ngx-datatable [rows]="order?.products"
+               [ngClass]="'material'"
+               [rowHeight]="'auto'"
+               [headerHeight]="50"
+               [columnMode]="'force'"
+               [messages]="{emptyMessage:''}">
+    <ngx-datatable-column name="Foto">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-img src="{{ row?.product?.image }}" *ngIf="row?.product?.image !== 'null'" class="image"></ion-img>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Nome">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.product?.description }}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Quantidade">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-item lines="none">
+                <ion-input type="number"
+                           value="{{ row?.quantity }}"
+                           min="0"
+                           max="100"
+                           #quantity
+                           (ionBlur)="changeQuantityItem.emit({item: row?.product, quantity: quantity.value})"></ion-input>
+            </ion-item>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Valor">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.product?.price_sale | currency: 'BRL':'symbol' }}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="SubTotal">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.amount | currency: 'BRL':'symbol' }}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column sortable="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-button color="light" mode="ios" (click)="delete.emit(row?.product)">
+                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+            </ion-button>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>
+
+<ngx-datatable [rows]="order?.services"
+               [ngClass]="'material'"
+               [rowHeight]="'auto'"
+               [headerHeight]="0"
+               [columnMode]="'force'"
+               [messages]="{emptyMessage:''}">
+    <ngx-datatable-column name="Foto">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            Sem imagem
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Nome">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.service?.description }}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Quantidade">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.quantity }}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Valor">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.service?.price | currency: 'BRL':'symbol' }}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="SubTotal">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.amount | currency: 'BRL':'symbol' }}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column sortable="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-button color="light" mode="ios" (click)="delete.emit(row?.service)">
+                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+            </ion-button>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>

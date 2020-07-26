@@ -1,0 +1,113 @@
+<app-header [title]="'Lista de Presença'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-daycare-check-content">
+    <ion-grid class="table">
+        <app-daycare-buttons [schedule]="schedulesCheckCollection$ | async"
+                             (selectAllSchedule)="selectAllSchedule()"
+                             (clickChangeAll)="changeAllSchedule($event)"></app-daycare-buttons>
+
+        <ion-row>
+            <ion-col class="sp-form">
+                <ngx-datatable [rows]="schedulesCollection$ | async"
+                               [ngClass]="'material'"
+                               [rowHeight]="'auto'"
+                               [headerHeight]="50"
+                               [columnMode]="'force'"
+                               [messages]="{emptyMessage:'Nenhum resultado encontrado.'}">
+                    <ngx-datatable-column name="Nome">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-item lines="none" (click)="selectSchedule(row)">
+                                <ion-checkbox color="success"
+                                              mode="ios"
+                                              [checked]="row.check"></ion-checkbox>
+                                <ion-label class="sp-label margin-left">{{ row?.pet?.name }}</ion-label>
+                            </ion-item>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Presença">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-item lines="none">
+                                <ion-checkbox (ionChange)="changePresence($event, row)"
+                                              mode="ios"
+                                              color="success"
+                                              [checked]="row?.daycare?.presence"></ion-checkbox>
+                            </ion-item>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Xixi">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-item lines="none">
+                                <ion-checkbox (ionChange)="changePeed($event, row)"
+                                              mode="ios"
+                                              color="success"
+                                              [disabled]="!row.daycare.presence"
+                                              [checked]="row?.daycare?.peed"></ion-checkbox>
+                            </ion-item>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Cocô">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-item lines="none">
+                                <ion-checkbox (ionChange)="changePooped($event, row)"
+                                              mode="ios"
+                                              color="success"
+                                              [disabled]="!row.daycare.presence"
+                                              [checked]="row?.daycare?.pooped"></ion-checkbox>
+                            </ion-item>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Refeição 1">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <div class="sp-border-select">
+                                <ion-select interface="popover"
+                                            [placeholder]="(row.daycare.first_meat) ? (row.daycare.first_meat === 'RECUSOU') ? 'Recusou' : 'Comeu tudo' : 'Nenhuma'"
+                                            okText="OK"
+                                            cancelText="Cancelar"
+                                            [disabled]="!row.daycare.presence"
+                                            (ionChange)="changeFirstMeat($event, row)">
+                                    <ion-select-option [value]="'NENHUMA'">Nenhuma</ion-select-option>
+                                    <ion-select-option [value]="'RECUSOU'">Recusou</ion-select-option>
+                                    <ion-select-option [value]="'COMEU_TUDO'">Comeu tudo</ion-select-option>
+                                </ion-select>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Refeição 2">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <div class="sp-border-select">
+                                <ion-select interface="popover"
+                                            [placeholder]="(row.daycare.second_meat) ? (row.daycare.second_meat === 'RECUSOU') ? 'Recusou' : 'Comeu tudo'  : 'Nenhuma'"
+                                            okText="OK"
+                                            cancelText="Cancelar"
+                                            [disabled]="!row.daycare.presence"
+                                            (ionChange)="changeSecondMeat($event, row)">
+                                    <ion-select-option [value]="'NENHUMA'">Nenhuma</ion-select-option>
+                                    <ion-select-option [value]="'RECUSOU'">Recusou</ion-select-option>
+                                    <ion-select-option [value]="'COMEU_TUDO'">Comeu tudo</ion-select-option>
+                                </ion-select>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Observações">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-item>
+                                <ion-input (ionBlur)="changeObservation(observation.value, row)"
+                                           #observation
+                                           type="text"
+                                           [readonly]="!row.daycare.presence"
+                                           [value]="row?.daycare?.observation"></ion-input>
+                            </ion-item>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Opções" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-button color="light" mode="ios">
+                                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                            </ion-button>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

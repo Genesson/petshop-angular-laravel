@@ -1,0 +1,63 @@
+<ngx-datatable
+    [rows]="rows"
+    [ngClass]="'material'"
+    [rowHeight]="'auto'"
+    [headerHeight]="50"
+    [columnMode]="'force'"
+    [messages]="{emptyMessage:'Nenhum resultado encontrado.'}">
+    <ngx-datatable-column name="Fornecedor">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">CNPJ</ion-row>
+            <ion-row class="info">{{ xml?.provider?.cnpj }}</ion-row>
+            <ion-row class="title spacing">Endereço</ion-row>
+            <ion-row class="info">{{ xml?.provider?.address }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Razão social</ion-row>
+            <ion-row class="info">{{ xml?.provider?.company_name }}</ion-row>
+            <ion-row class="title spacing">Bairro</ion-row>
+            <ion-row class="info">{{ xml?.provider?.district }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Nome Fantasia</ion-row>
+            <ion-row class="info">{{ xml?.provider?.company_name }}</ion-row>
+            <ion-row>
+                <ion-col class="ion-no-padding">
+                    <ion-row class="title spacing">Cep</ion-row>
+                    <ion-row class="info">{{ xml?.provider?.cep }}</ion-row>
+                </ion-col>
+                <ion-col class="ion-no-padding">
+                    <ion-row class="title spacing">Município</ion-row>
+                    <ion-row class="info">{{ xml?.provider?.municipio }}</ion-row>
+                </ion-col>
+            </ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">I.E.</ion-row>
+            <ion-row class="info">{{ xml?.provider?.ie }}</ion-row>
+            <ion-row class="title spacing">UF</ion-row>
+            <ion-row class="info">{{ xml?.provider?.uf }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <!--<ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row>
+                <ion-icon src="assets/icon/check.svg" class="icon"></ion-icon>
+            </ion-row>
+            <ion-row class="update">
+                <p>Atualizar fornecedor</p>
+            </ion-row>
+            <ion-row>
+                <ion-item class="border">
+                    <ion-input placeholder="Sim" type="text"></ion-input>
+                </ion-item>
+            </ion-row>
+        </ng-template>
+    </ngx-datatable-column>-->
+</ngx-datatable>

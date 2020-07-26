@@ -1,0 +1,215 @@
+.sp-pet-profile-content {
+    --background: #f5f7f8;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+}
+
+.sp-pet-card {
+  display: flex;
+  align-items: center;
+  box-shadow: none;
+
+  .image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-size: cover !important;
+  }
+
+  .sp-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .sp-subtitle {
+    font-size: 14px;
+  }
+
+  .link {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.title {
+    font-size: 16pt;
+    margin: 20px 0 8px 0;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.date {
+    font-size: 14px;
+    color: #8d8d8d;
+    line-height: 29px;
+
+    &.bold {
+        font-weight: 600;
+    }
+}
+
+.circle-evaluation {
+    position: absolute;
+    float: left;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 10px;
+
+    &.test-true {
+        background-color: #5CD313;
+    }
+
+    &.test-false {
+        background-color: #D31313;
+    }
+}
+
+.circle {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ba322c;
+    margin-right: 10px;
+    padding-top: 3px;
+
+    .icon-medic {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+    }
+}
+
+.line-info {
+    margin-top: 15px;
+}
+
+.evaluation {
+    border-bottom: 1.5px solid #e2e2e2;
+
+    ion-col {
+        .bold {
+            font-weight: 600;
+            font-size: 14px;
+            color: #828282;
+            line-height: 29px;
+        }
+
+        .normal {
+            font-size: 14px;
+            color: #828282;
+            line-height: 29px;
+        }
+    }
+}
+
+.desc {
+    color: #828282;
+    font-size: 14;
+    font-weight: bold;
+    padding-right: 6px;
+    margin-bottom: 5px;
+}
+
+.info {
+    color: #828282;
+    font-size: 14;
+}
+
+.line-info {
+    margin-bottom: 10px;
+}
+
+.container {
+    height: 10em;
+    position: relative;
+}
+
+p {
+    color: #828282;
+    font-size: 14;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.details {
+    font-size: 11pt;
+    line-height: 29px;
+    float: right;
+}
+
+a.details {
+    cursor: pointer;
+    color: #333333;
+}
+
+.plus {
+    font-size: 11pt;
+    color: #c2c2c2;
+    line-height: 29px;
+}
+
+.circle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    padding-top: 3px;
+
+    ion-icon {
+        color: black;
+        width: 45px;
+        height: 45px;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.profile-text {
+    font-size: 16px;
+    color: #828282;
+    line-height: 29px;
+}
+
+.profile-link {
+    font-size: 16px;
+    color: #828282;
+    line-height: 29px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
+.line-valid {
+    margin-top: 10px;
+}
+
+#renew-package {
+    font-size: 15pt;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: -6px;
+    margin-left: 6px;
+}

@@ -1,0 +1,24 @@
+.sp-user-tabs {
+  width: 100%;
+  height: 40px;
+  background: var(--ion-color-primary);
+  display: flex;
+  place-content: space-around;
+
+  .sp-user-tabs-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: inherit;
+  }
+
+  .sp-user-tabs-button {
+    --background: transparent;
+    font-size: 12px;
+    font-weight: bold;
+    color: #FAE1B6;
+
+    &.selected {
+      color: #FFFFFF;
+    }
+  }
+}

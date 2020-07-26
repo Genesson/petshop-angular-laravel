@@ -1,0 +1,67 @@
+.sp-unity-content {
+  --background: #ffffff;
+
+  .link {
+    color: var(--ion-color-primary);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .time-picker ion-col {
+    display: flex;
+    place-content: center;
+
+    &.time-picker-to {
+      font-size: 14px;
+      color: #929292;
+      text-align: center;
+    }
+  }
+
+  .list {
+      background: transparent;
+
+    > .category {
+      --padding-start: 0;
+      display: flex;
+      flex-direction: column;
+      border: none;
+
+      > .description {
+        flex: 1;
+        font-size: 14px;
+        color: #929292;
+        padding-left: 16px;
+      }
+
+      > .option {
+          flex: 1;
+          display: flex;
+          place-content: flex-end;
+
+          > .button {
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+          }
+      }
+
+      .icon {
+        font-size: 1.2em;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .wrapper-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+  }
+}

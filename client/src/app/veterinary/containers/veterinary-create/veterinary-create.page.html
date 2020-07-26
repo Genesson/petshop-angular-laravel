@@ -1,0 +1,264 @@
+<app-header [title]="'Nova Consulta'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-veterinary-create-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col size="2">
+                <ion-text color="secondary">
+                    <img [style.background]="'url('+ pet?.avatar +')'" class="image">
+                </ion-text>
+            </ion-col>
+            <ion-col size="10">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <h2 class="title">Informações Básicas</h2>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Nome:</ion-text>
+                                <ion-text class="info">{{ pet?.name }}</ion-text>
+                            </ion-row>
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Tipo:</ion-text>
+                                <ion-text class="info">{{ pet?.type?.description }}</ion-text>
+                            </ion-row>
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Raça:</ion-text>
+                                <ion-text class="info">{{ pet?.breed?.description }}</ion-text>
+                            </ion-row>
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Idade:</ion-text>
+                                <ion-text class="info">{{ pet?.date_birth | age }}</ion-text>
+                            </ion-row>
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Alergias:</ion-text>
+                                <ion-text class="info">nenhuma</ion-text>
+                            </ion-row>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Sexo:</ion-text>
+                                <ion-text class="info">{{ (pet?.gender === 'MALE') ? 'Macho' : 'Fêmea' }}</ion-text>
+                            </ion-row>
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Porte:</ion-text>
+                                <ion-text class="info">{{ pet?.size?.description }}</ion-text>
+                            </ion-row>
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Tipo de Pelo:</ion-text>
+                                <ion-text class="info">{{ pet?.type_fur?.description }}</ion-text>
+                            </ion-row>
+                            <ion-row class="line-info">
+                                <ion-text class="desc">Peso:</ion-text>
+                                <ion-text class="info">5kg</ion-text>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-item>
+                                <ion-label class="sp-label" position="floating">Peso atual <span class="required">*</span></ion-label>
+                                <ion-input type="text" formControlName="current_weight" [brmasker]="{type:'num'}" min="1" max="100"></ion-input>
+                            </ion-item>
+                            <ng-container *ngFor="let validation of validationMessages.current_weight">
+                                <app-validation-message [form]="formGroup"
+                                                        [control]="'current_weight'"
+                                                        [validation]="validation"></app-validation-message>
+                            </ng-container>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-item>
+                                <ion-label class="sp-label" position="floating">Temperatura <span class="required">*</span></ion-label>
+                                <ion-input type="number" formControlName="temperature" [brmasker]="{type:'num'}" min="20" max="40"></ion-input>
+                            </ion-item>
+                            <ng-container *ngFor="let validation of validationMessages.temperature">
+                                <app-validation-message [form]="formGroup"
+                                                        [control]="'temperature'"
+                                                        [validation]="validation"></app-validation-message>
+                            </ng-container>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <h2 class="title">Tutor(a)</h2>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="1">
+                            <ion-text color="primary">
+                                <img [style.background]="'url('+ pet?.user?.avatar +')'" class="avatar">
+                            </ion-text>
+                        </ion-col>
+                        <ion-col size="9">
+                            <ion-row>
+                                <ion-text class="desc">{{ pet?.user?.name }}</ion-text>
+                            </ion-row>
+                            <ion-row>
+                                <ion-text class="infoTutor">Telefone: {{ pet?.user?.phone }}</ion-text>
+                            </ion-row>
+                            <ion-row>
+                                <ion-text class="infoTutor" *ngIf="pet?.user?.address?.street">
+                                    Endereço: {{ pet?.user?.address?.street }}, {{ pet?.user?.address?.number }}
+                                    - {{ pet?.user?.address?.district }}
+                                </ion-text>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <h2 class="title">Anamnese</h2>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label class="sp-label" position="floating">Diagnóstico complementar</ion-label>
+                                <ion-textarea rows="3" formControlName="anamnesis"></ion-textarea>
+                            </ion-item>
+                            <ng-container *ngFor="let validation of validationMessages.anamnesis">
+                                <app-validation-message [form]="formGroup"
+                                                        [control]="'anamnesis'"
+                                                        [validation]="validation"></app-validation-message>
+                            </ng-container>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <h2 class="title">Diagnóstico</h2>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label class="sp-label" position="floating">Diagnóstico atual com receituário</ion-label>
+                                <ion-textarea rows="3" formControlName="diagnosis"></ion-textarea>
+                            </ion-item>
+                            <ng-container *ngFor="let validation of validationMessages.diagnosis">
+                                <app-validation-message [form]="formGroup"
+                                                        [control]="'diagnosis'"
+                                                        [validation]="validation"></app-validation-message>
+                            </ng-container>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <h2 class="title">Exames</h2>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label class="sp-label" position="floating">Digite aqui os exames que deseja solicitar</ion-label>
+                                <ion-textarea rows="3" formControlName="exams"></ion-textarea>
+                            </ion-item>
+                            <ng-container *ngFor="let validation of validationMessages.exams">
+                                <app-validation-message [form]="formGroup"
+                                                        [control]="'exams'"
+                                                        [validation]="validation"></app-validation-message>
+                            </ng-container>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <h2 class="title">Histórico</h2>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="1">
+                            <div class="circle">
+                                <ion-icon src="assets/icon/icon-medic-kit.svg"></ion-icon>
+                            </div>
+                        </ion-col>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label class="sp-label" position="floating">Consultas</ion-label>
+                                <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" (ionChange)="openModalVeterinaryView($event)">
+                                    <ion-select-option *ngFor="let consultation of consultationsCollection$ | async" [value]="consultation">
+                                        {{ consultation?.created_at | date: 'dd/MM/yyyy' }}
+                                    </ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <h2 class="title">Tratamento</h2>
+                        </ion-col>
+                    </ion-row>
+                    <div formArrayName="treatments" *ngFor="let item of formData.controls; let i = index;">
+                        <div [formGroupName]="i">
+                            <ion-row>
+                                <ion-col>
+                                    <h2 class="title border-top">Remédio {{ (i + 1) }}</h2>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col size="8">
+                                    <ion-item>
+                                        <ion-label class="sp-label" position="floating">Nome do Remédio <span class="required">*</span><small> (mínimo 2, máximo 100)</small></ion-label>
+                                        <ion-input type="text" formControlName="remedy_name"></ion-input>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-item>
+                                        <ion-label class="sp-label" position="floating">Durante Quantos Dias? <span class="required">*</span><small> (mínimo 1, máximo 100)</small></ion-label>
+                                        <ion-input type="number" formControlName="number_of_days" [brmasker]="{type:'num'}" min="1" max="100"></ion-input>
+                                    </ion-item>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col>
+                                    <ion-item>
+                                        <ion-label class="sp-label" position="floating">Quantas Vezes por Dia? <span class="required">*</span><small> (mínimo 1, máximo 10)</small></ion-label>
+                                        <ion-input type="number" formControlName="times_day" [brmasker]="{type:'num'}" min="1" max="10"></ion-input>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col>
+                                    <ion-item>
+                                        <ion-label class="sp-label" position="floating">Quantidade <span class="required">*</span><small> (mínimo 1, máximo 100)</small></ion-label>
+                                        <ion-input type="number" formControlName="amount" [brmasker]="{type:'num'}" min="1" max="100"></ion-input>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col>
+                                    <ion-item>
+                                        <ion-label class="sp-label" position="floating">Unidade <span class="required">*</span></ion-label>
+                                        <ion-select formControlName="unity_type" placeholder="Selecione" okText="OK" cancelText="Cancelar">
+                                            <ion-select-option [value]="1">Comprimidos</ion-select-option>
+                                            <ion-select-option [value]="2">Gotas</ion-select-option>
+                                            <ion-select-option [value]="3">Gramas</ion-select-option>
+                                            <ion-select-option [value]="4">Miligramas</ion-select-option>
+                                            <ion-select-option [value]="5">Unidade</ion-select-option>
+                                        </ion-select>
+                                    </ion-item>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col>
+                                    <ion-item>
+                                        <ion-label class="sp-label" position="floating">Observações <span class="required">*</span><small> (mínimo 2, máximo 500)</small></ion-label>
+                                        <ion-textarea rows="3" formControlName="observations"></ion-textarea>
+                                    </ion-item>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </div>
+                    <ion-row>
+                        <ion-col>
+                            <ion-text>
+                                <a (click)="addItem()" color="primary" class="link">+ Adicionar Remédio</a>
+                            </ion-text>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="'Salvar'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoading$ | async"></app-footer-button>

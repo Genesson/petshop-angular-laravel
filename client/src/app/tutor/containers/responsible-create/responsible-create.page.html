@@ -1,0 +1,44 @@
+<app-header-modal [title]="'Segundo Responsável'"></app-header-modal>
+
+<ion-content class="sp-breed-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Nome</ion-label>
+                    <ion-input type="text" formControlName="second_name"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.second_name">
+                    <app-validation-message [form]="formGroup" [control]="'second_name'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">CPF</ion-label>
+                    <ion-input type="text" formControlName="second_cpf" [brmasker]="{person: true}" minlength="14" maxlength="14"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.second_cpf">
+                    <app-validation-message [form]="formGroup" [control]="'second_cpf'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Telefone</ion-label>
+                    <ion-input type="text" formControlName="second_phone" [brmasker]="{phone: true}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.second_phone">
+                    <app-validation-message [form]="formGroup" [control]="'second_phone'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="'Concluir'"
+                  [isLoading]="isLoading$ | async"></app-footer-modal>

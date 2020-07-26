@@ -1,0 +1,70 @@
+.sp-veterinary-create-content {
+    --background: #ffffff;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+
+    .image {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 5px solid var(--ion-color-primary);
+        background-size: cover !important;
+        z-index: 1;
+    }
+
+    .avatar {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        border: 2px solid var(--ion-color-primary);
+        background-size: cover !important;
+        z-index: 1;
+    }
+
+    .desc {
+        color: #828282;
+        font-size: 15px;
+        font-weight: bold;
+        padding-right: 6px;
+        margin-bottom: 5px;
+    }
+
+    .info {
+        color: #828282;
+        font-size: 15px;
+    }
+
+    .infoTutor {
+        font-size: 15px;
+        color: #828282;
+        margin-bottom: 5px;
+    }
+
+    .line-info {
+        margin-bottom: 10px;
+    }
+
+    .circle {
+        position: relative;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background-color: #BA322C;
+
+        ion-icon {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+    }
+
+    .link {
+        color: var(--ion-color-primary);
+        cursor: pointer;
+    }
+}

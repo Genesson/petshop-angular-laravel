@@ -1,0 +1,14 @@
+<ion-footer mode="ios">
+    <ion-toolbar mode="ios">
+        <ion-grid>
+            <ion-row>
+                <ion-col class="ion-align-items-end">
+                    <ion-button color="medium" size="large" shape="round" mode="ios" (click)="clickCancel.emit()" [disabled]="!isDisabled">{{ labelCancel }}</ion-button>
+                    <ion-button [color]="colorConfirm" size="large" shape="round" mode="ios" (click)="clickConfirm.emit()" [disabled]="!isDisabled">
+                        <ion-spinner slot="start" name="crescent" *ngIf="isLoading"></ion-spinner> {{ labelConfirm }}
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>

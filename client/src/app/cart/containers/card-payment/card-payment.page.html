@@ -1,0 +1,161 @@
+<app-header-modal [title]="'Receber'"></app-header-modal>
+
+<ion-content class="sp-card-payment-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Valor <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="value" [brmasker]="{money: true, thousand: '.'}" [readonly]="true"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.value">
+                    <app-validation-message [form]="formGroup" [control]="'value'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Forma de Pagamento <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="payment_form"
+                                (ionChange)="changePaymentForm($event)"
+                                [disabled]="formGroup.get('payment_with').value === 'DINHEIRO'">
+                        <ion-select-option [value]="'VISTA'">A Vista</ion-select-option>
+                        <ion-select-option [value]="'PRAZO'">A Prazo</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.payment_form">
+                    <app-validation-message [form]="formGroup" [control]="'payment_form'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Parcelas</ion-label>
+                    <ion-input type="number"
+                               formControlName="quotas"
+                               min="1"
+                               max="6"
+                               (ngModelChange)="changeQuota($event)"
+                               [readonly]="formGroup.get('payment_form').value === 'VISTA'"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.quotas">
+                    <app-validation-message [form]="formGroup" [control]="'quotas'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Pagamento em <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="payment_with"
+                                (ionChange)="changePaymentWith($event)">
+                        <ion-select-option [value]="'DINHEIRO'">Dinheiro</ion-select-option>
+                        <ion-select-option [value]="'CARTAO'">Cartão</ion-select-option>
+                        <ion-select-option [value]="'CHEQUE'">Cheque</ion-select-option>
+                        <ion-select-option [value]="'DEPOSITO'">Deposito</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.payment_with">
+                    <app-validation-message [form]="formGroup" [control]="'payment_with'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione a Bandeira</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="flag"
+                                [disabled]="formGroup.get('payment_with').value !== 'CARTAO'">
+                        <ion-select-option [value]="cardFlag?.id" *ngFor="let cardFlag of cardFlagsCollection$ | async">{{cardFlag?.description}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">N° do comprovante</ion-label>
+                    <ion-input type="text" formControlName="voucher_number"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <h2 class="title">CPF na nota:</h2>
+                <ion-radio-group formControlName="cpf">
+                    <ion-row>
+                        <ion-col>
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'SIM'" color="success"></ion-radio>
+                                <ion-label class="sp-label"> Sim</ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col>
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'NAO'" color="success"></ion-radio>
+                                <ion-label class="sp-label"> Não</ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-radio-group>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Número</ion-label>
+                    <ion-input type="text" formControlName="cpf_number" [brmasker]="{person: true}" minlength="14" maxlength="14"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.cpf_number">
+                    <app-validation-message [form]="formGroup" [control]="'cpf_number'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Parcelamento</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row formArrayName="receivables" *ngFor="let receivable of arrayReceivables; index as i">
+            <ion-col size="3">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Parcela</ion-label>
+                    <ion-input type="text"
+                               [value]="receivable.quota"
+                               [readonly]="true"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col size="5">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Vencimento</ion-label>
+                    <ion-input type="text"
+                               [value]="receivable.expiration"
+                               [readonly]="true"></ion-input>
+                </ion-item>
+                <!--<input type="text"
+                       placeholder="Vencimento"
+                       class="form-control"
+                       [value]="receivable.expiration"
+                       [readonly]="true"
+                       bsDatepicker>-->
+            </ion-col>
+            <ion-col size="4">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Valor</ion-label>
+                    <ion-input type="text"
+                               [brmasker]="{money: true, thousand: '.'}"
+                               [value]="receivable.value"
+                               [readonly]="true"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [isLoading]="isLoading$ | async"
+                  [labelConfirm]="'Receber'"></app-footer-modal>

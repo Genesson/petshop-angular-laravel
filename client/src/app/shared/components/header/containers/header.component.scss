@@ -1,0 +1,45 @@
+.sp-header {
+    .sp-header-toolbar {
+        height: 70px;
+        display: flex;
+
+        .sp-header-title {
+            color: var(--ion-color-primary);
+        }
+
+        .sp-buttons-end {
+            margin-right: 16px;
+
+            .sp-icon-cart {
+                font-size: 32px;
+                color: #BEBEBE;
+            }
+
+            .sp-badge-cart {
+                color: #ffffff;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+        }
+
+        .sp-chip {
+            margin-right: 16px;
+        }
+    }
+
+    .sp-column {
+        display: flex;
+        align-items: center;
+
+        .sp-search {
+            border: 1px solid var(--ion-color-primary);
+            border-radius: 22px;
+            margin-right: 8px;
+            --padding-top: 12px;
+            --padding-start: 16px;
+            --padding-bottom: 12px;
+            --padding-end: 16px;
+        }
+    }
+}

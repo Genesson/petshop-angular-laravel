@@ -1,0 +1,13 @@
+<ion-grid>
+    <ion-row *ngFor="let interval of intervals; index as i">
+        <ion-col>
+            <input type="text"
+                   placeholder="Data de Início"
+                   class="form-control"
+                   [ngModel]="i"
+                   [bsValue]="setDate(interval)"
+                   (bsValueChange)="changeDate($event, i)"
+                   bsDatepicker>
+        </ion-col>
+    </ion-row>
+</ion-grid>

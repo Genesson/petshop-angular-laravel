@@ -1,0 +1,14 @@
+<ion-card class="sp-pet-card" (click)="clickCard.emit(pet)">
+    <img [style.background]="'url('+ pet?.avatar +')'" class="image">
+    <ion-card-header class="sp-header">
+        <div class="sp-legend">
+            <ul class="list">
+                <li class="circle has-services"></li>
+                <li class="circle special-attention"></li>
+                <li class="circle attention"></li>
+            </ul>
+        </div>
+        <ion-card-title class="sp-title">{{ pet?.name }}</ion-card-title>
+        <ion-card-subtitle class="sp-subtitle">{{ pet?.user?.name }}</ion-card-subtitle>
+    </ion-card-header>
+</ion-card>

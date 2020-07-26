@@ -1,0 +1,82 @@
+<app-header [title]="'Pet Sitter'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-pet-sitter-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-text class="title">Para qual data?</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione o Responsável</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="user">
+                        <ion-select-option [value]="user"
+                                           *ngFor="let user of usersCollection$ | async">{{ user.name }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.user">
+                    <app-validation-message [form]="formGroup" [control]="'user'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text class="title">Táxi incluso?</ion-text>
+        </ion-row>
+        <ion-radio-group formControlName="taxi">
+            <ion-row>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="'SIM'" color="success"></ion-radio>
+                        <ion-label class="sp-label">Sim</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="'NAO'" color="success"></ion-radio>
+                        <ion-label class="sp-label">Não</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-radio-group>
+        <ion-row>
+            <ion-text class="title">Para qual data?</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="4">
+                <input type="text"
+                       placeholder="Data"
+                       class="form-control"
+                       formControlName="date"
+                       bsDatepicker>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text class="title">Selecione o Pet:</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col class="ion-flex">
+                <app-card-pet *ngIf="pet"
+                              [name]="pet?.name"
+                              [image]="pet?.avatar"
+                              [isButtons]="true"
+                              [onlyDelete]="true"
+                              (clickDelete)="confirmPet(pet)"></app-card-pet>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row>
+                <ion-col class="ion-align-items-end">
+                    <ion-button color="success" shape="round" mode="ios" (click)="onClickConfirm()">Finalizar</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>

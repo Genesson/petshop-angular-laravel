@@ -1,0 +1,20 @@
+<ion-toolbar class="sp-toolbar">
+    <div class="sp-header-toolbar">
+        <ion-img src="assets/logo/logo-kando.png" class="logo"></ion-img>
+        <ion-icon name="ios-resize" class="resize" color="primary" (click)="fullScreen()"></ion-icon>
+    </div>
+    <ion-img src="{{ user?.unityFull?.logo }}"
+             *ngIf="user.unityFull.logo !== null"
+             class="logo"
+             routerLink="/main/home"></ion-img>
+</ion-toolbar>
+<div class="sp-units" [formGroup]="formGroup">
+    <ion-label>Unidades:</ion-label>
+    <ion-select placeholder="{{ user?.unityFull?.fantasy }}"
+                [compareWith]="compareWithFn"
+                formControlName="unity"
+                interface="popover"
+                (ionChange)="selectUnity($event)">
+        <ion-select-option [value]="unity" *ngFor="let unity of units">{{ unity?.fantasy }}</ion-select-option>
+    </ion-select>
+</div>

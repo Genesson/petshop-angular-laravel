@@ -1,0 +1,31 @@
+<ion-content class="sp-login-content">
+    <div class="sp-login-background">
+        <ion-grid class="sp-grid">
+            <ion-row class="sp-row">
+                <ion-col class="sp-column">
+                    <div class="sp-form-login" [formGroup]="formGroup" novalidate>
+                        <ion-img src="assets/logo/logo-kando.png" class="logo"></ion-img>
+                        <ion-item mode="ios" lines="none">
+                            <ion-label class="label">E-mail:</ion-label>
+                            <ion-input type="email" formControlName="email" class="input"></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validationMessages.email">
+                          <app-validation-message [form]="formGroup" [control]="'email'" [marginTop]="true"
+                                                  [validation]="validation"></app-validation-message>
+                        </ng-container>
+                        <ion-item mode="ios" lines="none">
+                            <ion-label class="label">Senha:</ion-label>
+                            <ion-input type="password" formControlName="password" class="input"></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validationMessages.password">
+                          <app-validation-message [form]="formGroup" [control]="'password'" [marginTop]="true"
+                                                  [validation]="validation"></app-validation-message>
+                        </ng-container>
+                        <app-auth-button (clickConfirm)="onSubmit()" [isLoading]="loading$ | async"></app-auth-button>
+                        <a href="#" class="sp-link">Recuperar senha?</a>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

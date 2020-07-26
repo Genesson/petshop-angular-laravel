@@ -1,0 +1,117 @@
+<app-header [title]="isEditing ? 'Atualização de Pacote' : 'Cadastro de Pacote'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-package-create-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Nome do pacote <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="name"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.name">
+                    <app-validation-message [form]="formGroup" [control]="'name'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Qtd dias <span class="required">*</span></ion-label>
+                    <ion-input type="number" formControlName="days"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.days">
+                    <app-validation-message [form]="formGroup" [control]="'days'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Valor un. do pacote <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="price" [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.price">
+                    <app-validation-message [form]="formGroup" [control]="'price'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione o serviço <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="service">
+                        <ion-select-option *ngFor="let service of servicesCollection$ | async" [value]="service.id">{{ service.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.service">
+                    <app-validation-message [form]="formGroup" [control]="'service'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title">Promoção (A partir de x dias desconto de (valor) ou de (%))</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Qtd dias</ion-label>
+                    <ion-input type="number" formControlName="promotional_days"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Valor</ion-label>
+                    <ion-input type="text" formControlName="promotional_price" [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Em %</ion-label>
+                    <ion-input type="text" formControlName="promotional_percent"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title">A partir de x dias dar brinde</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Qtd dias</ion-label>
+                    <ion-input type="number" formControlName="toast_before"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Qual brinde</ion-label>
+                    <ion-input type="text" formControlName="toast_name"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title">Validade do pacote</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <input type="text"
+                       placeholder="Validade"
+                       class="form-control"
+                       formControlName="package_until"
+                       bsDatepicker>
+            </ion-col>
+            <ion-col></ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="isEditing ? 'Finalizar Atualização' : 'Finalizar Cadastro'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoading$ | async"></app-footer-button>

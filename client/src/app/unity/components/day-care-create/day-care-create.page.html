@@ -1,0 +1,57 @@
+<app-header-modal [title]="'Cadastrar Creche'"></app-header-modal>
+
+<ion-content class="sp-service-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione o Porte</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="size">
+                        <ion-select-option [value]="size"
+                                           *ngFor="let size of sizesCollection$ | async">{{ size.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.size">
+                    <app-validation-message [form]="formGroup" [control]="'size'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Período</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="period">
+                        <ion-select-option [value]="'MEIA'">Meia</ion-select-option>
+                        <ion-select-option [value]="'INTEIRA'">Inteira</ion-select-option>
+                        <ion-select-option [value]="'PERNOITE'">Pernoite</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.period">
+                    <app-validation-message [form]="formGroup" [control]="'period'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Preço</ion-label>
+                    <ion-input type="text" formControlName="price"
+                               [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.price">
+                    <app-validation-message [form]="formGroup" [control]="'price'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="'Cadastrar'"
+                  [isLoading]="isLoading$ | async"></app-footer-modal>

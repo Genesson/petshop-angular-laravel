@@ -1,0 +1,80 @@
+<app-header-modal [title]="'Cadastrar Pet Sitter'"></app-header-modal>
+
+<ion-content class="sp-service-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Descrição</ion-label>
+                    <ion-input type="text" formControlName="description"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.description">
+                    <app-validation-message [form]="formGroup" [control]="'description'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione a Região</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="region">
+                        <ion-select-option [value]="region"
+                                           *ngFor="let region of regionsCollection$ | async">{{ region.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.region">
+                    <app-validation-message [form]="formGroup" [control]="'region'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Tempo estimado (min)</ion-label>
+                    <ion-input type="number" formControlName="time"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.time">
+                    <app-validation-message [form]="formGroup" [control]="'time'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Preço</ion-label>
+                    <ion-input type="text" formControlName="price"
+                               [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.price">
+                    <app-validation-message [form]="formGroup" [control]="'price'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione o Responsável</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="user">
+                        <ion-select-option [value]="user"
+                                           *ngFor="let user of usersCollection$ | async">{{ user.name }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.user">
+                    <app-validation-message [form]="formGroup" [control]="'user'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="'Cadastrar'"
+                  [isLoading]="isLoading$ | async"></app-footer-modal>

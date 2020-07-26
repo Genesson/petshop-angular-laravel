@@ -1,0 +1,3 @@
+<div class="error-message" [class.error-top]="marginTop" *ngIf="form.get(control).hasError(validation.type) && (form.get(control).dirty || form.get(control).touched)">
+    <ion-icon name="information-circle-outline" class="icon"></ion-icon> {{ validation.message }}
+</div>

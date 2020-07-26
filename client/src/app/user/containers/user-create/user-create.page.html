@@ -1,0 +1,197 @@
+<app-header [title]="isEditing ? 'Atualização de Usuário' : 'Cadastro de Usuário'"
+            [showButtonBack]="true">
+</app-header>
+
+<ion-content class="sp-user-content">
+  <ion-grid class="sp-form" [formGroup]="formGroup">
+    <ion-row>
+      <ion-col>
+        <h2 class="title">Dados do Usuário</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="8" class="ion-no-padding">
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label class="sp-label"
+                         position="floating">
+                Nome Completo <span class="required">*</span>
+              </ion-label>
+              <ion-input formControlName="name" type="text"></ion-input>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.name">
+              <app-validation-message [form]="formGroup"
+                                      [control]="'name'"
+                                      [validation]="validation">
+              </app-validation-message>
+            </ng-container>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label class="sp-label"
+                         position="floating">
+                E-mail <span class="required">*</span>
+              </ion-label>
+              <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.email">
+              <app-validation-message [form]="formGroup"
+                                      [control]="'email'"
+                                      [validation]="validation">
+              </app-validation-message>
+            </ng-container>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label class="sp-label"
+                         position="floating">
+                Senha <span class="required" *ngIf="!isEditing">*</span>
+              </ion-label>
+              <ion-input formControlName="password" type="password"></ion-input>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.password">
+              <app-validation-message [form]="formGroup"
+                                      [control]="'password'"
+                                      [validation]="validation">
+              </app-validation-message>
+            </ng-container>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label class="sp-label"
+                         position="floating">
+                Confirme a Senha <span class="required" *ngIf="!isEditing">*</span>
+              </ion-label>
+              <ion-input formControlName="re_password" type="password"></ion-input>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.re_password">
+              <app-validation-message [form]="formGroup"
+                                      [control]="'re_password'"
+                                      [validation]="validation">
+              </app-validation-message>
+            </ng-container>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label class="sp-label" position="floating">Setor <span class="required" *ngIf="!isEditing">*</span></ion-label>
+              <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="role">
+                <ion-select-option value="ADMIN" *ngxPermissionsOnly="['ADMIN']">Administrador</ion-select-option>
+                <ion-select-option value="OWNER" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Dono/Diretor</ion-select-option>
+                <ion-select-option value="RH" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gestão de Talentos (RH)</ion-select-option>
+                <ion-select-option value="INOVACAO" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Inovação</ion-select-option>
+                <ion-select-option value="FINANCEIRO" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Financeiro</ion-select-option>
+                <ion-select-option value="AUX_ADMIN" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Auxiliar administrativo</ion-select-option>
+                <ion-select-option value="COORDENADOR" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Coordenador</ion-select-option>
+                <ion-select-option value="GERENTE_GERAL" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente geral</ion-select-option>
+                <ion-select-option value="GERENTE_MKT_VENDAS" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de marketing e vendas</ion-select-option>
+                <ion-select-option value="GERENTE_VENDAS" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de vendas</ion-select-option>
+                <ion-select-option value="GERENTE_COMPRAS" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de compras</ion-select-option>
+                <ion-select-option value="GERENTE_LOJA" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de loja</ion-select-option>
+                <ion-select-option value="GERENTE_HOTEL_CRECHE" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de hotel/creche</ion-select-option>
+                <ion-select-option value="GERENTE_EQUIPE" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de equipe</ion-select-option>
+                <ion-select-option value="GERENTE" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente</ion-select-option>
+                <ion-select-option value="VENDEDOR" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Vendedor</ion-select-option>
+                <ion-select-option value="RECEPCIONISTA" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Recepcionista</ion-select-option>
+                <ion-select-option value="ATENDENTE" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Atendente</ion-select-option>
+                <ion-select-option value="SECRETARIA" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Secretária</ion-select-option>
+                <ion-select-option value="AUX_1" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Auxiliar 1</ion-select-option>
+                <ion-select-option value="AUX_2" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Auxiliar 2</ion-select-option>
+                <ion-select-option value="AUX_3" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Auxiliar 3</ion-select-option>
+                <ion-select-option value="AUX_4" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Auxiliar 4</ion-select-option>
+                <ion-select-option value="SERVICOS_GERAIS" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Serviços gerais</ion-select-option>
+                <ion-select-option value="ESTAGIARIO_1" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Estagiário 1</ion-select-option>
+                <ion-select-option value="ESTAGIARIO_2" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Estagiário 2</ion-select-option>
+                <ion-select-option value="ESTAGIARIO_3" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Estagiário 3</ion-select-option>
+                <ion-select-option value="ESTAGIARIO_4" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Estagiário 4</ion-select-option>
+                <ion-select-option value="GERENTE_MONITORES" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de Monitores</ion-select-option>
+                <ion-select-option value="MONITOR" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Monitor</ion-select-option>
+                <ion-select-option value="GERENTE_BANHO_TOSA" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de banho e tosa</ion-select-option>
+                <ion-select-option value="TOSADOR" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Tosador</ion-select-option>
+                <ion-select-option value="BANHISTA" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Banhista</ion-select-option>
+                <ion-select-option value="MOTORISTA" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Motorista</ion-select-option>
+                <ion-select-option value="GERENTE_LIMPEZA" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de limpeza</ion-select-option>
+                <ion-select-option value="FAXINEIRO" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Faxineiro</ion-select-option>
+                <ion-select-option value="VETERINARIO" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Veterinário</ion-select-option>
+                <ion-select-option value="GERENTE_HOSPITAL" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Gerente de hospital</ion-select-option>
+                <ion-select-option value="AUX_VET" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Auxiliar veterinário</ion-select-option>
+                <ion-select-option value="SERVICO_1" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Serviço 1</ion-select-option>
+                <ion-select-option value="SERVICO_2" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Serviço 2</ion-select-option>
+                <ion-select-option value="SERVICO_3" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Serviço 3</ion-select-option>
+                <ion-select-option value="SERVICO_4" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Serviço 4</ion-select-option>
+                <ion-select-option value="SERVICO_5" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Serviço 5</ion-select-option>
+                <ion-select-option value="SERVICO_6" *ngxPermissionsOnly="['ADMIN', 'OWNER']">Serviço 6</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.role">
+              <app-validation-message [form]="formGroup"
+                                      [control]="'role'"
+                                      [validation]="validation">
+              </app-validation-message>
+            </ng-container>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <input type="file" #fileInput (change)="onFileUpload($event)" class="sp-form-file">
+        <app-file [description]="'Selecionar foto'"
+                  [image]="formGroup.get('avatar').value"
+                  (actionClick)="fileInput.click()"
+                  [height]="'375px'"
+                  [isLoading]="isLoadingImageUser$ | async">
+        </app-file>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h2 class="title border-top">Unidades e Permissões</h2>
+      </ion-col>
+    </ion-row>
+    <div formArrayName="units" *ngFor="let item of formData.controls; let i = index;">
+      <div [formGroupName]="i">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label class="sp-label" position="floating">Unidade <span class="required">*</span></ion-label>
+              <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="unity">
+                <ion-select-option [value]="unity.id"
+                                   *ngFor="let unity of unitsCollection$ | async">
+                  {{ unity.fantasy }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label class="sp-label" position="floating">Permissão <span class="required">*</span></ion-label>
+              <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="permission">
+                <ion-select-option [value]="permission.id"
+                                   *ngFor="let permission of permissionsCollection$ | async">
+                  {{ permission.description }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="1">
+            <ion-button color="light" mode="ios" (click)="removeItem(i)">
+              <ion-icon src="assets/icon/delete.svg"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-text>
+          <a (click)="addItem()" color="primary" class="link">+ Adicionar Unidade</a>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="isEditing ? 'Finalizar Atualização' : 'Finalizar Cadastro'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoadingUser$ | async">
+</app-footer-button>

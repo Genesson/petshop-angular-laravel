@@ -1,0 +1,53 @@
+<app-header-modal [title]="'Receber'"></app-header-modal>
+
+<ion-content class="sp-cashier-receive-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Valor <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="value" [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.value">
+                    <app-validation-message [form]="formGroup" [control]="'value'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Pagamento em <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="payment_with">
+                        <ion-select-option [value]="'DINHEIRO'">Dinheiro</ion-select-option>
+                        <ion-select-option [value]="'CARTAO'">Cartão</ion-select-option>
+                        <ion-select-option [value]="'CHEQUE'">Cheque</ion-select-option>
+                        <ion-select-option [value]="'DEPOSITO'">Deposito</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.payment_with">
+                    <app-validation-message [form]="formGroup" [control]="'payment_with'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione a Bandeira</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="flag"
+                                [disabled]="formGroup.get('payment_with').value !== 'CARTAO'">
+                        <ion-select-option [value]="cardFlag?.id" *ngFor="let cardFlag of cardFlagsCollection$ | async">{{cardFlag?.description}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [isLoading]="isLoading$ | async"
+                  [labelConfirm]="'Receber'"></app-footer-modal>

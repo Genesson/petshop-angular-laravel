@@ -1,0 +1,67 @@
+<app-header [title]="'Conferência da Agenda'" [showButtonBack]="true"></app-header>
+<app-schedule-filter-list [services]="servicesCollection$ | async"
+                          [service]="serviceSelected$ | async"
+                          [users]="usersCollection$ | async"
+                          (filterPetName)="updateFilterPetName($event)"
+                          (filterService)="updateFilterService($event)"
+                          (filterDate)="updateFilterDate($event)"
+                          (filterResponsible)="updateFilterResponsible($event)"
+                          (filterAll)="updateFilter($event)"></app-schedule-filter-list>
+
+<ion-content class="sp-schedule-list-content">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ngx-datatable #table
+                               [rows]="rows"
+                               [ngClass]="'material'"
+                               [rowHeight]="'auto'"
+                               [headerHeight]="50"
+                               [columnMode]="'force'"
+                               [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                               [loadingIndicator]="isLoading$ | async">
+                    <ngx-datatable-column name="Data">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.date | date: 'dd/MM/yyyy' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Hora">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.startTime | date: 'H:mm' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Pronto">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.endTime | date: 'H:mm' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Pet">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.pet.name }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Responsável">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.user.name }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Serviço">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.service.description }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Opções" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-button color="light" mode="ios" (click)="finishedSchedule(row)">
+                                <ion-icon src="assets/icon/{{ (row.finished_at) ? 'check.svg' : 'close.svg' }}"></ion-icon>
+                            </ion-button>
+                            <ion-button color="light" mode="ios" (click)="deleteSchedule(row)">
+                                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                            </ion-button>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

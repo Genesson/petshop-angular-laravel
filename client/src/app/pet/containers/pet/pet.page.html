@@ -1,0 +1,32 @@
+<app-header [headerActions]="true" [buttonTitle]="'Cadastrar Cliente'" [descriptionSearch]="'Nome do Cliente ou Pet'"
+  (actionButton)="openModalTutor()"></app-header>
+
+<ion-content class="sp-pet-content">
+  <ng-container *ngIf="!(isLoading$ | async); else loading">
+    <ion-grid>
+      <ion-row class="sp-pet-legend">
+        <ion-col size="2" class="column">
+          <span class="circle has-services"></span> Possui Serviços
+        </ion-col>
+        <ion-col size="2" class="column">
+          <span class="circle special-attention"></span> Atenção Especial
+        </ion-col>
+        <ion-col size="2" class="column">
+          <span class="circle attention"></span> Atenção
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3" *ngFor="let pet of petsCollection$ | async">
+          <app-pet-cart [pet]="pet" (clickCard)="openModalService(pet)"></app-pet-cart>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>
+
+<ng-template #loading>
+  <div class="wrapper-content">
+    <ion-spinner name="crescent"></ion-spinner>
+    <span>Carregando pets...</span>
+  </div>
+</ng-template>

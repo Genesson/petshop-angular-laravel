@@ -1,0 +1,419 @@
+<app-header [title]="isEditing ? 'Atualização de Unidade' : 'Cadastro de Unidade'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-unity-content" padding>
+  <ng-container *ngIf="!(isLoading$ | async) || !(isLoadingCities$ | async); else loading">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+      <ion-row>
+        <ion-col size="9" class="ion-no-padding">
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="sp-label" position="floating">Razão Social</ion-label>
+                <ion-input type="text" formControlName="razao_social"></ion-input>
+              </ion-item>
+              <ng-container *ngFor="let validation of validationMessages.razao_social">
+                <app-validation-message [form]="formGroup"
+                                        [control]="'razao_social'"
+                                        [validation]="validation">
+                </app-validation-message>
+              </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="sp-label" position="floating">Nome Fantasia <span class="required">*</span></ion-label>
+                <ion-input type="text" formControlName="fantasy"></ion-input>
+              </ion-item>
+              <ng-container *ngFor="let validation of validationMessages.fantasy">
+                <app-validation-message [form]="formGroup" [control]="'fantasy'" [validation]="validation"></app-validation-message>
+              </ng-container>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label class="sp-label" position="floating">E-mail <span class="required">*</span></ion-label>
+                <ion-input type="email" formControlName="email"></ion-input>
+              </ion-item>
+              <ng-container *ngFor="let validation of validationMessages.email">
+                <app-validation-message [form]="formGroup" [control]="'email'" [validation]="validation"></app-validation-message>
+              </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="sp-label" position="floating">CNPJ</ion-label>
+                <ion-input type="text" formControlName="cnpj" [brmasker]="{person: true}"></ion-input>
+              </ion-item>
+              <ng-container *ngFor="let validation of validationMessages.cnpj">
+                <app-validation-message [form]="formGroup" [control]="'cnpj'" [validation]="validation"></app-validation-message>
+              </ng-container>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label class="sp-label" position="floating">Inscrição Estadual</ion-label>
+                <ion-input type="text" formControlName="ie" [brmasker]="{type:'num'}"></ion-input>
+              </ion-item>
+              <ng-container *ngFor="let validation of validationMessages.ie">
+                <app-validation-message [form]="formGroup" [control]="'ie'" [validation]="validation"></app-validation-message>
+              </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="sp-label" position="floating">Ambiente da NFe <span class="required">*</span></ion-label>
+                <ion-select formControlName="nfe" placeholder="Selecione" okText="OK" cancelText="Cancelar">
+                  <ion-select-option [value]="'PRODUCAO'">Produção</ion-select-option>
+                  <ion-select-option [value]="'HOMOLOGACAO'">Homologação</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ng-container *ngFor="let validation of validationMessages.nfe">
+                <app-validation-message [form]="formGroup" [control]="'nfe'" [validation]="validation">
+                </app-validation-message>
+              </ng-container>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label class="sp-label" position="floating">Selecione a cor</ion-label>
+                <ion-input type="text" [(colorPicker)]="color" [value]="color" formControlName="color"></ion-input>
+                <span class="preview-color" [style.background]="color"></span>
+              </ion-item>
+              <ng-container *ngFor="let validation of validationMessages.color">
+                <app-validation-message [form]="formGroup" [control]="'color'" [validation]="validation"></app-validation-message>
+              </ng-container>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3">
+          <input type="file" #fileInput (change)="onFileUpload($event)" class="sp-form-file">
+          <app-file [description]="'Selecionar logo'"
+                    [image]="formGroup.get('logo').value"
+                    (actionClick)="fileInput.click()"
+                    [height]="'298px'"
+                    [isLoading]="isLoadingImageUnity$ | async"></app-file>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label class="sp-label" position="floating">CEP <span class="required">*</span></ion-label>
+            <ion-input type="text"
+                       formControlName="zipcode"
+                       [brmasker]="{mask: '00000-000', len:9, type:'num'}"
+                       (ionBlur)="changeCep()"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.zipcode">
+            <app-validation-message [form]="formGroup" [control]="'zipcode'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Rua <span class="required">*</span></ion-label>
+            <ion-input type="text" formControlName="street"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.street">
+            <app-validation-message [form]="formGroup" [control]="'street'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Número <span class="required">*</span></ion-label>
+            <ion-input type="text" formControlName="number"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.number">
+            <app-validation-message [form]="formGroup" [control]="'number'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Bairro <span class="required">*</span></ion-label>
+            <ion-input type="text" formControlName="district"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.district">
+            <app-validation-message [form]="formGroup" [control]="'district'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label class="sp-label" position="floating">País <span class="required">*</span></ion-label>
+            <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="country">
+              <ion-select-option [value]="1">Brasil</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.country">
+            <app-validation-message [form]="formGroup" [control]="'country'" [validation]="validation">
+            </app-validation-message>
+          </ng-container>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Estado <span class="required">*</span>
+            </ion-label>
+            <ion-select placeholder="Selecione"
+                        okText="OK"
+                        cancelText="Cancelar"
+                        formControlName="province"
+                        (ionChange)="changeProvince($event)">
+              <ion-select-option [value]="province.id" *ngFor="let province of provincesCollection$ | async">
+                {{ province.name }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.province">
+            <app-validation-message [form]="formGroup" [control]="'province'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Cidade <span class="required">*</span>
+            </ion-label>
+            <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="city">
+              <ion-select-option [value]="city.id" *ngFor="let city of citiesCollection$ | async">{{ city.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.city">
+            <app-validation-message [form]="formGroup" [control]="'city'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h2 class="title border-top">
+            Dias de Funcionamento <ion-toggle color="success" (ionChange)="showHours = !showHours" mode="ios" class="ion-float-end"></ion-toggle>
+          </h2>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="showHours" [@enterAnimation]>
+        <ion-col size="12">
+          <ion-row>
+            <ion-col class="label-checkbox">Dom</ion-col>
+            <ion-col class="label-checkbox">Seg</ion-col>
+            <ion-col class="label-checkbox">Ter</ion-col>
+            <ion-col class="label-checkbox">Qua</ion-col>
+            <ion-col class="label-checkbox">Qui</ion-col>
+            <ion-col class="label-checkbox">Sex</ion-col>
+            <ion-col class="label-checkbox">Sáb</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="align-checkbox">
+              <ion-checkbox color="success" formControlName="sunday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+              <ion-checkbox color="success" formControlName="monday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+              <ion-checkbox color="success" formControlName="tuesday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+              <ion-checkbox color="success" formControlName="wednesday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+              <ion-checkbox color="success" formControlName="thursday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+              <ion-checkbox color="success" formControlName="friday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+              <ion-checkbox color="success" formControlName="saturday"></ion-checkbox>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12">
+          <ion-row>
+            <ion-col class="time-picker">
+              <ion-row>
+                <ion-col size="12" class="time-picker-to">Período da Manhã</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_sunday_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_sunday_interval_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12" class="time-picker-to">Período da Tarde</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_sunday_interval_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_sunday_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="time-picker">
+              <ion-row>
+                <ion-col size="12" class="time-picker-to">Período da Manhã</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_monday_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_monday_interval_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12" class="time-picker-to">Período da Tarde</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_monday_interval_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_monday_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="time-picker">
+              <ion-row>
+                <ion-col size="12" class="time-picker-to">Período da Manhã</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_tuesday_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_tuesday_interval_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12" class="time-picker-to">Período da Tarde</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_tuesday_interval_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_tuesday_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="time-picker">
+              <ion-row>
+                <ion-col size="12" class="time-picker-to">Período da Manhã</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_wednesday_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_wednesday_interval_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12" class="time-picker-to">Período da Tarde</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_wednesday_interval_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_wednesday_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="time-picker">
+              <ion-row>
+                <ion-col size="12" class="time-picker-to">Período da Manhã</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_thursday_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_thursday_interval_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12" class="time-picker-to">Período da Tarde</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_thursday_interval_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_thursday_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="time-picker">
+              <ion-row>
+                <ion-col size="12" class="time-picker-to">Período da Manhã</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_friday_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_friday_interval_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12" class="time-picker-to">Período da Tarde</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_friday_interval_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_friday_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="time-picker">
+              <ion-row>
+                <ion-col size="12" class="time-picker-to">Período da Manhã</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_saturday_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_saturday_interval_in" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12" class="time-picker-to">Período da Tarde</ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_saturday_interval_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+                <ion-col size="12">
+                  <timepicker formControlName="hour_saturday_out" [showMeridian]="false"></timepicker>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isEditing">
+        <ion-col>
+          <h2 class="title border-top">Categorias</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isEditing">
+        <ion-col size="3">
+          <ion-list class="list">
+            <ion-item class="category" *ngFor="let category of categoriesCollection$ | async">
+              <span class="description">{{ category.order }} - {{ category.description }}</span>
+              <span class="option">
+                <span class="button">
+                  <ion-icon src="assets/icon/edit.svg" (click)="selectCategory(category)" color="success" class="icon">
+                  </ion-icon>
+                </span>
+                <span class="button">
+                  <ion-icon src="assets/icon/delete.svg" (click)="confirmCategory(category)" color="danger" class="icon">
+                  </ion-icon>
+                </span>
+                <span class="button">
+                  <ion-toggle color="success" mode="ios" [checked]="category.status"
+                    (ionChange)="statusCategory(category)" class="icon"></ion-toggle>
+                </span>
+              </span>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isEditing">
+        <ion-col>
+          <a class="link" (click)="presentModalCategory()">+ Adicionar Categoria</a>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isEditing">
+        <ion-col>
+          <h2 class="title border-top">Serviços Prestados</h2>
+        </ion-col>
+      </ion-row>
+      <app-service-list [services]="servicesCollection$ | async"
+        [subServices]="subServicesCollection$ | async"
+        [showers]="showersCollection$ | async"
+        [subShowers]="subShowersCollection$ | async"
+        [transports]="transportsCollection$ | async"
+        [petSitters]="petSittersCollection$ | async"
+        [dayCares]="dayCaresCollection$ | async"
+        [hotels]="hotelsCollection$ | async"
+        [others]="othersCollection$ | async"
+        *ngIf="isEditing">
+      </app-service-list>
+    </ion-grid>
+  </ng-container>
+</ion-content>
+
+<ng-template #loading>
+  <div class="wrapper-content">
+    <ion-spinner name="crescent"></ion-spinner>
+    <span>Carregando unidate...</span>
+  </div>
+</ng-template>
+
+<app-footer-button [labelConfirm]="isEditing ? 'Finalizar Atualização' : 'Finalizar Cadastro'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoading$ | async">
+</app-footer-button>

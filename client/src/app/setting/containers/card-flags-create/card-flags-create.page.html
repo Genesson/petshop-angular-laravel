@@ -1,0 +1,22 @@
+<app-header-modal [title]="isEditing ? 'Atualizar Bandeira' : 'Cadastrar Bandeira'"></app-header-modal>
+
+<ion-content class="sp-breed-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Descrição</ion-label>
+                    <ion-input type="text" formControlName="description"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.description">
+                    <app-validation-message [form]="formGroup" [control]="'description'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="(isEditing) ? 'Atualizar' : 'Cadastrar'"
+                  [isLoading]="isLoading$ | async"></app-footer-modal>

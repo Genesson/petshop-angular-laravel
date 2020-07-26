@@ -1,0 +1,17 @@
+<ion-header class="sp-product-tabs">
+    <ion-tab-button class="sp-product-tabs-button"
+                    [class.selected]="selected === 'general'"
+                    (click)="tab.emit('general')">
+        <ion-label>Dados Gerais</ion-label>
+    </ion-tab-button>
+    <ion-tab-button class="sp-product-tabs-button"
+                    [class.selected]="selected === 'complementary'"
+                    (click)="tab.emit('complementary')">
+        <ion-label>Dados Complementares</ion-label>
+    </ion-tab-button>
+    <ion-tab-button class="sp-product-tabs-button"
+                    [class.selected]="selected === 'others'"
+                    (click)="tab.emit('others')">
+        <ion-label>Outros</ion-label>
+    </ion-tab-button>
+</ion-header>

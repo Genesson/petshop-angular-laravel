@@ -1,0 +1,8 @@
+<ion-card class="sp-cashier-card">
+    <ion-card-header>
+        <ion-card-subtitle class="sp-cashier-card-subtitle">{{ subtitle }}</ion-card-subtitle>
+        <ion-card-title class="sp-cashier-card-value">
+            <ion-text [color]="colorValue" *ngIf="value">{{ value | currency: 'BRL':'symbol' }}</ion-text>
+        </ion-card-title>
+    </ion-card-header>
+</ion-card>

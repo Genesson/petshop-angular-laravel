@@ -1,0 +1,14 @@
+<ion-list class="sp-menu-list">
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+        <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" (click)="closeModals()" class="sp-menu-item" *ngxPermissionsOnly="[p.role]">
+            <ion-icon slot="start" [src]="p.icon" style="fill: #FFFFFF;"></ion-icon>
+            <ion-label>{{p.title}}</ion-label>
+        </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle auto-hide="false">
+        <ion-item (click)="logout()" class="sp-menu-item">
+            <ion-icon slot="start" [src]="'assets/icon/logout.svg'"></ion-icon>
+            <ion-label>Sair</ion-label>
+        </ion-item>
+    </ion-menu-toggle>
+</ion-list>

@@ -1,0 +1,76 @@
+<app-header-modal
+        [title]="isEditing ? 'Atualizar Horários de Check-in/Check-out' : 'Cadastrar Horários de Check-in/Check-out'"></app-header-modal>
+
+<ion-content class="sp-check-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col size="9">
+                <ion-item class="sp-margin-top">
+                    <ion-label class="sp-label" position="floating">Selecione o Tipo <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="type">
+                        <ion-select-option [value]="'CHECK-IN'">Check-in</ion-select-option>
+                        <ion-select-option [value]="'CHECK-OUT'">Check-out</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.type">
+                    <app-validation-message [form]="formGroup" [control]="'type'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="3">
+                <timepicker formControlName="hour" [showMeridian]="false"></timepicker>
+                <!--<ion-item>
+                    <ion-label class="sp-label" position="floating">Horário <span class="required">*</span></ion-label>
+                    <ion-datetime displayFormat="HH:mm"
+                                  doneText="OK"
+                                  cancelText="Cancelar"
+                                  formControlName="hour"></ion-datetime>
+                </ion-item>-->
+                <ng-container *ngFor="let validation of validationMessages.hour">
+                    <app-validation-message [form]="formGroup" [control]="'hour'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="label-checkbox">Dom</ion-col>
+            <ion-col class="label-checkbox">Seg</ion-col>
+            <ion-col class="label-checkbox">Ter</ion-col>
+            <ion-col class="label-checkbox">Qua</ion-col>
+            <ion-col class="label-checkbox">Qui</ion-col>
+            <ion-col class="label-checkbox">Sex</ion-col>
+            <ion-col class="label-checkbox">Sáb</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="align-checkbox">
+                <ion-checkbox color="success" formControlName="sunday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+                <ion-checkbox color="success" formControlName="monday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+                <ion-checkbox color="success" formControlName="tuesday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+                <ion-checkbox color="success" formControlName="wednesday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+                <ion-checkbox color="success" formControlName="thursday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+                <ion-checkbox color="success" formControlName="friday"></ion-checkbox>
+            </ion-col>
+            <ion-col class="align-checkbox">
+                <ion-checkbox color="success" formControlName="saturday"></ion-checkbox>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="(isEditing) ? 'Atualizar' : 'Cadastrar'"
+                  [isLoading]="isLoading$ | async"></app-footer-modal>

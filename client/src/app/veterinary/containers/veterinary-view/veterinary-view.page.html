@@ -1,0 +1,126 @@
+<app-header [title]="'Detalhes da Consulta'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-veterinary-view-content">
+    <ion-grid>
+        <ion-row>
+            <ion-text color="primary">
+                <h3 class="title">Informações sobre o Fred</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">Nome:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.name }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Tipo:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.type?.description }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Raça:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.breed?.description }}</ion-text>
+                </ion-row>
+            </ion-col>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">Sexo:</ion-text>
+                    <ion-text class="info">{{ (consultation?.pet?.gender === 'MALE') ? 'Macho' : 'Fêmea' }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Porte:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.size?.description }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Tipo de Pelo:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.type_fur?.description }}</ion-text>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary">
+                <h3 class="title">Dados do Cliente</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">Nome:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.user?.name }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Data de Nascimento:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.user?.date_birth | date: 'dd/MM/yyyy' }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Telefone:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.user?.phone }}</ion-text>
+                </ion-row>
+            </ion-col>
+            <ion-col size="6">
+                <ion-row class="line-info">
+                    <ion-text class="desc">CPF:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.user?.cpf }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">RG:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.user?.rg }}</ion-text>
+                </ion-row>
+                <ion-row class="line-info">
+                    <ion-text class="desc">Email:</ion-text>
+                    <ion-text class="info">{{ consultation?.pet?.user?.email }}</ion-text>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-text>
+                    <p class="result">
+                        <strong>Peso atual:</strong> {{ consultation?.current_weight }}Kg
+                    </p>
+                </ion-text>
+            </ion-col>
+            <ion-col>
+                <ion-text>
+                    <p class="result">
+                        <strong>Temperatura:</strong> {{ consultation?.temperature }}° C
+                    </p>
+                </ion-text>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary">
+                <h3 class="subtitle">Anamnese</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-text>
+                <p class="result">{{ consultation?.anamnesis }}</p>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary">
+                <h3 class="subtitle">Diagnóstico</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-text>
+                <p class="result">{{ consultation?.diagnosis }}</p>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-text color="primary">
+                <h3 class="subtitle">Exames</h3>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-text>
+                <p class="result">{{ consultation?.exams }}</p>
+            </ion-text>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="'Imprimir'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"></app-footer-button>

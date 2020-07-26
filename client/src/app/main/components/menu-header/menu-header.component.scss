@@ -1,0 +1,51 @@
+.sp-toolbar {
+    --background: var(--ion-color-primary);
+    text-align: -webkit-center;
+
+    > .sp-header-toolbar {
+        height: 70px;
+        background: #ffffff;
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    > .sp-header-toolbar {
+        display: flex;
+        place-content: center;
+
+        > .logo {
+            width: 120px;
+        }
+
+        > .resize {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            cursor: pointer;
+        }
+    }
+
+    > .logo {
+        margin-top: 10px;
+        width: 80%;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.sp-units {
+    display: grid;
+    grid-template-columns: 74px 1fr;
+    align-items: center;
+    padding: 0 8px;
+
+    ion-label {
+        color: var(--ion-color-primary-contrast);
+    }
+
+    ion-select {
+        color: var(--ion-color-primary-contrast);
+    }
+}

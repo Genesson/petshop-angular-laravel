@@ -1,0 +1,63 @@
+<app-header-modal [title]="'Agendar ' + service.description + ' para o ' + form?.name"></app-header-modal>
+
+<ion-content class="sp-service-content">
+  <ion-grid class="sp-form" [formGroup]="formGroup">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label class="sp-label" position="floating">Período</ion-label>
+          <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="period">
+            <ion-select-option [value]="'MEIA'">Meia</ion-select-option>
+            <ion-select-option [value]="'INTEIRA'">Inteira</ion-select-option>
+            <ion-select-option [value]="'PERNOITE'">Pernoite</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMessages.period">
+          <app-validation-message [form]="formGroup" [control]="'period'" [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <input type="text" placeholder="Check-in" class="form-control" formControlName="date_checkin" bsDatepicker>
+        <ng-container *ngFor="let validation of validationMessages.date_checkin">
+          <app-validation-message [form]="formGroup" [control]="'date_checkin'" [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <timepicker formControlName="hour_checkin" [showMeridian]="false"></timepicker>
+        <ng-container *ngFor="let validation of validationMessages.hour_checkin">
+          <app-validation-message [form]="formGroup" [control]="'hour_checkin'" [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+      <ion-col>
+        <timepicker formControlName="hour_checkout" [showMeridian]="false"></timepicker>
+        <ng-container *ngFor="let validation of validationMessages.hour_checkout">
+          <app-validation-message [form]="formGroup" [control]="'hour_checkout'" [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <!--<ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecionar Turma Personalizada</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="custom">
+                        <ion-select-option [value]="'1'">Adestrameto</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row>-->
+  </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()" (clickConfirm)="onClickConfirm()" [labelConfirm]="'Concluir'"
+  [isLoading]="isLoading$ | async"></app-footer-modal>

@@ -1,0 +1,170 @@
+<app-header [title]="'Caixa'" [isCart]="true"></app-header>
+<app-cashier-tabs [selected]="tab" (tab)="onTab($event)"></app-cashier-tabs>
+
+<ion-content class="sp-cashier-content">
+    <div class="sp-cashier-receive" *ngIf="tab === 'receive'">
+        <ion-grid>
+            <ion-row>
+                <app-cashier-buttons [cashier]="cashierSelected$ | async"
+                                     (clickOpen)="openCashierModal('ABERTURA', 'ENTRADA', $event)"
+                                     (clickClose)="openCashierModal('FECHAMENTO', 'SAIDA', $event)"
+                                     (clickBleed)="openCashierModal('SANGRIA', 'SAIDA', $event)"
+                                     (clickReinforce)="openCashierModal('REFORCO', 'ENTRADA', $event)"
+                                     (clickCart)="openCart()"
+                                     class="sp-cashier-cards"></app-cashier-buttons>
+            </ion-row>
+            <ion-row>
+                <app-cashier-cards [totals]="totals$ | async"
+                                   [cashier]="cashierSelected$ | async"
+                                   class="sp-cashier-cards"></app-cashier-cards>
+            </ion-row>
+            <div class="sp-cashier-space"></div>
+            <ion-row>
+                <ion-col>
+                    <ngx-datatable [rows]="receivablesCollection$ | async"
+                                   [ngClass]="'material'"
+                                   [rowHeight]="'auto'"
+                                   [headerHeight]="50"
+                                   [columnMode]="'force'"
+                                   [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                                   [loadingIndicator]="isLoading$ | async">
+                        <!--<ngx-datatable-column name="Parcela">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                Parcela {{ row?.quota }}
+                            </ng-template>
+                        </ngx-datatable-column>-->
+                        <ngx-datatable-column name="Data">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.created_at | date: 'dd/MM/yyyy' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Cliente">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.tutor?.name }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Pet">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.pet?.name }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Telefone">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.tutor?.phone }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Valor">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.value | currency: 'BRL':'symbol' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Vencimento">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.expiration | date: 'dd/MM/yyyy' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column sortable="false">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <ion-button color="light" mode="ios" (click)="presentViewModal(row)">
+                                    <ion-icon src="assets/icon/eye.svg"></ion-icon>
+                                </ion-button>
+                                <ion-button color="light" mode="ios" (click)="confirmPayment(row)">
+                                    <ion-icon src="assets/icon/alert.svg" class="icon"></ion-icon>
+                                </ion-button>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </ion-col>
+            </ion-row>
+            <div class="sp-cashier-space"></div>
+            <ion-row>
+                <ion-col class="sp-cashier-total">
+                    <span class="sp-cashier-total-description">Total:</span>
+                    <span class="sp-cashier-total-result" *ngIf="total$ | async as total">{{ total | currency: 'BRL':'symbol' }}</span>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div class="sp-cashier-received" *ngIf="tab === 'received'">
+        <ion-grid>
+            <ion-row>
+                <app-cashier-cards [totals]="totals$ | async"
+                                   [cashier]="cashierSelected$ | async"
+                                   class="sp-cashier-cards"></app-cashier-cards>
+            </ion-row>
+            <div class="sp-cashier-space"></div>
+            <ion-row>
+                <ion-col>
+                    <ngx-datatable [rows]="receivablesCollection$ | async"
+                                   [ngClass]="'material'"
+                                   [rowHeight]="'auto'"
+                                   [headerHeight]="50"
+                                   [columnMode]="'force'"
+                                   [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                                   [loadingIndicator]="isLoading$ | async">
+                        <!--<ngx-datatable-column name="Parcela">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                Parcela {{ row?.quota }}
+                            </ng-template>
+                        </ngx-datatable-column>-->
+                        <ngx-datatable-column name="Data">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.created_at | date: 'dd/MM/yyyy' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Cliente">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.tutor?.name }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Pet">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.pet?.name }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Telefone">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.tutor?.phone }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Valor">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.value | currency: 'BRL':'symbol' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Vencimento">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.expiration | date: 'dd/MM/yyyy' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Pagamento">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.receivement_at | date: 'dd/MM/yyyy H:mm' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column sortable="false">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <ion-button color="light" mode="ios" (click)="presentViewModal(row)">
+                                    <ion-icon src="assets/icon/eye.svg"></ion-icon>
+                                </ion-button>
+                                <ion-button color="light" mode="ios">
+                                    <ion-icon src="assets/icon/check.svg" class="icon"></ion-icon>
+                                </ion-button>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </ion-col>
+            </ion-row>
+            <div class="sp-cashier-space"></div>
+            <ion-row>
+                <ion-col class="sp-cashier-total">
+                    <span class="sp-cashier-total-description">Total:</span>
+                    <span class="sp-cashier-total-result" *ngIf="total$ | async as total">{{ total | currency: 'BRL':'symbol' }}</span>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div class="sp-cashier-report" *ngIf="tab === 'report'">
+
+    </div>
+</ion-content>

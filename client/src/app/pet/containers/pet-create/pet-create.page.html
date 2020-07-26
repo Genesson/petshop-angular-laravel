@@ -1,0 +1,472 @@
+<app-header [title]="isEditing ? 'Atualização de Pet' : 'Cadastro de Pet'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-pet-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <h2 class="title">Dados do Pet</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="2">
+                <input type="file" #fileInputPet (change)="onFileUploadPet($event)" class="sp-form-file">
+                <app-file [description]="'Selecionar foto'"
+                          [image]="formGroup.get('avatar').value" (actionClick)="fileInputPet.click()"
+                          [height]="'150px'"
+                          [isLoading]="isLoadingImagePet$ | async"></app-file>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Nome <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="name"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.name">
+                    <app-validation-message [form]="formGroup" [control]="'name'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Tipo <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="type"
+                                (ionChange)="changeType($event)">
+                        <ion-select-option [value]="type.id"
+                                           *ngFor="let type of typesCollection$ | async">{{ type.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.type">
+                    <app-validation-message [form]="formGroup" [control]="'type'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Raça <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="breed">
+                        <ion-select-option [value]="breed.id"
+                                           *ngFor="let breed of breedsCollection$ | async">{{ breed.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.breed">
+                    <app-validation-message [form]="formGroup" [control]="'breed'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Sexo <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="gender">
+                        <ion-select-option [value]="'MALE'">Macho</ion-select-option>
+                        <ion-select-option [value]="'FEMALE'">Fêmea</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.gender">
+                    <app-validation-message [form]="formGroup" [control]="'gender'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Porte <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="size">
+                        <ion-select-option [value]="size.id"
+                                           *ngFor="let size of sizesCollection$ | async">{{ size.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.size">
+                    <app-validation-message [form]="formGroup" [control]="'size'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Tipo do Pelo <span class="required">*</span>
+                    </ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="type_fur">
+                        <ion-select-option [value]="typeFur.id"
+                                           *ngFor="let typeFur of typeFursCollection$ | async">{{ typeFur.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.type_fur">
+                    <app-validation-message [form]="formGroup" [control]="'type_fur'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <input type="text"
+                       placeholder="Data de Nascimento"
+                       class="form-control"
+                       formControlName="date_birth"
+                       bsDatepicker>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item lines="none" class="toggle">
+                    <ion-label class="sp-label">Castrado?</ion-label>
+                    <ion-toggle color="success" formControlName="castrated"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Alimentação</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Marca da Ração</ion-label>
+                    <ion-input type="text" formControlName="ration_brand"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.ration_brand">
+                    <app-validation-message [form]="formGroup" [control]="'ration_brand'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Quantidade de vezes por dia</ion-label>
+                    <ion-input type="number" formControlName="times_day"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.times_day">
+                    <app-validation-message [form]="formGroup" [control]="'times_day'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Quantia por vez (gramas)</ion-label>
+                    <ion-input type="number" formControlName="amount_time"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.amount_time">
+                    <app-validation-message [form]="formGroup" [control]="'amount_time'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Tipos de comida</ion-label>
+                    <ion-input type="text" formControlName="types_food"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.types_food">
+                    <app-validation-message [form]="formGroup" [control]="'types_food'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Observação</ion-label>
+                    <ion-input type="text" formControlName="obs_food"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.obs_food">
+                    <app-validation-message [form]="formGroup" [control]="'obs_food'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item lines="none" class="toggle">
+                    <ion-label class="sp-label">Dar sachet?</ion-label>
+                    <ion-toggle color="success" formControlName="sachet"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Informações Gerais</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none" class="toggle">
+                    <ion-label class="sp-label">Perfume?</ion-label>
+                    <ion-toggle color="success" formControlName="perfume"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item lines="none" class="toggle">
+                    <ion-label class="sp-label">Enfeite?</ion-label>
+                    <ion-toggle color="success" formControlName="ornament"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item lines="none" class="toggle">
+                    <ion-label class="sp-label">Animal vivo?</ion-label>
+                    <ion-toggle color="success" checked formControlName="alive"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item lines="none" class="toggle">
+                    <ion-label class="sp-label">Piscina?</ion-label>
+                    <ion-toggle color="success" formControlName="pool"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Observações</ion-label>
+                    <ion-textarea formControlName="obs_general"></ion-textarea>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.obs_general">
+                    <app-validation-message [form]="formGroup" [control]="'obs_general'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Saúde</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Nome do veterinário</ion-label>
+                    <ion-input type="text" formControlName="vet_name"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.vet_name">
+                    <app-validation-message [form]="formGroup" [control]="'vet_name'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Telefone do veterinário</ion-label>
+                    <ion-input type="text" formControlName="vet_phone" [brmasker]="{phone: true}"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="8">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Observações médicas</ion-label>
+                    <ion-textarea formControlName="obs_medical" rows="5" cols="20"></ion-textarea>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.obs_medical">
+                    <app-validation-message [form]="formGroup" [control]="'obs_medical'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="4">
+                <input type="file" #fileInputPetCarter (change)="onFileUploadCarterPet($event)" class="sp-form-file">
+                <app-file [description]="'Selecionar foto da carteirinha'"
+                          [image]="formGroup.get('vaccination_carter').value" (actionClick)="fileInputPetCarter.click()"
+                          [height]="'170px'"
+                          [isLoading]="isLoadingImageCarterPet$ | async"></app-file>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="isEditing">
+            <ion-col>
+                <h2 class="title border-top">Doenças pré-existentes</h2>
+            </ion-col>
+            <ion-col>
+                <h2 class="title border-top">Vacinas</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="isEditing">
+            <ion-col>
+                <ion-row>
+                    <div class="subitem-content" *ngFor="let disease of diseasesCollection$ | async">
+                        <span>{{ disease.description }}</span>
+                        <span class="option">
+                            <span class="button" (click)="openPetDiseaseModal(true, disease)">
+                                <ion-icon src="assets/icon/edit.svg" color="success" class="icon"></ion-icon>
+                            </span>
+                            <span class="button" (click)="confirmSubService(disease)">
+                                <ion-icon src="assets/icon/delete.svg" color="danger" class="icon"></ion-icon>
+                            </span>
+                        </span>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <a class="link" (click)="openPetDiseaseModal(false)">+ Adicionar</a>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col>
+                <ion-row>
+                    <div class="subitem-content" *ngFor="let vaccine of vaccinesCollection$ | async">
+                        <span>{{ vaccine.description }}</span>
+                        <span>{{ vaccine.date | date: 'dd/MM/yyyy' }}</span>
+                        <span class="option">
+                            <span class="button" (click)="openPetVaccineModal(true, vaccine)">
+                                <ion-icon src="assets/icon/edit.svg" color="success" class="icon"></ion-icon>
+                            </span>
+                            <span class="button" (click)="confirmPetVaccine(vaccine)">
+                                <ion-icon src="assets/icon/delete.svg" color="danger" class="icon"></ion-icon>
+                            </span>
+                        </span>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <a class="link" (click)="openPetVaccineModal(false)">+ Adicionar</a>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="isEditing">
+            <ion-col>
+                <h2 class="title border-top">Remédios e Prevenções</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="isEditing">
+            <ion-col>
+                <ion-row>
+                    <div class="subitem-content" *ngFor="let medicine of medicinesCollection$ | async">
+                        <span>{{ medicine.description }}</span>
+                        <span>{{ medicine.date | date: 'dd/MM/yyyy'  }}</span>
+                        <span>Val. {{ medicine.validity }} dias</span>
+                        <span class="option">
+                            <span class="button" (click)="openPetMedicineModal(true, medicine)">
+                                <ion-icon src="assets/icon/edit.svg" color="success" class="icon"></ion-icon>
+                            </span>
+                            <span class="button" (click)="confirmPetMedicine(medicine)">
+                                <ion-icon src="assets/icon/delete.svg" color="danger" class="icon"></ion-icon>
+                            </span>
+                        </span>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <a class="link" (click)="openPetMedicineModal(false)">+ Adicionar</a>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Emergência</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Em caso de emergência</ion-label>
+                    <ion-input type="text" formControlName="case_emergency"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.case_emergency">
+                    <app-validation-message [form]="formGroup" [control]="'case_emergency'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Em caso de sintomas</ion-label>
+                    <ion-input type="text" formControlName="case_symptoms"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.case_symptoms">
+                    <app-validation-message [form]="formGroup" [control]="'case_symptoms'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row [hidden]="formGroup.get('gender').value === 'MALE'">
+            <ion-col size="6">
+                <input type="text"
+                       placeholder="Data do último CIO"
+                       class="form-control"
+                       formControlName="date_cio"
+                       bsDatepicker>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Avaliação</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <input type="text"
+                       placeholder="Data da avaliação"
+                       class="form-control"
+                       formControlName="date_evaluation"
+                       bsDatepicker>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Comportamento</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="behavior">
+                        <ion-select-option [value]="behavior.id"
+                                           *ngFor="let behavior of behaviorsCollection$ | async">{{ behavior.description }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Informações Adicionais</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="2">
+                <ion-item lines="none" class="no-border">
+                    <ion-checkbox formControlName="has_services" [value]="'green'" color="success"
+                                  mode="ios"></ion-checkbox>
+                    <ion-label class="sp-label margin-left">Verde</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2">
+                <ion-item lines="none" class="no-border">
+                    <ion-checkbox formControlName="special_attention" [value]="'red'" color="danger"
+                                  mode="ios"></ion-checkbox>
+                    <ion-label class="sp-label margin-left">Vermelho</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2">
+                <ion-item lines="none" class="no-border">
+                    <ion-checkbox formControlName="attention" [value]="'blue'" color="secondary"
+                                  mode="ios"></ion-checkbox>
+                    <ion-label class="sp-label margin-left">Azul</ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Observações</ion-label>
+                    <ion-textarea formControlName="obs_alert"></ion-textarea>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.obs_alert">
+                    <app-validation-message [form]="formGroup" [control]="'obs_alert'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="isEditing ? 'Atualizar Pet' : 'Cadastrar Pet'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoadingPet$ | async"></app-footer-button>

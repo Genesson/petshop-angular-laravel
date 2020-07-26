@@ -1,0 +1,37 @@
+.sp-veterinary-view-content {
+    --background: #ffffff;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+
+    .line-info {
+        margin-bottom: 15px;
+    }
+
+    .desc {
+        color: #828282;
+        font-size: 15px;
+        font-weight: bold;
+        padding-right: 6px;
+    }
+
+    .info {
+        color: #828282;
+        font-size: 15px;
+    }
+
+    .title {
+        font-weight: bold;
+    }
+
+    .subtitle {
+        font-weight: normal;
+    }
+
+    .result {
+        color: #777777;
+        font-size: 14px;
+        text-align: justify;
+    }
+}

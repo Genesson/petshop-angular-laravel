@@ -1,0 +1,26 @@
+<ion-header class="sp-dre-filter-content" mode="ios">
+    <ion-grid class="sp-form">
+        <ion-row>
+            <ion-col size="9">
+                <div class="sp-dre-filter-navigate">
+                    <span>
+                        <ion-button color="light" mode="ios" class="button-arrow" (click)="backDate.emit()">
+                            <ion-icon name="ios-arrow-back"></ion-icon>
+                        </ion-button>
+                    </span>
+                    <span class="current-date">{{ currentDate | date: 'MMMM yyyy' | titlecase }}</span>
+                    <span>
+                        <ion-button color="light" mode="ios" class="button-arrow" (click)="forwardDate.emit()">
+                            <ion-icon name="ios-arrow-forward"></ion-icon>
+                        </ion-button>
+                    </span>
+                </div>
+            </ion-col>
+            <ion-col size="3">
+                <ion-button color="success" shape="round" mode="ios" expand="block" class="button" (click)="clickButton.emit()">
+                    Imprimir
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-header>

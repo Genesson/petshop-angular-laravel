@@ -1,0 +1,343 @@
+<app-header [title]="isEditing ? 'Atualização de Cliente' : 'Cadastro de Cliente'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-tutor-content" class="ion-padding">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <h2 class="title">Dados do Tutor</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="2">
+                <input type="file" #fileInput (change)="onFileUpload($event)" class="sp-form-file">
+                <app-file [description]="'Selecionar foto'"
+                          [image]="formGroup.get('avatar').value" (actionClick)="fileInput.click()"
+                          [height]="'150px'"
+                          [isLoading]="isLoadingImageTutor$ | async"></app-file>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="2">
+                <ion-item lines="none" class="toggle no-border">
+                    <ion-label class="sp-label">Extrangeiro?</ion-label>
+                    <ion-toggle color="success" formControlName="foreign" (ionChange)="changeForeign()"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="8">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Nome <span class="required">*</span></ion-label>
+                    <ion-input formControlName="name" type="text"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.name">
+                    <app-validation-message [form]="formGroup" [control]="'name'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="4">
+                <input type="text"
+                       placeholder="Data de Nascimento"
+                       class="form-control"
+                       formControlName="date_birth"
+                       bsDatepicker>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!formGroup.get('foreign').value">
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">CPF <span class="required">*</span></ion-label>
+                    <ion-input formControlName="cpf" type="text" [brmasker]="{person: true}" minlength="14" maxlength="14"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.cpf">
+                    <app-validation-message [form]="formGroup" [control]="'cpf'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">RG</ion-label>
+                    <ion-input formControlName="rg" type="text" [brmasker]="{type:'num'}" minlength="9" maxlength="15"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.rg">
+                    <app-validation-message [form]="formGroup" [control]="'rg'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="formGroup.get('foreign').value">
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Documento 1 <span class="required">*</span></ion-label>
+                    <ion-input formControlName="document" type="text" minlength="4" maxlength="20" [brmasker]="{type:'num'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.document">
+                    <app-validation-message [form]="formGroup" [control]="'document'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Passaporte</ion-label>
+                    <ion-input formControlName="passport" type="text" minlength="4" maxlength="20" [brmasker]="{type:'num'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.passport">
+                    <app-validation-message [form]="formGroup" [control]="'passport'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6" *ngIf="!formGroup.get('foreign').value">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Telefone <span class="required">*</span></ion-label>
+                    <ion-input formControlName="phone" type="text" [brmasker]="{phone: true}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.phone">
+                    <app-validation-message [form]="formGroup" [control]="'phone'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6" *ngIf="formGroup.get('foreign').value">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Celular <span class="required">*</span></ion-label>
+                    <ion-input formControlName="cell_phone" type="text" [brmasker]="{mask: '+00 (00) 0000-0000', type:'num'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.cell_phone">
+                    <app-validation-message [form]="formGroup" [control]="'cell_phone'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">E-mail <span class="required">*</span></ion-label>
+                    <ion-input formControlName="email" type="email"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.email">
+                    <app-validation-message [form]="formGroup" [control]="'email'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Tel. Residencial</ion-label>
+                    <ion-input formControlName="phone_residential" type="text" [brmasker]="{phone: true}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.phone_residential">
+                    <app-validation-message [form]="formGroup" [control]="'phone_residential'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Tel. Empresarial</ion-label>
+                    <ion-input formControlName="phone_company" type="text" [brmasker]="{phone: true}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.phone_company">
+                    <app-validation-message [form]="formGroup" [control]="'phone_company'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Dados de Endereço</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row formGroupName="address">
+            <ion-col size="3">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">
+                        {{ (formGroup.get('foreign').value) ? 'Código Postal' : 'CEP' }} <span class="required" *ngIf="!formGroup.get('foreign').value">*</span>
+                    </ion-label>
+                    <ion-input type="text"
+                               formControlName="zipcode"
+                               [brmasker]="{mask: '00000-000', len:9, type:'num'}"
+                               (ionBlur)="changeCep()"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.address.zipcode">
+                    <app-validation-message [form]="formGroup.get('address')" [control]="'zipcode'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Rua <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="street"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.address.street">
+                    <app-validation-message [form]="formGroup.get('address')" [control]="'street'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="3">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Número <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="number"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.address.number">
+                    <app-validation-message [form]="formGroup.get('address')" [control]="'number'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row formGroupName="address">
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Bairro <span class="required">*</span></ion-label>
+                    <ion-input type="text" formControlName="district"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.address.district">
+                    <app-validation-message [form]="formGroup.get('address')" [control]="'district'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">País <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="country">
+                        <ion-select-option [value]="1">Brasil</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.address.country">
+                    <app-validation-message [form]="formGroup.get('address')" [control]="'country'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Estado <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="province"
+                                (ionChange)="changeProvince($event)">
+                        <ion-select-option [value]="province.id" *ngFor="let province of provincesCollection$ | async">{{ province.name }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.address.province">
+                    <app-validation-message [form]="formGroup.get('address')" [control]="'province'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Cidade <span class="required">*</span></ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="city">
+                        <ion-select-option [value]="city.id" *ngFor="let city of citiesCollection$ | async">{{ city.name }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.address.city">
+                    <app-validation-message [form]="formGroup.get('address')" [control]="'city'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Adicione o Pet:</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="ion-flex">
+                <app-card-pet *ngFor="let pet of petsCollection$ | async"
+                              [name]="pet?.name"
+                              [image]="pet.avatar"
+                              [isButtons]="true"
+                              (clickEdit)="selectPet(pet)"
+                              (clickDelete)="confirmPet(pet)"></app-card-pet>
+                <app-card-button (click)="openModelPet()"></app-card-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Informações Adicionais</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row formGroupName="additional">
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Como nos encontrou?</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="found_us">
+                        <ion-select-option [value]="1">Google</ion-select-option>
+                        <ion-select-option [value]="2">Facebook</ion-select-option>
+                        <ion-select-option [value]="3">Instagram</ion-select-option>
+                        <ion-select-option [value]="4">Indicação de amigos</ion-select-option>
+                        <ion-select-option [value]="5">Outros Sites</ion-select-option>
+                        <ion-select-option [value]="6">Fachada</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Campo adicional 1</ion-label>
+                    <ion-input type="text" formControlName="additional_one"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.additional.additional_one">
+                    <app-validation-message [form]="formGroup.get('additional')" [control]="'additional_one'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row formGroupName="additional">
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Campo adicional 2</ion-label>
+                    <ion-input type="text" formControlName="additional_two"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.additional.additional_two">
+                    <app-validation-message [form]="formGroup.get('additional')" [control]="'additional_two'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Campo adicional 3</ion-label>
+                    <ion-input type="text" formControlName="additional_three"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.additional.additional_three">
+                    <app-validation-message [form]="formGroup.get('additional')" [control]="'additional_three'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row formGroupName="additional">
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Observações</ion-label>
+                    <ion-textarea formControlName="obs_general"></ion-textarea>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.additional.obs_general">
+                    <app-validation-message [form]="formGroup.get('additional')" [control]="'obs_general'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row formGroupName="additional">
+            <ion-col size="2">
+                <ion-item lines="none" class="no-border">
+                    <ion-checkbox formControlName="has_services" [value]="'green'" color="success" mode="ios"></ion-checkbox>
+                    <ion-label class="sp-label margin-left">Verde</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2">
+                <ion-item lines="none" class="no-border">
+                    <ion-checkbox formControlName="special_attention" [value]="'red'" color="danger" mode="ios"></ion-checkbox>
+                    <ion-label class="sp-label margin-left">Vermelho</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2">
+                <ion-item lines="none" class="no-border">
+                    <ion-checkbox formControlName="attention" [value]="'blue'" color="secondary" mode="ios"></ion-checkbox>
+                    <ion-label class="sp-label margin-left">Azul</ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row formGroupName="additional">
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Observações</ion-label>
+                    <ion-textarea formControlName="obs_alert"></ion-textarea>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.additional.obs_alert">
+                    <app-validation-message [form]="formGroup.get('additional')" [control]="'obs_alert'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="isEditing ? 'Finalizar Atualização' : 'Finalizar Cadastro'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoadingTutor$ | async"></app-footer-button>

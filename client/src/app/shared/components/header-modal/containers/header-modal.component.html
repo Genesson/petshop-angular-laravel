@@ -1,0 +1,12 @@
+<ion-header class="sp-modal-header" mode="ios">
+    <ion-toolbar class="sp-modal-header-toolbar">
+        <ion-title class="sp-modal-header-title">{{ title }}</ion-title>
+
+        <ion-buttons slot="end" class="sp-buttons-end">
+            <ion-button (click)="onClickCart()" *ngIf="isCart">
+                <ion-icon slot="start" name="cart" class="sp-icon-cart"></ion-icon>
+                <ion-badge color="primary" mode="ios" class="sp-badge-cart">10</ion-badge>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>

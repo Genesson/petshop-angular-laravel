@@ -1,0 +1,73 @@
+<app-header [title]="'Resort'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-pet-content">
+  <ion-grid class="sp-form" [formGroup]="formGroup">
+    <ion-row>
+      <ion-col>
+        <span class="title">
+          Nosso horário de Check-in é às {{ (checkIn$ | async ) | date: 'H:mm' }}h e o de Check-out é às
+          {{ (checkOut$ | async) | date: 'H:mm' }}h
+        </span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3" class="sp-margin-top">
+        <input type="text" placeholder="Check-in" class="form-control" formControlName="date_checkin"
+          (ngModelChange)="calculateDaily()" bsDatepicker>
+      </ion-col>
+      <ion-col size="2" class="sp-timepicker">
+        <timepicker formControlName="hour_checkin" [showMeridian]="false" (ngModelChange)="calculateDaily()">
+        </timepicker>
+      </ion-col>
+      <ion-col size="3" class="sp-margin-top">
+        <input type="text" placeholder="Check-out" class="form-control" formControlName="date_checkout"
+          (ngModelChange)="calculateDaily()" bsDatepicker>
+      </ion-col>
+      <ion-col size="2" class="sp-timepicker">
+        <timepicker formControlName="hour_checkout" [showMeridian]="false" (ngModelChange)="calculateDaily()">
+        </timepicker>
+      </ion-col>
+      <ion-col size="2" class="sp-margin-top">
+        <app-total-days-hotel [daily]="daily$ | async" [isLoading]="isLoadingDaily$ | async"></app-total-days-hotel>
+      </ion-col>
+    </ion-row>
+    <!--<ion-row>
+            <ion-button class="link">+ Adicionar Datas</ion-button>
+        </ion-row>-->
+    <ion-row>
+      <ion-col>
+        <h2 class="title padding">Selecione o Hóspede</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-flex">
+        <app-card-pet *ngIf="pet" [name]="pet?.name" [image]="pet?.avatar" [isButtons]="true" [onlyDelete]="true"
+          (clickDelete)="confirmPet(pet)"></app-card-pet>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h2 class="title padding">Selecione o Quarto</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="2" *ngFor="let room of roomsCollection$ | async">
+        <ion-button [color]="(selectedRoom === room.id) ? 'primary' : 'success'" expand="block" mode="ios" size="large"
+          (click)="selectRoom(room)">{{ room.number | leftpad: 2 }}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-align-items-end">
+          <ion-button color="success" shape="round" mode="ios" (click)="onClickConfirm()" [disabled]="!formGroup.valid">
+            Finalizar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

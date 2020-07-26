@@ -1,0 +1,14 @@
+<ion-header class="sp-user-tabs">
+    <div class="sp-user-tabs-wrapper">
+        <ion-tab-button class="sp-user-tabs-button"
+                        [class.selected]="selected === 'user'"
+                        (click)="tab.emit('user')">
+            <ion-label>USUÁRIOS</ion-label>
+        </ion-tab-button>
+        <ion-tab-button class="sp-user-tabs-button"
+                        [class.selected]="selected === 'permission'"
+                        (click)="tab.emit('permission')">
+            <ion-label>PERMISSÕES</ion-label>
+        </ion-tab-button>
+    </div>
+</ion-header>

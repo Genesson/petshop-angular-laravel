@@ -1,0 +1,229 @@
+<app-header [title]="'Avaliação comportamental'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-pet-evaluation-content">
+    <ion-grid [formGroup]="formGroup">
+        <ion-row>
+            <ion-col size="3">
+                <ion-item class="sp-pet-card" lines="none">
+                    <ion-text color="primary">
+                        <img [style.background]="'url('+ pet?.avatar +')'" class="image">
+                    </ion-text>
+                    <ion-label>
+                        <h2 class="sp-pet-name">{{ pet?.name }}</h2>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <ion-item class="border">
+                    <ion-label class="label" position="floating">Data primeiro dia</ion-label>
+                    <ion-datetime formControlName="first_date"
+                                  displayFormat="DD/MM/YYYY"
+                                  doneText="OK"
+                                  cancelText="Cancelar"></ion-datetime>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.first_date">
+                    <app-validation-message [form]="formGroup" [control]="'first_date'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-item class="border">
+                <ion-label position="floating"></ion-label>
+                <ion-textarea formControlName="description"
+                              rows="4"></ion-textarea>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.description">
+                <app-validation-message [form]="formGroup" [control]="'description'"
+                                        [validation]="validation"></app-validation-message>
+            </ng-container>
+        </ion-row>
+        <div class="divisor"></div>
+        <ion-row>
+            <ion-text class="title">Atividades</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="5">
+                <ion-row>
+                    <ion-text class="label">Gostou da Piscina?</ion-text>
+                </ion-row>
+                <ion-radio-group formControlName="liked_pool">
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'SIM'" color="success"></ion-radio>
+                                <ion-label class="sp-label">Sim</ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'NAO'" color="success"></ion-radio>
+                                <ion-label class="sp-label">Não</ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'OUTROS'" color="success"></ion-radio>
+                                <ion-label class="sp-label">Outros</ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-radio-group>
+                <ng-container *ngFor="let validation of validationMessages.liked_pool">
+                    <app-validation-message [form]="formGroup" [control]="'liked_pool'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+                <ion-item class="border">
+                    <ion-label class="sp-label" position="floating">Obs.</ion-label>
+                    <ion-input formControlName="pool_obs" type="text"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.pool_obs">
+                    <app-validation-message [form]="formGroup" [control]="'pool_obs'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="5">
+                <ion-row>
+                    <ion-text class="label">Hidratação</ion-text>
+                </ion-row>
+                <ion-radio-group formControlName="hydration">
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'SIM'" color="success"></ion-radio>
+                                <ion-label class="sp-label">Normal</ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'NAO'" color="success"></ion-radio>
+                                <ion-label class="sp-label">Não bebeu água</ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-item lines="none" class="no-border radio">
+                                <ion-radio [value]="'OUTROS'" color="success"></ion-radio>
+                                <ion-label class="sp-label">Outros</ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-radio-group>
+                <ng-container *ngFor="let validation of validationMessages.hydration">
+                    <app-validation-message [form]="formGroup" [control]="'hydration'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+                <ion-item class="border">
+                    <ion-label class="sp-label" position="floating">Obs.</ion-label>
+                    <ion-input formControlName="hydration_obs" type="text"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.hydration_obs">
+                    <app-validation-message [form]="formGroup" [control]="'hydration_obs'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-text class="label">Xixi e Cocô</ion-text>
+        </ion-row>
+        <ion-radio-group formControlName="pee_poop">
+            <ion-row>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="'NORMAL'" color="success"></ion-radio>
+                        <ion-label class="sp-label">Normal</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="'APENAS_XIXI'" color="success"></ion-radio>
+                        <ion-label class="sp-label">Apenas xixi</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="'APENAS_COCO'" color="success"></ion-radio>
+                        <ion-label class="sp-label">Apenas cocô</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="'NENHUM'" color="success"></ion-radio>
+                        <ion-label class="sp-label">Nenhum</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-radio-group>
+        <ng-container *ngFor="let validation of validationMessages.pee_poop">
+            <app-validation-message [form]="formGroup" [control]="'pee_poop'"
+                                    [validation]="validation"></app-validation-message>
+        </ng-container>
+        <div class="divisor"></div>
+        <ion-row>
+            <ion-text class="title">Comportamento</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-item class="border">
+                <ion-label position="floating"></ion-label>
+                <ion-textarea formControlName="behavior" rows="3"></ion-textarea>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.behavior">
+                <app-validation-message [form]="formGroup" [control]="'behavior'"
+                                        [validation]="validation"></app-validation-message>
+            </ng-container>
+        </ion-row>
+        <div class="divisor"></div>
+        <ion-row>
+            <ion-text class="title">Recomendação de frequência</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col size="5">
+                <ion-item class="border">
+                    <ion-label class="sp-label" position="floating"></ion-label>
+                    <ion-input formControlName="frequency" type="text"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.frequency">
+                    <app-validation-message [form]="formGroup" [control]="'frequency'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col size="5" style="margin-top: 20px;">
+                <ion-text class="label">vezes por semana</ion-text>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-item class="border">
+                <ion-label position="floating">Motivo</ion-label>
+                <ion-textarea formControlName="reason" rows="3"></ion-textarea>
+            </ion-item>
+            <ng-container *ngFor="let validation of validationMessages.reason">
+                <app-validation-message [form]="formGroup" [control]="'reason'"
+                                        [validation]="validation"></app-validation-message>
+            </ng-container>
+        </ion-row>
+        <div class="divisor"></div>
+        <ion-radio-group formControlName="test">
+            <ion-row>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="true" color="success"></ion-radio>
+                        <ion-label class="sp-label">Passou no teste</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-item lines="none" class="no-border radio">
+                        <ion-radio [value]="false" color="success"></ion-radio>
+                        <ion-label class="sp-label">Não passou no teste</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-radio-group>
+        <div class="divisor"></div>
+        <ion-row>
+            <ion-col size="6">
+                <ion-button color="primary" mode="ios" shape="round" (click)="onClickConfirm()">Salvar</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

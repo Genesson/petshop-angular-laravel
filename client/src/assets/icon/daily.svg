@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22"
+     viewBox="0 0 22 22">
+    <defs>
+        <clipPath id="a">
+            <path
+                d="M16.5,22H0V2.749H16.5V22ZM1.374,4.125v16.5H15.126V4.125ZM19.251,19.937H17.874V1.374H2.063V0H19.251V19.937ZM7.562,17.186H3.437V15.812H7.562v1.374Zm5.5-4.125H3.437V11.687h9.626v1.374Zm0-4.125H3.437V7.562h9.626V8.936Z"
+                fill="#1f1410"/>
+        </clipPath>
+    </defs>
+    <rect width="22" height="22" fill="none"/>
+    <g transform="translate(1.833 0)">
+        <path
+            d="M16.5,22H0V2.749H16.5V22ZM1.374,4.125v16.5H15.126V4.125ZM19.251,19.937H17.874V1.374H2.063V0H19.251V19.937ZM7.562,17.186H3.437V15.812H7.562v1.374Zm5.5-4.125H3.437V11.687h9.626v1.374Zm0-4.125H3.437V7.562h9.626V8.936Z"
+            fill="#1f1410"/>
+        <g clip-path="url(#a)">
+            <g transform="translate(-1.833 0)">
+                <rect width="22" height="22" fill="none"/>
+                <rect width="22" height="22" fill="var(--ion-color-primary-contrast)" />
+            </g>
+        </g>
+    </g>
+</svg>

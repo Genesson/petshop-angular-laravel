@@ -1,0 +1,9 @@
+<ion-button color="tertiary"
+            expand="block"
+            class="sp-form-button"
+            mode="ios"
+            size="large"
+            [disabled]="isLoading"
+            (click)="clickConfirm.emit()">
+    <ion-spinner slot="start" name="crescent" *ngIf="isLoading"></ion-spinner> Acessar
+</ion-button>

@@ -1,0 +1,19 @@
+<ion-header class="sp-schedule-list-tabs">
+    <div class="sp-schedule-list-tabs-wrapper">
+        <ion-tab-button class="sp-schedule-list-tabs-button"
+                        [class.selected]="selected === 'all'"
+                        (click)="tab.emit('all')">
+            <ion-label>TODOS</ion-label>
+        </ion-tab-button>
+        <ion-tab-button class="sp-schedule-list-tabs-button"
+                        [class.selected]="selected === 'realized'"
+                        (click)="tab.emit('realized')">
+            <ion-label>REALIZADOS</ion-label>
+        </ion-tab-button>
+        <ion-tab-button class="sp-schedule-list-tabs-button"
+                        [class.selected]="selected === 'pending'"
+                        (click)="tab.emit('pending')">
+            <ion-label>PENDENTES</ion-label>
+        </ion-tab-button>
+    </div>
+</ion-header>

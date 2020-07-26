@@ -1,0 +1,115 @@
+<app-header [title]="isEditing ? 'Atualização de Permissão' : 'Cadastro de Permissão'" [showButtonBack]="true">
+</app-header>
+
+<ion-content class="sp-permission-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <h2 class="title">Dados da Permissão</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Nome da Permissão</ion-label>
+                    <ion-input type="text" formControlName="description"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.description">
+                    <app-validation-message [form]="formGroup" [control]="'description'" [validation]="validation">
+                    </app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title">Módulos Permitidos</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Pets</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="pets"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Diário</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="daily"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Usuários</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="users"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Configurações</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="settings"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Caixa</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="cashier"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Veterinário</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="vet"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Relatórios</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="reports"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Produtos</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="products"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="3">
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Tutores</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="tutors"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col size="3">
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Unidades</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="units"></ion-toggle>
+                </ion-item>
+            </ion-col>
+            <ion-col size="3">
+                <ion-item class="sp-toogle" lines="none">
+                    <ion-label class="sp-label">Notas Fiscais</ion-label>
+                    <ion-toggle color="success" mode="ios" formControlName="units"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title">Status da Permissão</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="3">
+                <ion-toggle color="success" mode="ios" formControlName="status"></ion-toggle>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="isEditing ? 'Finalizar Atualização' : 'Finalizar Cadastro'"
+    (clickCancel)="onClickCancel()" (clickConfirm)="onClickConfirm()" [isLoading]="isLoading$ | async">
+</app-footer-button>

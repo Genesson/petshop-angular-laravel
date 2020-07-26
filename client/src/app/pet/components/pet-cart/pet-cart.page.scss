@@ -1,0 +1,75 @@
+.sp-pet-card {
+    --background: #E1E1E1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+    margin-top: 80px;
+    border-radius: 20px;
+    box-shadow: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    > .sp-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 74px;
+
+        > .sp-legend {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            > .list {
+                width: 50px;
+                list-style: none;
+                padding: 0;
+                display: flex;
+                flex-direction: row;
+                place-content: space-around;
+                margin-bottom: 0;
+
+                > .circle {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+
+                    &.has-services {
+                        background: #0091FF;
+                    }
+
+                    &.special-attention {
+                        background: #91D144;
+                    }
+
+                    &.attention {
+                        background: #D14141;
+                    }
+                }
+            }
+        }
+
+        > .sp-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        > .sp-subtitle {
+            font-size: 14px;
+        }
+    }
+
+    > .image {
+        position: absolute;
+        top: -80px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 5px solid #E1E1E1;
+        background-size: cover !important;
+        z-index: 1;
+    }
+}

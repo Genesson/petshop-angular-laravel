@@ -1,0 +1,26 @@
+.sp-footer {
+  border-top: 1px solid #E6E6E6;
+
+  .sp-footer-divider {
+    width: 1px;
+    height: 46px;
+    background: #E6E6E6;
+  }
+
+  .sp-footer-column {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    place-content: center;
+    cursor: pointer;
+    padding: 0;
+
+    &.danger {
+      color: var(--ion-color-danger);
+    }
+
+    &.success {
+      color: var(--ion-color-success);
+    }
+  }
+}

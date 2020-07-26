@@ -1,0 +1,55 @@
+<app-header [title]="'Unidades'"></app-header>
+
+<ion-content class="sp-unity-content">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-button color="success" shape="round" mode="ios" *ngxPermissionsOnly="['ADMIN']" (click)="presentModal()"> Cadastrar Unidade</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ngx-datatable [rows]="unitsCollection$ | async"
+                               [ngClass]="'material'"
+                               [rowHeight]="'auto'"
+                               [headerHeight]="50"
+                               [columnMode]="'force'"
+                               [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                               [loadingIndicator]="isLoading$ | async">
+                    <ngx-datatable-column name="Logo">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <ion-img src="{{ row?.logo }}" *ngIf="row.logo !== null" class="image"></ion-img>
+                          <ion-img src="assets/images/NoImage.png" *ngIf="row.logo === null" class="image"></ion-img>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Nome Fantasia">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.fantasy }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Cidade">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.cityObject?.name }}/{{ row?.provinceObject?.initials }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Opções" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-button color="light" mode="ios" (click)="confirmDisable(row)">
+                              <ion-icon src="assets/icon/{{ (row.status === 'ACTIVE') ? 'check.svg' : 'close.svg' }}"></ion-icon>
+                            </ion-button>
+                            <ion-button color="light" mode="ios" (click)="selectUnity(row)">
+                                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                            </ion-button>
+                            <ion-button color="light" mode="ios" (click)="confirmUnity(row)">
+                                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                            </ion-button>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

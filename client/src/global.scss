@@ -1,0 +1,515 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+/* Ngx Datatable */
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import 'theme/datatable.scss';
+
+/* Menu Sidebar */
+.split-pane-visible>.split-pane-side {
+  min-width: 300px !important;
+  max-width: 300px !important;
+}
+
+.weekview-allday-table {
+  display: none !important;
+}
+
+.weekview-normal-event-container {
+  margin-top: 72px !important;
+}
+
+.weekview-header {
+  thead {
+    tr {
+      height: 72px !important;
+    }
+  }
+}
+
+// Print
+@media print {
+  .sp-menu, .sp-dont-print {
+    visibility: hidden !important;
+    display: none !important;
+  }
+
+  .show-modal {
+    left: 0 !important;
+  }
+}
+// Close Print
+
+/* Forms */
+.sp-form {
+  .title {
+    margin: 0;
+    font-size: 18px;
+    color: #8F8F8F;
+
+    &.border-top {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #D8D8D8;
+    }
+
+    &.padding {
+      padding: 20px 0 16px 0;
+    }
+  }
+
+  .sp-form-file {
+    display: none;
+  }
+
+  .label-checkbox {
+    color: #989898;
+    text-align: center;
+  }
+
+  .align-checkbox {
+    display: flex;
+    place-content: center;
+  }
+
+  ion-item {
+    //--background: transparent !important;
+    //border: 1px solid #DCDCDC;
+    //border-radius: 6px 8px 0px 0px;
+    //overflow: initial;
+
+    --background: #ffffff !important;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+
+    .help {
+      position: absolute;
+      font-size: 12px;
+      color: #8B8B8B;
+      bottom: -20px;
+      text-align: right;
+      width: 100%;
+    }
+
+    &.toggle {
+      padding: 8px 0;
+      background: #ffffff;
+    }
+
+    &.no-border {
+      border: none;
+    }
+
+    &.file {
+      width: 100%;
+      height: 100%;
+      border: 2px dashed #DCDCDC;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-end;
+
+      &:hover {
+        border-color: #FEC118;
+
+        >.label {
+          color: #FEC118;
+        }
+      }
+
+      >.label {
+        width: 100%;
+        color: #989898;
+        display: flex;
+        place-content: center;
+      }
+    }
+  }
+
+  .sp-label {
+    --color: #989898;
+    color: #989898;
+
+    &.margin-left {
+      margin-left: 8px;
+    }
+
+    >.required {
+      color: #f04141;
+    }
+  }
+}
+
+.header-custom {
+  .datatable-header-cell-label {
+    display: block !important;
+    text-align: right !important;
+    margin-right: 15px !important;
+  }
+}
+
+/* Align Items */
+.ion-flex {
+  display: flex;
+}
+
+.ion-align-items-end {
+  display: flex;
+  place-content: flex-end;
+}
+
+/* Content Loading */
+.sp-wrapper-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+/* Modal Sizes */
+.modal-category-real {
+  --width: 500px;
+  --height: 325px;
+  --border-radius: 16px;
+}
+
+.modal-dre {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-disease {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-medicine {
+  --width: 500px;
+  --height: 324px;
+  --border-radius: 16px;
+}
+
+.modal-vaccine {
+  --width: 500px;
+  --height: 324px;
+  --border-radius: 16px;
+}
+
+.modal-category {
+  --width: 500px;
+  --height: 281px;
+  --border-radius: 16px;
+}
+
+.modal-product-category {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-product-provider {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-behavior {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-size {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-card-flags {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-type {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-type-fur {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-district {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-region {
+  --width: 500px;
+  --height: 325px;
+  --border-radius: 16px;
+}
+
+.modal-breed {
+  --width: 500px;
+  --height: 325px;
+  --border-radius: 16px;
+}
+
+.modal-room {
+  --width: 500px;
+  --height: 226px;
+  --border-radius: 16px;
+}
+
+.modal-exception-date {
+  --width: 500px;
+  --height: 296px;
+  --border-radius: 16px;
+}
+
+.modal-responsible {
+  --width: 500px;
+  --height: 385px;
+  --border-radius: 16px;
+}
+
+.modal-service {
+  --width: 500px;
+  --height: 213px;
+  --border-radius: 16px;
+}
+
+.modal-service-editing {
+  --width: 500px;
+  --height: 213px;
+  --border-radius: 16px;
+}
+
+.modal-check {
+  --width: 500px;
+  --height: 358px;
+  --border-radius: 16px;
+}
+
+.modal-price-variation {
+  --width: 500px;
+  --height: 523px;
+  --border-radius: 16px;
+}
+
+.modal-hydration {
+  --width: 500px;
+  --height: 400px;
+  --border-radius: 16px;
+}
+
+.modal-shower {
+  --width: 500px;
+  --height: 523px;
+  --border-radius: 16px;
+}
+
+.modal-shy {
+  --width: 500px;
+  --height: 523px;
+  --border-radius: 16px;
+}
+
+.modal-other {
+  --width: 500px;
+  --height: 299px;
+  --border-radius: 16px;
+}
+
+.modal-hotel {
+  --width: 500px;
+  --height: 325px;
+  --border-radius: 16px;
+}
+
+.modal-shy-hygienic {
+  --width: 500px;
+  --height: 400px;
+  --border-radius: 16px;
+}
+
+.modal-transport {
+  --width: 500px;
+  --height: 400px;
+  --border-radius: 16px;
+}
+
+.modal-pet-sitter {
+  --width: 500px;
+  --height: 491px;
+  --border-radius: 16px;
+}
+
+.modal-day-care {
+  --width: 500px;
+  --height: 325px;
+  --border-radius: 16px;
+}
+
+.modal-pet-cart {
+  --width: 500px;
+  --height: 260px;
+  --border-radius: 16px;
+}
+
+.modal-daycare-create {
+  --width: 500px;
+  --height: 423px;
+  --border-radius: 16px;
+}
+
+.modal-schedule {
+  --width: 500px;
+  --height: 546px;
+  --border-radius: 16px;
+}
+
+.modal-sm {
+  --width: 500px;
+  --height: 250px;
+  --border-radius: 16px;
+}
+
+.modal-lg {
+  --width: 500px;
+  --height: 420px;
+  --border-radius: 16px;
+}
+
+.modal-receive {
+  --width: 500px;
+  --height: 303px;
+  --border-radius: 16px;
+}
+
+.modal-receive-view {
+  --width: 500px;
+  --height: 401px;
+  --border-radius: 16px;
+}
+
+.modal-card-receive {
+  --width: 680px;
+  --height: 600px;
+  --border-radius: 16px;
+}
+
+.modal-cashier {
+  --width: 500px;
+  --height: 303px;
+  --border-radius: 16px;
+}
+
+.modal-full {
+  --width: 100% !important;
+  --height: 100% !important;
+  --border-radius: 2px !important;
+  --box-shadow: none !important;
+  left: 300px;
+}
+
+/* Margins */
+.margin-bottom {
+  margin-bottom: 16px;
+}
+
+.loading-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+/* Form Bootstrap */
+.form-control {
+  padding: 20px 10px !important;
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+}
+
+/* Alert */
+.alert-wrapper {
+  contain: none !important;
+
+  .alert-head {
+    padding-top: 36px;
+  }
+
+  .alert-title {
+    font-size: 22px;
+    color: #727C8E;
+    text-align: center;
+  }
+
+  .alert-message {
+    font-size: 14px;
+    color: #727C8E;
+    text-align: center;
+  }
+
+  .bg-icon {
+    position: absolute;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    top: -35px;
+    left: calc(50% - 35px);
+    background: #ffffff;
+    border-radius: 50%;
+    z-index: 1;
+
+    >.icon {
+      --border-radius: 50%;
+      --color: #ffffff;
+      width: 54px;
+      height: 54px;
+
+      &.success {
+        --background: var(--ion-color-success);
+      }
+
+      &.danger {
+        --background: var(--ion-color-danger);
+      }
+    }
+  }
+}

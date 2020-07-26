@@ -1,0 +1,224 @@
+<ion-grid class="sp-form sp-grid-no-padding" [formGroup]="formGroup">
+  <ng-container *ngIf="isPackage; else package">
+    <ion-row>
+      <ion-col>
+        <ion-item class="sp-toogle" lines="none">
+          <ion-label class="sp-label">Criar Pacote?</ion-label>
+          <ion-toggle color="success" mode="ios" [checked]="isPackage" (ionChange)="changePackage()"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label class="sp-label" position="floating">Quantidade</ion-label>
+          <ion-input type="number" min="1" max="7" formControlName="quantity_days"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item [ngClass]="{'input-opacity': formGroup.get('quantity_days').value === 1 || formGroup.get('weekdays').value}">
+          <ion-label class="sp-label" position="floating">Intervalo de dias</ion-label>
+          <ion-input type="number"
+                     min="1"
+                     max="7"
+                     formControlName="interval_days"
+                     [readonly]="formGroup.get('quantity_days').value === 1 || formGroup.get('weekdays').value"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMessages.interval_days">
+          <app-validation-message [form]="formGroup"
+                                  [control]="'interval_days'"
+                                  [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+      <ion-col>
+        <ion-item class="sp-item-checkbox" lines="none">
+          <ion-label class="sp-label">Dias?</ion-label>
+          <ion-checkbox color="success" formControlName="weekdays" (ionChange)="changeWeekDays()"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="sp-form-days">
+      <ion-col class="align-checkbox" *ngIf="user.unityFull.sunday">
+        <ion-checkbox color="success"
+                      [disabled]="!formGroup.get('weekdays').value"
+                      [(ngModel)]="weekDays.sunday"
+                      [ngModelOptions]="{standalone: true}"></ion-checkbox>
+      </ion-col>
+      <ion-col class="align-checkbox" *ngIf="user.unityFull.monday">
+        <ion-checkbox color="success"
+                      [disabled]="!formGroup.get('weekdays').value"
+                      [(ngModel)]="weekDays.monday"
+                      [ngModelOptions]="{standalone: true}"></ion-checkbox>
+      </ion-col>
+      <ion-col class="align-checkbox" *ngIf="user.unityFull.tuesday">
+        <ion-checkbox color="success"
+                      [disabled]="!formGroup.get('weekdays').value"
+                      [(ngModel)]="weekDays.tuesday"
+                      [ngModelOptions]="{standalone: true}"></ion-checkbox>
+      </ion-col>
+      <ion-col class="align-checkbox" *ngIf="user.unityFull.wednesday">
+        <ion-checkbox color="success"
+                      [disabled]="!formGroup.get('weekdays').value"
+                      [(ngModel)]="weekDays.wednesday"
+                      [ngModelOptions]="{standalone: true}"></ion-checkbox>
+      </ion-col>
+      <ion-col class="align-checkbox" *ngIf="user.unityFull.thursday">
+        <ion-checkbox color="success"
+                      [disabled]="!formGroup.get('weekdays').value"
+                      [(ngModel)]="weekDays.thursday"
+                      [ngModelOptions]="{standalone: true}"></ion-checkbox>
+      </ion-col>
+      <ion-col class="align-checkbox" *ngIf="user.unityFull.friday">
+        <ion-checkbox color="success"
+                      [disabled]="!formGroup.get('weekdays').value"
+                      [(ngModel)]="weekDays.friday"
+                      [ngModelOptions]="{standalone: true}"></ion-checkbox>
+      </ion-col>
+      <ion-col class="align-checkbox" *ngIf="user.unityFull.saturday">
+        <ion-checkbox color="success"
+                      [disabled]="!formGroup.get('weekdays').value"
+                      [(ngModel)]="weekDays.saturday"
+                      [ngModelOptions]="{standalone: true}"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="label-checkbox" *ngIf="user.unityFull.sunday">Dom</ion-col>
+      <ion-col class="label-checkbox" *ngIf="user.unityFull.monday">Seg</ion-col>
+      <ion-col class="label-checkbox" *ngIf="user.unityFull.tuesday">Ter</ion-col>
+      <ion-col class="label-checkbox" *ngIf="user.unityFull.wednesday">Qua</ion-col>
+      <ion-col class="label-checkbox" *ngIf="user.unityFull.thursday">Qui</ion-col>
+      <ion-col class="label-checkbox" *ngIf="user.unityFull.friday">Sex</ion-col>
+      <ion-col class="label-checkbox" *ngIf="user.unityFull.saturday">Sáb</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7">
+        <ion-item class="sp-toogle" lines="none">
+          <ion-toggle color="success"
+                      mode="ios"
+                      formControlName="with_month"
+                      [disabled]="!formGroup.get('weekdays').value"></ion-toggle>
+          <ion-label class="sp-label">Fechar dentro do mês</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col class="sp-month" size="5">
+        <div class="sp-form-hidden">
+          <input type="text"
+                 placeholder="Mês"
+                 class="form-control"
+                 minMode="month"
+                 formControlName="start_date"
+                 #dp="bsDatepicker" bsDatepicker>
+        </div>
+        <ion-button color="medium" (click)="dp.toggle()" mode="ios" expand="block" class="sp-button">{{ date }}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7">
+        <div
+          [ngClass]="{'input-opacity': formGroup.get('weekdays').value}">
+          <input type="text"
+                 placeholder="Data de Início"
+                 class="form-control"
+                 formControlName="start_date"
+                 [readonly]="formGroup.get('weekdays').value"
+                 bsDatepicker>
+        </div>
+      </ion-col>
+      <ion-col size="5">
+        <ion-button expand="block"
+                    fill="outline"
+                    (click)="getDateIntervals()"
+                    class="btn-generate"
+                    [disabled]="isLoadingPetPackage$ | async">
+                    <ion-spinner slot="start" name="crescent" *ngIf="isLoadingPetPackage$ | async"></ion-spinner>
+                    Gerar
+                    <ion-icon slot="end" name="send"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <app-package-date [intervals]="intervals$ | async" style="width: 100%;"></app-package-date>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-item>
+          <timepicker formControlName="hour" [showMeridian]="false"></timepicker>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMessages.hour">
+          <app-validation-message [form]="formGroup"
+                                  [control]="'hour'"
+                                  [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label class="sp-label" position="floating">Tempo Estimado (min)</ion-label>
+          <ion-input type="number" formControlName="time"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMessages.time">
+          <app-validation-message [form]="formGroup"
+                                  [control]="'time'"
+                                  [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label class="sp-label" position="floating">Selecione o Responsável</ion-label>
+          <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="user">
+            <ion-select-option [value]="user"
+                               *ngFor="let user of usersCollection$ | async">{{ user.name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMessages.user">
+          <app-validation-message [form]="formGroup" [control]="'user'" [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item class="sp-toogle fix-height-toggle" lines="none">
+          <ion-label class="sp-label">Transporte?</ion-label>
+          <ion-toggle color="success" mode="ios" formControlName="transport" (ionChange)="changeTransport($event)"></ion-toggle>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label class="sp-label" position="floating">Selecione a Região</ion-label>
+          <ion-select placeholder="Selecione"
+                      okText="OK"
+                      cancelText="Cancelar"
+                      formControlName="transport_id"
+                      [disabled]="!formGroup.get('transport').value">
+            <ion-select-option [value]="transport?.id" *ngFor="let transport of transportsCollection$ | async">
+              {{ transport?.region?.description }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMessages.transport_id">
+          <app-validation-message [form]="formGroup" [control]="'transport_id'" [validation]="validation">
+          </app-validation-message>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-grid>
+
+<ng-template #package>
+  <ion-grid class="sp-form sp-grid-no-padding">
+    <ion-row>
+      <ion-col>
+        <ion-item class="sp-toogle" lines="none">
+          <ion-label class="sp-label">Criar Pacote?</ion-label>
+          <ion-toggle color="success" mode="ios" [checked]="isPackage" (ionChange)="changePackage()"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-template>

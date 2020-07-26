@@ -1,0 +1,99 @@
+<app-header [title]="'Nova Pacote para o Pet ' + form.name" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-package-pet-create-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Quantidade</ion-label>
+                    <ion-input type="number"
+                               min="1"
+                               max="7"
+                               formControlName="quantity_days"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.quantity_days">
+                    <app-validation-message [form]="formGroup" [control]="'quantity_days'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Intervalo de dias</ion-label>
+                    <ion-input type="number"
+                               min="1"
+                               max="7"
+                               formControlName="interval_days"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.interval_days">
+                    <app-validation-message [form]="formGroup" [control]="'interval_days'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <input type="text"
+                       placeholder="Data de Início"
+                       class="form-control"
+                       formControlName="start_date"
+                       (bsValueChange)="getDateIntervals()"
+                       bsDatepicker>
+                <ng-container *ngFor="let validation of validationMessages.start_date">
+                    <app-validation-message [form]="formGroup" [control]="'start_date'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <app-package-date [intervals]="intervals$ | async" style="width: 100%;"></app-package-date>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Horário de Início</ion-label>
+                    <ion-datetime formControlName="hour"
+                                  displayFormat="HH:mm"
+                                  doneText="OK"
+                                  cancelText="Cancelar"></ion-datetime>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.hour">
+                    <app-validation-message [form]="formGroup" [control]="'hour'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Tempo Estimado (min)</ion-label>
+                    <ion-input type="number" formControlName="time"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.time">
+                    <app-validation-message [form]="formGroup" [control]="'time'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Selecione o Responsável</ion-label>
+                    <ion-select placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="user">
+                        <ion-select-option [value]="user"
+                                           *ngFor="let user of usersCollection$ | async">{{ user.name }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.user">
+                    <app-validation-message [form]="formGroup" [control]="'user'"
+                                            [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="'Salvar'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoading$ | async"></app-footer-button>

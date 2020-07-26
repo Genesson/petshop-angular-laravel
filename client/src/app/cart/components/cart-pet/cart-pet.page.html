@@ -1,0 +1,9 @@
+<ion-item class="sp-pet-card" lines="none" *ngIf="order?.pet">
+  <ion-avatar slot="start" class="sp-pet-avatar">
+    <img [style.background]="'url('+ order.pet?.avatar +')'" class="image">
+  </ion-avatar>
+  <ion-label>
+    <h2 class="sp-pet-name">{{ order.pet?.name }} <small>({{ order?.tutor?.name }})</small></h2>
+    <h3 class="sp-pet-profile" (click)="openModalService()">Continuar Comprando</h3>
+  </ion-label>
+</ion-item>

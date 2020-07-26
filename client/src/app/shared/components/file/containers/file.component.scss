@@ -1,0 +1,40 @@
+.sp-file {
+    width: 100%;
+    padding: 10px;
+    border: 2px dashed #DCDCDC;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-content: center;
+    background-size: cover !important;
+    background-position: center !important;
+    transition: all 200ms linear;
+
+    .sp-file-input {
+        min-width: 100px;
+        min-height: 73px;
+        background-image: url('../../../../../assets/icon/image.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .sp-file-label {
+        font-size: 14px;
+        color: #989898;
+    }
+
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+.load-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}

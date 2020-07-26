@@ -1,0 +1,20 @@
+<ngx-datatable [rows]="rows" [ngClass]="'material'" [rowHeight]="'auto'" [headerHeight]="50" [columnMode]="'force'"
+    [messages]="{emptyMessage:'Nenhum resultado encontrado.'}">
+    <ngx-datatable-column name="CONTA">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <span (click)="(row.editable) ? clickConfirm.emit({id: row.id, value: row.value, module: row.module}) : null"
+                [ngClass]="{'sp-background-child': row.child, 'sp-background': !row.child, 'red': !row.receita}">
+                <span [ngClass]="{'sp-editable': row.editable}">{{ row.title }}</span>
+            </span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="VALOR" headerClass="header-custom">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <span (click)="(row.editable) ? clickConfirm.emit({id: row.id, value: row.value, module: row.module}) : null"
+                class="sp-float-right"
+                [ngClass]="{'sp-background-child': row.child, 'sp-background': !row.child, 'red': !row.receita}">
+                <span [ngClass]="{'sp-editable': row.editable}">{{ (!row.receita) ? '-' : '' }}{{ row.value | currency: 'BRL':'symbol' }}</span>
+            </span>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>

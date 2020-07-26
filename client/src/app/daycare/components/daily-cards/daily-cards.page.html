@@ -1,0 +1,11 @@
+<ion-row>
+    <ion-col class="sp-daily-card" *ngFor="let service of services" (click)="buttonClick.emit(service)">
+        <div class="image">
+            <ion-icon slot="start" [src]="'assets/icon/services/'+ service?.type +'.svg'" class="icon"></ion-icon>
+        </div>
+        <div class="result">
+            <span class="description">{{ service?.description }}</span>
+            <span class="quantity">{{ service?.countServices }}</span>
+        </div>
+    </ion-col>
+</ion-row>

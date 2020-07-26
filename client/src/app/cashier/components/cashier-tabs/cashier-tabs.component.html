@@ -1,0 +1,21 @@
+<ion-header class="sp-cashier-tabs">
+    <div class="sp-cashier-tabs-wrapper">
+        <ion-tab-button class="sp-cashier-tabs-button"
+                        [class.selected]="selected === 'receive'"
+                        (click)="tab.emit('receive')">
+            <ion-label>RECEBER</ion-label>
+        </ion-tab-button>
+        <ion-tab-button class="sp-cashier-tabs-button"
+                        [class.selected]="selected === 'received'"
+                        (click)="tab.emit('received')">
+            <ion-label>RECEBIDOS</ion-label>
+        </ion-tab-button>
+    </div>
+    <div class="sp-cashier-tabs-report">
+        <ion-tab-button class="sp-cashier-tabs-button"
+                        [class.selected]="selected === 'report'"
+                        (click)="tab.emit('report')">
+            <ion-label>RELATÓRIO</ion-label>
+        </ion-tab-button>
+    </div>
+</ion-header>

@@ -1,0 +1,61 @@
+<app-header [title]="'Daycare'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-daycare-content">
+    <ion-grid>
+         <ion-row style="margin-bottom: 50px;">
+            <ion-col size="1" class="column" (click)="openModalDaycareCheck()">
+                <div class="circle">
+                    <ion-icon src="assets/icon/pets.svg"></ion-icon>
+                </div> 37
+            </ion-col>
+            <ion-col size="1" class="column">
+                <div class="circle">
+                    <ion-icon src="assets/icon/sign-in-alt.svg"></ion-icon>
+                </div> 18
+            </ion-col>
+            <ion-col size="2" class="column has-text">
+                <p>
+                    Daycare 13
+                </p>
+            </ion-col>
+            <ion-col size="2" class="column has-text"> 
+                <p>Pernoite 1</p>
+            </ion-col>
+            <ion-col size="2" class="column has-text"> 
+                <p>Hotel 4</p>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col>
+                <ngx-datatable [rows]="rows"
+                               [ngClass]="'material'"
+                               [rowHeight]="'auto'"
+                               [headerHeight]="50"
+                               [columnMode]="'force'"
+                               [messages]="{emptyMessage:'Nenhum resultado encontrado.'}">
+                    <ngx-datatable-column name="Turmas">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span (click)="selectDaycare()">{{ row.turmas }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Cachorros">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span (click)="selectDaycare()">{{ row.cachorros }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Opções" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <ion-button color="light" mode="ios">
+                                <ion-icon src="assets/icon/edit.svg"></ion-icon>
+                            </ion-button>
+                            <ion-button color="light" mode="ios">
+                                <ion-icon src="assets/icon/delete.svg"></ion-icon>
+                            </ion-button>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

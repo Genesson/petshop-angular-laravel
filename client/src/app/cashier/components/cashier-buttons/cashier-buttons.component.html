@@ -1,0 +1,43 @@
+<ion-grid>
+    <ion-row>
+        <ion-col size="2">
+            <ion-button color="success"
+                        expand="block"
+                        shape="round"
+                        mode="ios"
+                        [disabled]="cashier?.status === 'ABERTO'"
+                        (click)="clickOpen.emit(cashier)">Abrir Caixa</ion-button>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button color="primary"
+                        expand="block"
+                        shape="round"
+                        mode="ios"
+                        [disabled]="cashier?.status === 'FECHADO'"
+                        (click)="clickClose.emit(cashier)">Fechar Caixa</ion-button>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button color="danger"
+                        expand="block"
+                        shape="round"
+                        mode="ios"
+                        [disabled]="cashier?.status === 'FECHADO'"
+                        (click)="clickBleed.emit(cashier)">Sangria</ion-button>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button color="secondary"
+                        expand="block"
+                        shape="round"
+                        mode="ios"
+                        [disabled]="cashier?.status === 'FECHADO'"
+                        (click)="clickReinforce.emit(cashier)">Reforço</ion-button>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button color="medium"
+                        expand="block"
+                        shape="round"
+                        mode="ios"
+                        (click)="clickCart.emit(cashier)"><ion-icon name="cart"></ion-icon> Carrinho</ion-button>
+        </ion-col>
+    </ion-row>
+</ion-grid>

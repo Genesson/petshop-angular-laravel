@@ -1,0 +1,11 @@
+<calendar [eventSource]="eventSource" [calendarMode]="'week'" [currentDate]="currentDate"
+  (onEventSelected)="onEventSelected($event)" (onCurrentDateChanged)="changedDate($event)" allDayLabel=""
+  formatHourColumn="HH:mm" [weekviewHeaderTemplate]="template" startHour="6" endHour="23" step="60" startingDayWeek="1">
+</calendar>
+
+<ng-template #template let-viewDate="viewDate">
+  <div class="custom-day-header" [class.current]="viewDate.current">
+    {{ viewDate.date | date: 'E' | uppercase }}
+    <span>{{ viewDate.date | date: 'dd' }}</span>
+  </div>
+</ng-template>

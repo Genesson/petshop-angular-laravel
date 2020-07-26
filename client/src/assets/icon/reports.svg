@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10.5" height="12" viewBox="0 0 10.5 12">
+    <path
+        d="M1.125.75V0H10.5V10.875H9.75V.75ZM0,12V1.5H9V12ZM.75,2.25h7.5v9H.75ZM1.875,4.874V4.125h5.25v.749Zm0,1.5v.749h5.25V6.375ZM1.875,9V8.625h2.25v.749H1.875Z"
+        fill="var(--ion-color-primary-contrast)" fill-rule="evenodd"/>
+</svg>

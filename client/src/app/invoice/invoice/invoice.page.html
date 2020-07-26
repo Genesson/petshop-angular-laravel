@@ -1,0 +1,124 @@
+<app-header [title]="'Gerenciar Notas Fiscais'"></app-header>
+
+<app-invoice-tabs [selected]="tab" (tab)="onTab($event)"></app-invoice-tabs>
+
+<ion-content class="sp-invoice-content">
+    <div class="sp-invoice-nfce" *ngIf="tab === 'NFCE'">
+        <ion-grid class="sp-form">
+            <ion-row>
+                <ion-col size="4" offset="8">
+                    <ion-item>
+                        <ion-input placeholder="Digite o n. da nota..." class="sp-search" #input></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ngx-datatable [rows]="nfcesCollection$ | async"
+                                   [ngClass]="'material'"
+                                   [rowHeight]="'auto'"
+                                   [headerHeight]="50"
+                                   [columnMode]="'force'"
+                                   [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                                   [loadingIndicator]="isLoadingNfce$ | async">
+                        <ngx-datatable-column name="N. NFe">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.id }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Data/Hora">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.date | date: 'dd/MM/yyyy' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Valor">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <strong>{{ row?.price | currency: 'BRL':'symbol' }}</strong>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Situação">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span class="sp-label" [ngClass]="{'success': row.status === 'Autorizada',
+                                    'red': row.status === 'Cancelada'}">{{ row?.status }}</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Opções" sortable="false">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <ion-button color="light" mode="ios" (click)="selectNfce(row)">
+                                    <ion-icon src="assets/icon/eye.svg"></ion-icon>
+                                </ion-button>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+              <ul *ngIf="paginatorNfce$ | async as page" class="pagination">
+                <li (click)="changePage(page.first_page_url)">
+                  <ion-icon name="skip-backward"></ion-icon>
+                </li>
+                <li (click)="changePage(page.prev_page_url)" *ngIf="page.prev_page_url">{{ page.prev_page_url }}</li>
+                <li (click)="changePage(page.current_page)" class="active">{{ page.current_page }}</li>
+                <li (click)="changePage(page.next_page_url)" *ngIf="page.next_page_url">{{ page.next_page_url }}</li>
+              </ul>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div class="sp-invoice-nfse" *ngIf="tab === 'NFSE'">
+        <ion-grid class="sp-form">
+            <ion-row>
+                <ion-col size="4" offset="8">
+                    <ion-item>
+                        <ion-input placeholder="Digite o n. da nota..." class="sp-search" #input></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ngx-datatable [rows]="nfsesCollection$ | async"
+                                   [ngClass]="'material'"
+                                   [rowHeight]="'auto'"
+                                   [headerHeight]="50"
+                                   [columnMode]="'force'"
+                                   [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                                   [loadingIndicator]="isLoadingNfse$ | async">
+                        <ngx-datatable-column name="N. NFe">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.id }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Data/Hora">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row?.date | date: 'dd/MM/yyyy' }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Valor">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <strong>{{ row?.price | currency: 'BRL':'symbol' }}</strong>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Situação">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span class="sp-label" [ngClass]="{'success': row.status === 'Autorizada',
+                                    'red': row.status === 'Cancelada'}">{{ row?.status }}</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Opções" sortable="false">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <ion-button color="light" mode="ios" (click)="selectNfse(row)">
+                                    <ion-icon src="assets/icon/eye.svg"></ion-icon>
+                                </ion-button>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

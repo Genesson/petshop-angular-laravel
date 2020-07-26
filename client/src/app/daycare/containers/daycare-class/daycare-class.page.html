@@ -1,0 +1,34 @@
+<app-header [title]="'Turma de Segunda-Feira'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-daycare-class-content">
+    <ion-grid>
+        <ion-row class="sp-filters">
+            <ion-col>
+                <span class="sp-filter">Daycare</span>
+                <span class="sp-filter">Hotel</span>
+                <span class="sp-filter">Refeições</span>
+                <span class="sp-filter">Serviços</span>
+                <span class="sp-filter">Banho</span>
+                <span class="sp-filter">Vacinas</span>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="3" *ngFor="let schedule of schedulesCollection$ | async">
+                <ion-card class="sp-card">
+                    <img [style.background]="'url('+ schedule?.pet?.avatar +')'" class="image">
+                    <ion-card-header class="sp-header">
+                        <div class="sp-legend">
+                            <ul class="list">
+                                <li class="circle has-services"></li>
+                                <li class="circle special-attention"></li>
+                                <li class="circle attention"></li>
+                            </ul>
+                        </div>
+                        <ion-card-title class="sp-title">{{ schedule?.pet?.name }}</ion-card-title>
+                        <ion-card-subtitle class="sp-subtitle">{{ schedule?.pet?.user?.name }}</ion-card-subtitle>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

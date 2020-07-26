@@ -1,0 +1,36 @@
+<ion-header class="sp-schedule-filter-content" mode="ios">
+    <ion-grid class="sp-form">
+        <ion-row>
+            <ion-col size="6">
+                <div class="sp-schedule-filter-navigate">
+                    <span>
+                        <ion-button color="light" mode="ios" class="button-arrow" (click)="backDate.emit()">
+                            <ion-icon name="ios-arrow-back"></ion-icon>
+                        </ion-button>
+                    </span>
+                    <span class="current-date">{{ currentDate | date: 'MMMM yyyy' | titlecase }}</span>
+                    <span>
+                        <ion-button color="light" mode="ios" class="button-arrow" (click)="forwardDate.emit()">
+                            <ion-icon name="ios-arrow-forward"></ion-icon>
+                        </ion-button>
+                    </span>
+                </div>
+            </ion-col>
+            <ion-col size="3">
+                <ion-button color="primary" shape="round" mode="ios" expand="block" class="button" (click)="clickView.emit()">
+                    Ver Lista
+                </ion-button>
+            </ion-col>
+            <ion-col size="3">
+                <ion-item>
+                    <ion-label>Filtrar por</ion-label>
+                    <ion-select interface="popover" placeholder="Selecione" (ionChange)="changeFilter.emit($event)">
+                        <ion-select-option *ngFor="let service of services" [value]="service.id">
+                          {{ service.description }}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-header>

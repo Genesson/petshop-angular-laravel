@@ -1,0 +1,36 @@
+.icon {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.dropdown {
+    width: 100%;
+    height: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dcdcdc;
+
+    > ion-label {
+        color: #8d8d8d;
+    }
+}
+
+.status {
+    background-color: #149935;
+    border-radius: 8px;
+    height: 24px;
+    width: 100px;
+    color: white;
+    font-size: 11pt;
+    text-align: center;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}

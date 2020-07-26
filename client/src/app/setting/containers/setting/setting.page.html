@@ -1,0 +1,345 @@
+<app-header [title]="'Configurações'"></app-header>
+
+<ion-content class="sp-setting-content" padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="sp-setting-padding">
+        <h2 class="sp-setting-title">Configurações do Pet</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Tipos de Pet</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalType()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingType$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let type of typesCollection$ | async">
+                <ion-label class="sp-setting-card-label">{{ type?.description }}</ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon" (click)="selectType(type)">
+                </ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(type, 'type')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Raças</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalBreed()">+ Nova
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingBreed$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let breed of breedsCollection$ | async">
+                <ion-label class="sp-setting-card-label">
+                  {{ breed?.description }} <small>({{ breed?.type?.description }})</small>
+                </ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectBreed(breed)">
+                </ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(breed, 'breed')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Portes</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalSize()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingSize$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let size of sizesCollection$ | async">
+                <ion-label class="sp-setting-card-label">{{ size.description }}</ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon" (click)="selectSize(size)">
+                </ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(size, 'size')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Tipos de Pelo</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalTypeFur()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingTypeFur$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let typeFur of typeFursCollection$ | async">
+                <ion-label class="sp-setting-card-label">{{ typeFur.description }}</ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectTypeFur(typeFur)"></ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(typeFur, 'typeFur')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Comportamentos</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalBehavior()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingBehavior$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let behavior of behaviorsCollection$ | async">
+                <ion-label class="sp-setting-card-label">{{ behavior.description }}</ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectBehavior(behavior)"></ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(behavior, 'behavior')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-padding"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="sp-setting-padding">
+        <h2 class="sp-setting-title">Configurações do Hotel</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Quartos</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalRoom()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingRoom$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let room of roomsCollection$ | async">
+                <ion-label class="sp-setting-card-label">{{ room?.description }}</ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon" (click)="selectRoom(room)">
+                </ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(room, 'room')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Check-in/Check-out</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalCheck()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingCheck$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let check of checksCollection$ | async">
+                <ion-label class="sp-setting-card-label">
+                  {{ String(check.type) | titlecase }}
+                  <div class="itens">
+                    <small>{{ check.hour | date: 'H:mm' + ' - ' }}</small>
+                    <small>{{ (check.sunday) ? 'Dom, ' : '' }}</small>
+                    <small>{{ (check.monday) ? 'Seg, ' : '' }}</small>
+                    <small>{{ (check.tuesday) ? 'Ter, ' : '' }}</small>
+                    <small>{{ (check.wednesday) ? 'Qua, ' : '' }}</small>
+                    <small>{{ (check.thursday) ? 'Qui, ' : '' }}</small>
+                    <small>{{ (check.friday) ? 'Sex, ' : '' }}</small>
+                    <small>{{ (check.saturday) ? 'Sáb, ' : '' }}</small>
+                  </div>
+                </ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectCheck(check)">
+                </ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(check, 'check')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="sp-setting-padding">
+        <h2 class="sp-setting-title">Configurações de Transporte</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Bairros</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalDistrict()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingDistrict$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let district of districtsCollection$ | async">
+                <ion-label class="sp-setting-card-label">{{ district.description }}</ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectDistrict(district)"></ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(district, 'district')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Regiões</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalRegion()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingRegion$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let region of regionsCollection$ | async">
+                <ion-label class="sp-setting-card-label">
+                  {{ region.description }}
+                  <div class="itens">
+                    <small>{{ region?.districtsName }}</small>
+                  </div>
+                </ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectRegion(region)"></ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(region, 'region')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="sp-setting-padding">
+        <h2 class="sp-setting-title">Configurações da Unidade</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Valores Alta Temporada</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalPriceVariation()">+
+            Novo</ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingPriceVariation$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let priceVariation of priceVariationsCollection$ | async">
+                <ion-label class="sp-setting-card-label">
+                  {{ priceVariation.moduleObj.description }} - {{ priceVariation.description }} -
+                  {{ (priceVariation.value | currency: 'BRL':'symbol') || (priceVariation.percent + '%') }}
+                  <div class="itens">
+                    <small>{{ priceVariation.start | date: 'dd/MM/yyyy' }} á
+                      {{ priceVariation.end | date: 'dd/MM/yyyy' }}</small>
+                  </div>
+                </ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectPriceVariation(priceVariation)"></ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(priceVariation, 'priceVariation')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Feriados Nacionais</h2>
+          <h2 class="sp-subtitle">Aberto?</h2>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingHoliday$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let holiday of holidaysCollection$ | async">
+                <ion-label class="sp-setting-card-label">
+                  {{ holiday.name }}
+                  <div class="itens">
+                    <small>{{ holiday.date | date: 'dd/MM/yyyy' }}</small>
+                  </div>
+                </ion-label>
+                <ion-toggle color="success" mode="ios" [checked]="holiday.exception"
+                  (ionChange)="updateHoliday(holiday)">
+                </ion-toggle>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Feriados e Dias não Trabalhados</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalExceptionDate()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingExceptionDate$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let exceptionDate of exceptionDatesCollection$ | async">
+                <ion-label class="sp-setting-card-label">
+                  {{ exceptionDate.description }}
+                  <div class="itens">
+                    <small>{{ exceptionDate.date_start | date: 'dd/MM/yyyy' }} -
+                      {{ exceptionDate.date_end | date: 'dd/MM/yyyy' }}</small>
+                  </div>
+                </ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectExceptionDate(exceptionDate)"></ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(exceptionDate, 'exceptionDate')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-padding">
+        <div class="sp-setting-header">
+          <h2 class="sp-title">Bandeiras de Cartão</h2>
+          <ion-button color="success" mode="ios" shape="round" size="small" (click)="presentModalCardFlag()">+ Novo
+          </ion-button>
+        </div>
+        <ion-card class="sp-setting-card">
+          <ng-container *ngIf="!(isLoadingCardFlag$ | async); else loading">
+            <ion-list>
+              <ion-item *ngFor="let cardFlag of cardFlagsCollection$ | async">
+                <ion-label class="sp-setting-card-label">{{ cardFlag.description }}</ion-label>
+                <ion-icon slot="end" src="assets/icon/edit.svg" class="sp-setting-card-icon"
+                  (click)="selectCardFlag(cardFlag)"></ion-icon>
+                <ion-icon slot="end" src="assets/icon/delete.svg" class="sp-setting-card-icon"
+                  (click)="confirmDelete(cardFlag, 'cardFlag')"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ng-template #loading>
+  <div class="wrapper-content">
+    <ion-spinner name="crescent"></ion-spinner>
+    <span>Carregando...</span>
+  </div>
+</ng-template>

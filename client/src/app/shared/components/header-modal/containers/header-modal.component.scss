@@ -1,0 +1,27 @@
+.sp-modal-header {
+  .sp-modal-header-toolbar {
+    height: 60px;
+    display: flex;
+
+    .sp-modal-header-title {
+      font-size: 18px;
+      color: #575757;
+    }
+
+    .sp-buttons-end {
+      margin-right: 16px;
+
+      .sp-icon-cart {
+        font-size: 32px;
+        color: #BEBEBE;
+      }
+
+      .sp-badge-cart {
+        color: #ffffff;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+}

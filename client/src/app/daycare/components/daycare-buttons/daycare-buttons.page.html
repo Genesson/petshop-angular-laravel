@@ -1,0 +1,62 @@
+<ion-row>
+    <ion-col size="2">
+        <ion-item lines="none">
+            <ion-checkbox color="success" mode="ios" (ionChange)="selectAllSchedule.emit()"></ion-checkbox>
+            <ion-label class="sp-label margin-left">Selecionar todos</ion-label>
+        </ion-item>
+    </ion-col>
+    <ion-col size="1">
+        <ion-button [fill]="(check.PRESENCE) ? 'solid' : 'outline'"
+                    [color]="(check.PRESENCE) ? 'success' : 'medium'"
+                    expand="block"
+                    mode="ios"
+                    [disabled]="schedule.length === 0"
+                    (click)="changeAll(schedule, 'PRESENCE')">Presença
+        </ion-button>
+    </ion-col>
+    <ion-col size="1">
+        <ion-button [fill]="(check.PEED) ? 'solid' : 'outline'"
+                    [color]="(check.PEED) ? 'success' : 'medium'"
+                    expand="block"
+                    mode="ios"
+                    [disabled]="schedule.length === 0"
+                    (click)="changeAll(schedule, 'PEED')">Xixi
+        </ion-button>
+    </ion-col>
+    <ion-col size="1">
+        <ion-button [fill]="(check.POOPED) ? 'solid' : 'outline'"
+                    [color]="(check.POOPED) ? 'success' : 'medium'"
+                    expand="block"
+                    mode="ios"
+                    [disabled]="schedule.length === 0"
+                    (click)="changeAll(schedule, 'POOPED')">Cocô
+        </ion-button>
+    </ion-col>
+    <ion-col size="1">
+        <ion-button [fill]="(check.FIST_MEAT) ? 'solid' : 'outline'"
+                    [color]="(check.FIST_MEAT) ? 'success' : 'medium'"
+                    expand="block"
+                    mode="ios"
+                    [disabled]="schedule.length === 0"
+                    (click)="changeAll(schedule, 'FIST_MEAT')">Refeição 1
+        </ion-button>
+    </ion-col>
+    <ion-col size="1">
+        <ion-button [fill]="(check.SECOND_MEAT) ? 'solid' : 'outline'"
+                    [color]="(check.SECOND_MEAT) ? 'success' : 'medium'"
+                    expand="block"
+                    mode="ios"
+                    [disabled]="schedule.length === 0"
+                    (click)="changeAll(schedule, 'SECOND_MEAT')">Refeição 2
+        </ion-button>
+    </ion-col>
+    <ion-col size="1">
+        <ion-button [fill]="(check.OUT) ? 'solid' : 'outline'"
+                    [color]="(check.OUT) ? 'success' : 'medium'"
+                    expand="block"
+                    mode="ios"
+                    [disabled]="schedule.length === 0"
+                    (click)="changeAll(schedule, 'OUT')">Saída
+        </ion-button>
+    </ion-col>
+</ion-row>

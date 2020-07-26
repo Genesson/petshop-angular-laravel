@@ -1,0 +1,49 @@
+<ngx-datatable
+    [rows]="rows"
+    [ngClass]="'material'"
+    [rowHeight]="'auto'"
+    [headerHeight]="50"
+    [columnMode]="'force'"
+    [messages]="{emptyMessage:'Nenhum resultado encontrado.'}">
+    <ngx-datatable-column name="Nota Fiscal">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Modelo</ion-row>
+            <ion-row class="info">{{ xml?.nfe?.model }}</ion-row>
+            <ion-row class="title spacing">Chave de Acesso</ion-row>
+            <ion-row class="info">{{ xml?.nfe?.access_key }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Serie</ion-row>
+            <ion-row class="info">{{ xml?.nfe?.series }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Número</ion-row>
+            <ion-row class="info">{{ xml?.nfe?.number }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Emissão</ion-row>
+            <ion-row class="info">{{ xml?.nfe?.emission_date | date: 'dd/MM/yyyy H:mm' }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Valor total dos produtos</ion-row>
+            <ion-row class="right info">R$ {{ xml?.nfe?.price }}</ion-row>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <ion-row class="title">Valor total N.F</ion-row>
+            <ion-row class="info">R$ {{ xml?.nfe?.price }}</ion-row>
+            <!--<ion-row class="spacing">
+                <ion-button color="primary" shape="round" mode="ios">Baixar arquivo</ion-button>
+            </ion-row>-->
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>

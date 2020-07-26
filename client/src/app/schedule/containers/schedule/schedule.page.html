@@ -1,0 +1,22 @@
+<app-header [title]="'Calendário'" [isCart]="true" [order]="orderSelected$ | async"></app-header>
+
+<app-schedule-filter [currentDate]="currentDate"
+                     [services]="userData.services"
+                     (backDate)="backDate()"
+                     (forwardDate)="forwardDate()"
+                     (clickView)="openScheduleList()"
+                     (changeFilter)="updateFilter($event)"></app-schedule-filter>
+
+<ion-content class="sp-schedule-content">
+  <ng-container *ngIf="!(isLoading$ | async); else loading">
+    <app-schedule-calendar [currentDate]="currentDate" [schedule]="schedulesCollection$ | async"
+      (changeDate)="changeDate($event)"></app-schedule-calendar>
+  </ng-container>
+</ion-content>
+
+<ng-template #loading>
+  <div class="wrapper-content">
+    <ion-spinner name="crescent"></ion-spinner>
+    <span>Carregando calendário...</span>
+  </div>
+</ng-template>

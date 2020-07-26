@@ -1,0 +1,41 @@
+<app-header [title]="'Importação de NFe'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-import-nfe-content">
+    <ion-grid class="sp-form">
+        <ion-row>
+            <ion-col>
+                <input type="file" #fileInput (change)="onFileUpload($event)" class="sp-form-file">
+                <ion-button color="primary" shape="round" mode="ios" (click)="fileInput.click()">
+                    <ion-spinner slot="start" name="crescent" *ngIf="isLoading$ | async"></ion-spinner> Upload
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <app-data-nfe [xml]="xmlSelected$ | async"></app-data-nfe>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <app-data-provider [xml]="xmlSelected$ | async"></app-data-provider>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 class="title border-top">Produtos</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <app-data-products [xml]="xmlSelected$ | async" #products (selectXml)="onClickConfirm($event)"></app-data-products>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="'Confirmar'"
+                   [labelCancel]="'Descartar Arquivo'"
+                   (clickConfirm)="products.onClickConfirm()"
+                   (clickCancel)="onClickCancel()"
+                   [isDisabled]="xmlSelected$ | async"
+                   [isLoading]="isLoading$ | async"></app-footer-button>

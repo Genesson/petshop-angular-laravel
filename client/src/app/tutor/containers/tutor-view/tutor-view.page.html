@@ -1,0 +1,170 @@
+<app-header [title]="'Informações do Tutor'" [showButtonBack]="true"></app-header>
+
+<ion-content class="sp-tutor-view-content" padding>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6">
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-item class="sp-tutor-card" lines="none">
+                            <ion-avatar slot="start" class="sp-tutor-avatar">
+                                <img src="{{ tutor?.avatar }}" class="image">
+                            </ion-avatar>
+                            <ion-label>
+                                <h2 class="sp-tutor-name">{{ tutor?.name }}</h2>
+                                <a class="sp-tutor-profile" (click)="selectTutor(tutor)">Editar</a>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button color="success" mode="ios" shape="round" class="button-plus"
+                            (click)="openResponsibleModal()">+ Segundo Responsável
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-card class="sp-info-card">
+                <ion-card-content>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="4">
+                                <ion-text class="title">Dados do Cliente</ion-text>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Nome:</ion-text>
+                                    <ion-text class="info">{{ tutor?.name }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Data de Nascimento:</ion-text>
+                                    <ion-text class="info">{{ tutor?.date_birth | date: 'dd/MM/yyyy' }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Telefone:</ion-text>
+                                    <ion-text class="info">{{ tutor?.phone || tutor?.cell_phone }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">CPF:</ion-text>
+                                    <ion-text class="info">{{ tutor?.cpf }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">RG:</ion-text>
+                                    <ion-text class="info">{{ tutor?.rg }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Email:</ion-text>
+                                    <ion-text class="info">{{ tutor?.email }}</ion-text>
+                                </ion-row>
+                            </ion-col>
+                            <ion-col size="4">
+                                <ion-text class="title">Dados de Endereço</ion-text>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Rua:</ion-text>
+                                    <ion-text class="info">{{ tutor?.address?.street }}
+                                        , {{ tutor?.address?.number }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Bairro:</ion-text>
+                                    <ion-text class="info">{{ tutor?.address?.district }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                  <ion-text class="desc">Complemento:</ion-text>
+                                  <ion-text class="info">{{ tutor?.address?.complement }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Cidade:</ion-text>
+                                    <ion-text class="info">{{ tutor?.city?.name }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Estado:</ion-text>
+                                    <ion-text class="info">{{ tutor?.province?.initials }}</ion-text>
+                                </ion-row>
+                            </ion-col>
+                            <ion-col size="4">
+                                <ion-text class="title">Segundo Responsável</ion-text>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Nome:</ion-text>
+                                    <ion-text class="info">{{ tutor?.second_name }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">CPF:</ion-text>
+                                    <ion-text class="info">{{ tutor?.second_cpf }}</ion-text>
+                                </ion-row>
+                                <ion-row class="line-info">
+                                    <ion-text class="desc">Telefone:</ion-text>
+                                    <ion-text class="info">{{ tutor?.second_phone }}</ion-text>
+                                </ion-row>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <ion-row>
+                        <ion-text class="title">Relatório de Consumo</ion-text>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ngx-datatable [rows]="receivablesCollection$ | async"
+                                           [ngClass]="'material'"
+                                           [rowHeight]="'auto'"
+                                           [headerHeight]="50"
+                                           [columnMode]="'force'"
+                                           [messages]="{emptyMessage:'Nenhum resultado encontrado.'}"
+                                           [loadingIndicator]="isLoading$ | async">
+                                <ngx-datatable-column name="Data">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{ row?.created_at | date: 'dd/MM/yyyy' }}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Pet">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{ row?.pet?.name }}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Telefone">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{ row?.tutor?.phone }}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Valor">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{ row?.value | currency: 'BRL':'symbol' }}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Vencimento">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{ row?.expiration | date: 'dd/MM/yyyy' }}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Pagamento">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{ row?.receivement_at | date: 'dd/MM/yyyy H:mm' }}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column sortable="false">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <ion-button color="light" mode="ios" (click)="presentViewModal(row)">
+                                            <ion-icon src="assets/icon/eye.svg"></ion-icon>
+                                        </ion-button>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+        <ion-row>
+            <ion-text class="title">Pets</ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col class="ion-flex">
+                <app-card-pet *ngFor="let pet of tutor?.pets"
+                              [name]="pet?.name"
+                              [image]="pet.avatar"
+                              [isButtons]="true"
+                              (clickEdit)="selectPet(pet)"
+                              (clickDelete)="confirmPet(pet)"></app-card-pet>
+                <app-card-button (click)="selectTutor(tutor)"></app-card-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

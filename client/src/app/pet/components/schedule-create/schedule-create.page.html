@@ -1,0 +1,91 @@
+<app-header-modal [title]="'Agendar ' + service.description + ' para o ' + form?.name"></app-header-modal>
+
+<ion-content class="sp-service-content">
+  <ion-grid class="sp-form" [formGroup]="formGroup">
+    <ion-row *ngIf="service.category.package">
+      <ion-col class="sp-no-padding">
+        <app-pet-package [pet]="form" [service]="service" (emitPackage)="changePackage($event)" #petPackage></app-pet-package>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="!isPackage">
+      <ion-row>
+        <ion-col>
+          <input type="text" placeholder="Data" class="form-control" formControlName="date" bsDatepicker>
+          <ng-container *ngFor="let validation of validationMessages.date">
+            <app-validation-message [form]="formGroup" [control]="'date'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item>
+            <timepicker formControlName="hour" [showMeridian]="false"></timepicker>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.hour">
+            <app-validation-message [form]="formGroup" [control]="'hour'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Tempo Estimado (min)</ion-label>
+            <ion-input type="number" formControlName="time"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.time">
+            <app-validation-message [form]="formGroup" [control]="'time'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Selecione o Responsável</ion-label>
+            <ion-select placeholder="Selecione" okText="OK" cancelText="Cancelar" formControlName="user">
+              <ion-select-option [value]="user" *ngFor="let user of usersCollection$ | async">{{ user.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.user">
+            <app-validation-message [form]="formGroup" [control]="'user'" [validation]="validation"></app-validation-message>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="sp-toogle fix-height-toggle" lines="none">
+            <ion-label class="sp-label">Transporte?</ion-label>
+            <ion-toggle color="success" mode="ios" formControlName="transport" (ionChange)="changeTransport($event)"></ion-toggle>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label class="sp-label" position="floating">Selecione a Região</ion-label>
+            <ion-select placeholder="Selecione"
+                        okText="OK"
+                        cancelText="Cancelar"
+                        formControlName="transport_id"
+                        [disabled]="!formGroup.get('transport').value">
+              <ion-select-option [value]="transport?.id" *ngFor="let transport of transportsCollection$ | async">
+                {{ transport?.region?.description }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ng-container *ngFor="let validation of validationMessages.transport_id">
+            <app-validation-message [form]="formGroup" [control]="'transport_id'" [validation]="validation">
+            </app-validation-message>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>
+
+<app-footer-modal *ngIf="!isPackage"
+                  (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [labelConfirm]="'Cadastrar'"
+                  [isLoading]="isLoading$ | async"></app-footer-modal>
+
+<app-footer-modal *ngIf="isPackage"
+                  (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirmPackage()"
+                  [labelConfirm]="'Cadastrar Pacote'"
+                  [isLoading]="isLoadingPetPackage$ | async"></app-footer-modal>

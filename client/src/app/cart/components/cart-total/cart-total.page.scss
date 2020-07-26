@@ -1,0 +1,26 @@
+.sp-cart-total {
+  color: #5A5A5A;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+
+  .sp-cart-discount-result {
+    font-size: 19px;
+    font-weight: 400;
+    color: #E20707;
+  }
+
+  .sp-cart-total-result {
+    font-size: 21px;
+    font-weight: 400;
+
+    span {
+      font-size: 28px;
+      font-weight: bold;
+    }
+  }
+
+  ion-col {
+    --ion-grid-column-padding: 0;
+  }
+}

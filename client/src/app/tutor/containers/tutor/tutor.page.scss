@@ -1,0 +1,45 @@
+.sp-tutor-content {
+  --background: #F5F7F8;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+
+  .sp-search {
+  }
+
+  .image {
+      width: 100px;
+      height: 100px;
+  }
+
+  .pagination {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    place-content: flex-end;
+    margin-top: 10px;
+
+    li {
+      margin-left: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--ion-color-primary);
+
+      display: flex;
+      align-items: center;
+      place-content: center;
+
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--ion-color-primary-contrast);
+
+      cursor: pointer;
+
+      &.active {
+        opacity: 0.5;
+      }
+    }
+  }
+}

@@ -1,0 +1,394 @@
+<app-header [title]="isEditing ? 'Atualização de Produto' : 'Cadastro de Produto'" [showButtonBack]="true"></app-header>
+<app-product-tabs [selected]="tab" (tab)="onTab($event)"></app-product-tabs>
+
+<ion-content class="sp-product-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <div class="sp-form-general" *ngIf="tab === 'general'">
+            <ion-row>
+                <ion-col size="8">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Descrição Completa do Produto</ion-label>
+                        <ion-input type="text" formControlName="description"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.description">
+                        <app-validation-message [form]="formGroup" [control]="'description'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Código (SKU) ou Referência (opcional)</ion-label>
+                        <ion-input type="text" formControlName="sku"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.sku">
+                        <app-validation-message [form]="formGroup" [control]="'sku'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+            </ion-row>
+            <ion-row class="margin-bottom">
+                <ion-col size="8">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Origem</ion-label>
+                        <ion-input type="text" formControlName="origin"></ion-input>
+                        <span class="help">Origem do produto conforme ICMS</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.origin">
+                        <app-validation-message [form]="formGroup" [control]="'origin'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Tipo</ion-label>
+                        <ion-select formControlName="type"
+                                    placeholder="Selecione"
+                                    okText="OK"
+                                    cancelText="Cancelar">
+                            <ion-select-option [value]="1">Produto</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row class="margin-bottom">
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">NCM</ion-label>
+                        <ion-input type="text" formControlName="ncm" [brmasker]="{mask: '0000.00.00', type:'num'}" minlength="10" maxlength="10"></ion-input>
+                        <span class="help">Nomenclatura comun do Mercosul</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.ncm">
+                        <app-validation-message [form]="formGroup" [control]="'ncm'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">CFOP</ion-label>
+                        <ion-input type="text" formControlName="cfop" [brmasker]="{mask: '0000', type:'num'}" minlength="4" maxlength="4"></ion-input>
+                        <span class="help">Código Fiscal de Operações e Prestação</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.cfop">
+                        <app-validation-message [form]="formGroup" [control]="'cfop'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Código CEST</ion-label>
+                        <ion-input type="text" formControlName="cest" [brmasker]="{mask: '00.000.00', type:'num'}" minlength="9" maxlength="9"></ion-input>
+                        <span class="help">Código Especificador da Substituição Tributária</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.cest">
+                        <app-validation-message [form]="formGroup" [control]="'cest'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Preço de Venda</ion-label>
+                        <ion-input type="text" formControlName="price_sale" [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.price_sale">
+                        <app-validation-message [form]="formGroup" [control]="'price_sale'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Unidade</ion-label>
+                        <ion-select formControlName="unity"
+                                    placeholder="Selecione"
+                                    okText="OK"
+                                    cancelText="Cancelar">
+                            <ion-select-option [value]="1">UN</ion-select-option>
+                            <ion-select-option [value]="2">KG</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.unity">
+                        <app-validation-message [form]="formGroup" [control]="'unity'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Quantidade em Estoque</ion-label>
+                        <ion-input type="text" formControlName="quantity_stock" [brmasker]="{type:'num'}" minlength="1" maxlength="6"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.quantity_stock">
+                        <app-validation-message [form]="formGroup" [control]="'quantity_stock'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <h2 class="title border-top">Dimensões e peso</h2>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Peso Líquido <small>(KG)</small></ion-label>
+                        <ion-input type="text" formControlName="net_weight" minlength="1" maxlength="4"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.net_weight">
+                        <app-validation-message [form]="formGroup" [control]="'net_weight'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Peso Bruto <small>(KG)</small></ion-label>
+                        <ion-input type="text" formControlName="gross_weight" minlength="1" maxlength="4"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.gross_weight">
+                        <app-validation-message [form]="formGroup" [control]="'gross_weight'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Tipo de Embalagem</ion-label>
+                        <ion-select formControlName="type_pack"
+                                    placeholder="Selecione"
+                                    okText="OK"
+                                    cancelText="Cancelar">
+                            <ion-select-option [value]="1">Caixa</ion-select-option>
+                            <ion-select-option [value]="2">Pacote</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Largura <small>(CM)</small></ion-label>
+                        <ion-input type="text" formControlName="width" [brmasker]="{type:'num'}" minlength="1" maxlength="4"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.width">
+                        <app-validation-message [form]="formGroup" [control]="'width'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Altura <small>(CM)</small></ion-label>
+                        <ion-input type="text" formControlName="heigth" [brmasker]="{type:'num'}" minlength="1" maxlength="4"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.heigth">
+                        <app-validation-message [form]="formGroup" [control]="'heigth'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Comprimento <small>(CM)</small></ion-label>
+                        <ion-input type="text" formControlName="length" [brmasker]="{type:'num'}" minlength="1" maxlength="4"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.length">
+                        <app-validation-message [form]="formGroup" [control]="'length'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="sp-form-complementary" *ngIf="tab === 'complementary'">
+            <ion-row>
+                <ion-col>
+                    <h2 class="title">Descrição Complementar</h2>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="10">
+                    <ion-item>
+                        <ion-textarea rows="6" cols="20" formControlName="description_comp"></ion-textarea>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.description_comp">
+                        <app-validation-message [form]="formGroup" [control]="'description_comp'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="2">
+                    <input type="file" #fileInput (change)="onFileUpload($event)" class="sp-form-file">
+                    <app-file [description]="'Selecionar image'"
+                              [image]="formGroup.get('image').value" (actionClick)="fileInput.click()"
+                              [height]="'175px'"
+                              [isLoading]="isLoadingImageProduct$ | async"></app-file>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="6">
+                    <ion-item>
+                      <ion-label class="sp-label" position="floating">Categoria</ion-label>
+                      <ion-select [compareWith]="compareWithFn"
+                                  placeholder="Selecione"
+                                  okText="OK"
+                                  cancelText="Cancelar"
+                                  formControlName="category">
+                        <ion-select-option [value]="category" *ngFor="let category of productCategoriesCollection$ | async">
+                          {{ category.description }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Marca</ion-label>
+                        <ion-select formControlName="brand"
+                                    placeholder="Selecione"
+                                    okText="OK"
+                                    cancelText="Cancelar">
+                            <ion-select-option [value]="1">Special Dog</ion-select-option>
+                            <ion-select-option [value]="2">Premier</ion-select-option>
+                            <ion-select-option [value]="3">Ceva</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="sp-form-others" *ngIf="tab === 'others'">
+            <ion-row>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Fabricante</ion-label>
+                        <ion-select formControlName="manufacturer"
+                                    placeholder="Selecione"
+                                    okText="OK"
+                                    cancelText="Cancelar">
+                            <ion-select-option [value]="1">Ceva</ion-select-option>
+                            <ion-select-option [value]="2">MSD</ion-select-option>
+                            <ion-select-option [value]="3">Manfrin</ion-select-option>
+                            <ion-select-option [value]="4">Premier Pet</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-item>
+                    <ion-label class="sp-label" position="floating">Fornecedor</ion-label>
+                    <ion-select [compareWith]="compareWithFn"
+                                placeholder="Selecione"
+                                okText="OK"
+                                cancelText="Cancelar"
+                                formControlName="provider">
+                      <ion-select-option [value]="provider" *ngFor="let provider of productProvidersCollection$ | async">
+                        {{ provider.description }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Código do Produto pelo Fabricante</ion-label>
+                        <ion-input type="text" formControlName="cod_product"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.cod_product">
+                        <app-validation-message [form]="formGroup" [control]="'cod_product'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Unidade por Caixa</ion-label>
+                        <ion-input type="text" formControlName="unit_per_box" [brmasker]="{type:'num'}" minlength="1" maxlength="4"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.unit_per_box">
+                        <app-validation-message [form]="formGroup" [control]="'unit_per_box'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Preço de Custo</ion-label>
+                        <ion-input type="text" formControlName="price_cost" [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Linha do Produto</ion-label>
+                        <ion-select formControlName="line_product"
+                                    placeholder="Selecione"
+                                    okText="OK"
+                                    cancelText="Cancelar">
+                            <ion-select-option [value]="1">Prime</ion-select-option>
+                            <ion-select-option [value]="2">Magnus</ion-select-option>
+                            <ion-select-option [value]="3">Dog chow</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Garantia <small>(Dias)</small></ion-label>
+                        <ion-input type="text" formControlName="guarantee" [brmasker]="{type:'num'}" minlength="1" maxlength="4"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.guarantee">
+                        <app-validation-message [form]="formGroup" [control]="'guarantee'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Situação</ion-label>
+                        <ion-select formControlName="situation"
+                                    placeholder="Selecione"
+                                    okText="OK"
+                                    cancelText="Cancelar">
+                            <ion-select-option [value]="1">Em estoque</ion-select-option>
+                            <ion-select-option [value]="2">Fora de estoque</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <h2 class="title border-top">Descrição Complementar</h2>
+                </ion-col>
+            </ion-row>
+            <ion-row class="margin-bottom">
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">GTIN/EAN Tributável</ion-label>
+                        <ion-input type="text" formControlName="gtin"></ion-input>
+                        <span class="help">Utilizado apenas para Caixa, Fardo, Lote, etc...</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.gtin">
+                        <app-validation-message [form]="formGroup" [control]="'gtin'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Unidade Tributária</ion-label>
+                        <ion-input type="text" formControlName="unit_tributary"></ion-input>
+                        <span class="help">Campo usado em notas fiscais de exportação</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.unit_tributary">
+                        <app-validation-message [form]="formGroup" [control]="'unit_tributary'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Fator de Conversão</ion-label>
+                        <ion-input type="text" formControlName="conversion"></ion-input>
+                        <span class="help">Campo usado em notas fiscais de exportação</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.conversion">
+                        <app-validation-message [form]="formGroup" [control]="'conversion'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+            </ion-row>
+            <ion-row class="margin-bottom">
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Código de Enquadramento IPI</ion-label>
+                        <ion-input type="text" formControlName="ipi"></ion-input>
+                        <span class="help">Código de enquadramento legal do IPI</span>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validationMessages.ipi">
+                        <app-validation-message [form]="formGroup" [control]="'ipi'" [validation]="validation"></app-validation-message>
+                    </ng-container>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-item>
+                        <ion-label class="sp-label" position="floating">Valor do IPI Fixo</ion-label>
+                        <ion-input type="text" formControlName="value_ipi" [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                        <span class="help">Somente para produtos com tributação específica</span>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-grid>
+</ion-content>
+
+<app-footer-button [labelConfirm]="(tab === 'others') ? 'Finalizar' : 'Próximo'"
+                   [colorConfirm]="(tab === 'others') ? 'success' : 'primary'"
+                   (clickCancel)="onClickCancel()"
+                   (clickConfirm)="onClickConfirm()"
+                   [isLoading]="isLoading$ | async"></app-footer-button>

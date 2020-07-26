@@ -1,0 +1,13 @@
+<ion-card class="sp-home-card">
+    <ion-list>
+        <ion-item *ngFor="let notification of notifications">
+            <ion-label class="sp-home-card-label">
+                <div class="description">
+                    <ion-text class="name">{{notification.pet.name}}</ion-text>
+                    <ion-text class="item">{{notification.validity}} dia {{notification.date | date: 'dd/MM/yyyy'}}</ion-text>
+                </div>
+            </ion-label>
+            <ion-icon slot="end" src="assets/icon/search.svg" (click)="openPetProfile.emit(notification.pet)" class="button"></ion-icon>
+        </ion-item>
+    </ion-list>
+</ion-card>

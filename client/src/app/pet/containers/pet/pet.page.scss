@@ -1,0 +1,48 @@
+.sp-pet-content {
+  --background: #F5F7F8;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+
+  .sp-pet-legend {
+    margin: 10px 10px 40px 10px;
+    font-size: 14px;
+    color: #999999;
+
+    >.column {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      >.circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+
+        &.has-services {
+          background: #0091FF;
+        }
+
+        &.special-attention {
+          background: #91D144;
+        }
+
+        &.attention {
+          background: #D14141;
+        }
+      }
+    }
+  }
+
+  .wrapper-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+  }
+}

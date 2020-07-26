@@ -1,0 +1,10 @@
+<app-header [title]="'Relatórios'"></app-header>
+
+<app-dre-filter [currentDate]="currentDate"
+                (backDate)="backDate()"
+                (forwardDate)="forwardDate()"
+                (clickButton)="openButton()"></app-dre-filter>
+
+<ion-content class="sp-report-content">
+    <app-dre-datatable [dre]="dreSelected$ | async" (clickConfirm)="openModal($event)"></app-dre-datatable>
+</ion-content>

@@ -1,0 +1,13 @@
+.sp-cart-coupon {
+  .sp-label {
+    font-size: 14px;
+    color: #656565;
+  }
+
+  ion-item {
+    --min-height: 50px;
+    --background: transparent !important;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+  }
+}

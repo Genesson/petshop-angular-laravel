@@ -1,0 +1,33 @@
+.weekview-normal-event-container {
+  margin-top: 108px !important;
+}
+
+.custom-day-header {
+  font-size: 12px;
+  color: #A19EA1;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  align-items: center;
+
+  &.current {
+    color: var(--ion-color-primary);
+
+    >span {
+      width: 34px;
+      display: flex;
+      place-content: center;
+      align-items: center;
+      height: 34px;
+      background: var(--ion-color-primary);
+      color: #FFFFFF;
+      border-radius: 50%;
+      transition: all 0.5s;
+    }
+  }
+
+  span {
+    display: block;
+  }
+
+}

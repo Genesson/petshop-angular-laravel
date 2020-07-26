@@ -1,0 +1,33 @@
+<app-header-modal [title]="cashierType[action] + ' de Caixa'"></app-header-modal>
+
+<ion-content class="sp-cashier-modal-content">
+    <ion-grid class="sp-form" [formGroup]="formGroup">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Valor de {{ cashierType[action] }}</ion-label>
+                    <ion-input type="text" formControlName="value" [brmasker]="{money: true, thousand: '.'}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.value">
+                    <app-validation-message [form]="formGroup" [control]="'value'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label class="sp-label" position="floating">Observação</ion-label>
+                    <ion-input type="text" formControlName="note"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.note">
+                    <app-validation-message [form]="formGroup" [control]="'note'" [validation]="validation"></app-validation-message>
+                </ng-container>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<app-footer-modal (clickCancel)="onClickCancel()"
+                  (clickConfirm)="onClickConfirm()"
+                  [isLoading]="isLoading$ | async"
+                  [labelConfirm]="'Confirmar ' + cashierType[action]"></app-footer-modal>

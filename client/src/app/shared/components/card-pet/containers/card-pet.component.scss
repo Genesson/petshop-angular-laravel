@@ -1,0 +1,45 @@
+.sp-pet-card {
+  --background: var(--ion-color-primary);
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+  margin: 50px 16px 0 0;
+  border-radius: 10px;
+  box-shadow: none;
+
+  .sp-content {
+    position: absolute;
+    top: 80px;
+
+    .sp-button {
+      font-size: 10px;
+    }
+  }
+
+  > .sp-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    padding: 10px 0 16px 0;
+
+    > .sp-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #FFFFFF;
+    }
+  }
+
+  > .image {
+    position: absolute;
+    top: -50px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 5px solid var(--ion-color-primary);
+    background-size: cover !important;
+    z-index: 1;
+  }
+}

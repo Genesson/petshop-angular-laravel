@@ -1,0 +1,44 @@
+import {UserModel} from './user.model';
+import {SizeModel} from './size.model';
+import {TypeModel} from './type.model';
+import {BreedModel} from './breed.model';
+import {TypeFurModel} from './type-fur.model';
+
+export interface PetModel {
+    id?: number;
+    user: UserModel;
+    avatar: string;
+    name: string;
+    type: TypeModel;
+    breed: BreedModel;
+    gender: string;
+    size: SizeModel;
+    type_fur: TypeFurModel;
+    date_birth: Date;
+    castrated: boolean;
+    ration_brand: string;
+    times_day: number;
+    amount_time: number;
+    types_food: string;
+    obs_food: string;
+    sachet: boolean;
+    perfume: boolean;
+    ornament: boolean;
+    alive: boolean;
+    pool: boolean;
+    obs_general: string;
+    vet_name: string;
+    vet_phone: string;
+    obs_medical: string;
+    vaccination_carter: string;
+    case_emergency: string;
+    case_symptoms: string;
+    date_cio: string;
+    date_evaluation: string;
+    behavior: number;
+    has_services: boolean;
+    special_attention: boolean;
+    attention: boolean;
+    obs_alert: string;
+    status: string;
+}
